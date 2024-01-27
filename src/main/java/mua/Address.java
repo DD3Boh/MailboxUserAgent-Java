@@ -29,6 +29,15 @@ public class Address {
         ASCIICharSequence ascii = ASCIICharSequence.of(fullAddress);
         List<List<String>> addresses = AddressEncoding.decode(ascii);
 
+        if (addresses.size() != 1 || addresses.get(0).size() != 3)
+            throw new IllegalArgumentException("Invalid email address");
+
+        if (!AddressEncoding.isValidAddressPart(addresses.get(0).get(1)))
+            throw new IllegalArgumentException("Invalid local part");
+
+        if (!AddressEncoding.isValidAddressPart(addresses.get(0).get(2)))
+            throw new IllegalArgumentException("Invalid domain part");
+
         this.displayName = addresses.get(0).get(0);
         this.local = addresses.get(0).get(1);
         this.domain = addresses.get(0).get(2);
@@ -42,6 +51,12 @@ public class Address {
      * @param domain the domain part
      */
     public Address(String displayName, String local, String domain) {
+        if (!AddressEncoding.isValidAddressPart(local))
+            throw new IllegalArgumentException("Invalid local part");
+
+        if (!AddressEncoding.isValidAddressPart(domain))
+            throw new IllegalArgumentException("Invalid domain part");
+
         this.displayName = displayName;
         this.local = local;
         this.domain = domain;
