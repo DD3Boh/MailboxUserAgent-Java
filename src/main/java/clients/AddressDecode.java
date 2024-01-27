@@ -1,8 +1,10 @@
 package clients;
 
-/** AddressDecode */
-public class AddressDecode {
+import java.util.Scanner;
 
+import mua.Address;
+
+public class AddressDecode {
   /**
    * Tests address decoding
    *
@@ -12,6 +14,17 @@ public class AddressDecode {
    *
    * @param args not used.
    */
-  // public static void main(String[] args) {}
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    String encodedAddress = scanner.nextLine();
 
+    Address address = new Address(encodedAddress);
+    String displayName = address.getDisplayName();
+    String local = address.getLocal();
+    String domain = address.getDomain();
+
+    System.out.println(displayName);
+    System.out.println(local);
+    System.out.println(domain);
+  }
 }
