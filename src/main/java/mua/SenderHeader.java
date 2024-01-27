@@ -1,27 +1,27 @@
 package mua;
 
 /**
- * Represents the sender header of a message.
+ * Represents the sender header of a message, using an Address object.
  */
-public class SenderHeader implements Header<String> {
-    private String value;
+public class SenderHeader implements Header<Address> {
+    private Address value;
 
     /**
-     * Constructs a SenderHeader object with the specified email address of the sender.
+     * Constructs a SenderHeader object with the specified Address object.
      *
-     * @param value
+     * @param value the Address object of the sender
      */
-    public SenderHeader(String value) {
+    public SenderHeader(Address value) {
         this.value = value;
     }
 
     /**
-     * Returns the email address of the sender.
+     * Returns the Address object of the sender.
      *
-     * @return the email address of the sender.
+     * @return the Address object of the sender.
      */
     @Override
-    public String getValue() {
+    public Address getValue() {
         return value;
     }
 }
