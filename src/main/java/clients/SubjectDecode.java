@@ -1,6 +1,9 @@
 package clients;
 
-/** SubjectDecode */
+import java.util.Scanner;
+import utils.ASCIICharSequence;
+import mua.Subject;
+
 public class SubjectDecode {
 
   /**
@@ -11,5 +14,13 @@ public class SubjectDecode {
    *
    * @param args not used.
    */
-  // public static void main(String[] args) {}
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    String word = scanner.nextLine();
+
+    ASCIICharSequence ascii = ASCIICharSequence.of(word);
+
+    System.out.println(new Subject(ascii));
+    scanner.close();
+  }
 }
