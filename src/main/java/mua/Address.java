@@ -63,18 +63,6 @@ public class Address {
     }
 
     /**
-     * Returns the full email address as a string, including the display name if present.
-     *
-     * @return the full email address.
-     */
-    public String getFullAddress() {
-        if (!displayName.isEmpty()) {
-            return String.format("%s <%s@%s>", displayName, local, domain);
-        }
-        return String.format("%s@%s", local, domain);
-    }
-
-    /**
      * Returns the display name associated with the email address.
      *
      * @return the display name.
@@ -99,5 +87,26 @@ public class Address {
      */
     public String getDomain() {
         return domain;
+    }
+
+    /**
+     * Returns a string representation of the Address object.
+     * If the display name is not present, it returns the address in the format "local@domain".
+     * If the display name is present and is made of one or two words, it returns the address in the format "Display Name <local@domain>".
+     * If the display name is present and is made of more than two words, it returns the address in the format ""Display Name" <local@domain>".
+     *
+     * @return a string representation of the Address object
+     */
+    @Override
+    public String toString() {
+        if (displayName.trim().isEmpty())
+            return String.format("%s@%s", local, domain);
+
+        String[] nameParts = displayName.split("\\s+");
+
+        if (nameParts.length <= 2)
+            return String.format("%s <%s@%s>", displayName, local, domain);
+        else
+            return String.format("\"%s\" <%s@%s>", displayName, local, domain);
     }
 }
