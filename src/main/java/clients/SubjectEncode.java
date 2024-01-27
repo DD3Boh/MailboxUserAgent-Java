@@ -1,6 +1,8 @@
 package clients;
 
-/** SubjectEncode */
+import java.util.Scanner;
+import mua.Subject;
+
 public class SubjectEncode {
 
   /**
@@ -11,6 +13,13 @@ public class SubjectEncode {
    *
    * @param args not used.
    */
-  // public static void main(String[] args) {}
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    String word = scanner.nextLine();
+    scanner.close();
 
+    Subject subject = new Subject(word);
+
+    System.out.println(subject.encodeToAscii());
+  }
 }
