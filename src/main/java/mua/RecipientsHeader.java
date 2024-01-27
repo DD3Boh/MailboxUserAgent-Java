@@ -1,29 +1,27 @@
 package mua;
 
-import java.util.List;
-
 /**
- * Represents the recipients header of a message, using a list of Address objects.
+ * Represents the recipients header of a message, using a Recipients object.
  */
-public class RecipientsHeader implements Header<List<Address>> {
-    private List<Address> values;
+public class RecipientsHeader implements Header<Recipients> {
+    private Recipients recipients;
 
     /**
-     * Constructs a RecipientsHeader object with the specified list of Address objects.
+     * Constructs a RecipientsHeader object with the specified Recipients objects.
      *
-     * @param values the list of Address objects of the recipients
+     * @param values the Recipients object of the recipients
      */
-    public RecipientsHeader(List<Address> values) {
-        this.values = values;
+    public RecipientsHeader(Recipients recipients) {
+        this.recipients = recipients;
     }
 
     /**
-     * Returns the list of Address objects for the recipients.
+     * Returns the Recipients object for the recipients.
      *
-     * @return the list of Address objects for the recipients.
+     * @return the Recipients object for the recipients.
      */
     @Override
-    public List<Address> getValue() {
-        return values;
+    public Recipients getValue() {
+        return recipients;
     }
 }
