@@ -34,7 +34,7 @@ public class Recipients implements Iterable<Address> {
         String[] addressArray = addressList.split(", ");
         for (String addressString : addressArray) {
             Address address = new Address(addressString);
-            this.addresses.add(address);
+            addAddress(address);
         }
     }
 
@@ -53,7 +53,7 @@ public class Recipients implements Iterable<Address> {
         String domain = addressArray[2].trim();
 
         Address address = new Address(displayName, local, domain);
-        this.addresses.add(address);
+        addAddress(address);
     }
 
     /**
