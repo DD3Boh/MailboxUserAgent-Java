@@ -17,6 +17,7 @@ public class AddressDecode {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     String encodedAddress = scanner.nextLine();
+    scanner.close();
 
     Address address = new Address(encodedAddress);
     String displayName = address.getDisplayName();
