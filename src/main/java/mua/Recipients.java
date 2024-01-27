@@ -65,4 +65,27 @@ public class Recipients implements Iterable<Address> {
     public Iterator<Address> iterator() {
         return addresses.iterator();
     }
+
+    /**
+     * Returns a string representation of the Recipients object.
+     * The string includes all the addresses in the Recipients object, separated by commas.
+     *
+     * @return a string representation of the Recipients object
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("To: ");
+        Iterator<Address> iterator = addresses.iterator();
+
+        while (iterator.hasNext()) {
+            Address address = iterator.next();
+
+            sb.append(address);
+
+            if (iterator.hasNext())
+                sb.append(", ");
+        }
+
+        return sb.toString();
+    }
 }
