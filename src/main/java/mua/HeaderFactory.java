@@ -12,20 +12,20 @@ public class HeaderFactory {
      * @return a new Header instance corresponding to the type, or null if the type is not recognized
      */
     public static Header<?> createHeader(String type, String value) {
-        switch (type) {
-            case "From":
+        switch (type.toLowerCase()) {
+            case "from":
                 return new SenderHeader(new Address(value));
-            case "To":
+            case "to":
                 return new RecipientsHeader(new Recipients(value));
-            case "Subject":
+            case "subject":
                 return new SubjectHeader(new Subject(ASCIICharSequence.of(value)));
-            case "Date":
+            case "date":
                 return new DateHeader(new Date(ASCIICharSequence.of(value)));
-            case "MIME-Version":
+            case "mime-version":
                 return new MimeVersionHeader(Double.parseDouble(value));
-            case "Content-Type":
+            case "content-type":
                 return new ContentTypeHeader(value);
-            case "Content-Transfer-Encoding":
+            case "content-transfer-encoding":
                 return new ContentTransferEncodingHeader(value);
             default:
                 System.out.println("Unknown header type: " + type);
