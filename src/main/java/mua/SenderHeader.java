@@ -34,4 +34,14 @@ public class SenderHeader implements Header<Address> {
     public Address getValue() {
         return value;
     }
+
+    /**
+     * Returns a string representation of the SenderHeader object.
+     *
+     * @return a string representation of the SenderHeader object
+     */
+    @Override
+    public String toString() {
+        return getType() + ": " + value.toString();
+    }
 }

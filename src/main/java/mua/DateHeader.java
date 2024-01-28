@@ -34,4 +34,14 @@ public class DateHeader implements Header<Date> {
     public Date getValue() {
         return value;
     }
+
+    /**
+     * Returns a string representation of the DateHeader object.
+     *
+     * @return a string representation of the DateHeader object
+     */
+    @Override
+    public String toString() {
+        return getType() + ": " + value.toString();
+    }
 }

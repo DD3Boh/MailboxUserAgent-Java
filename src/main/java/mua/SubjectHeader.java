@@ -34,4 +34,14 @@ public class SubjectHeader implements Header<Subject> {
     public Subject getValue() {
         return value;
     }
+
+    /**
+     * Returns a string representation of the SubjectHeader object.
+     *
+     * @return a string representation of the SubjectHeader object
+     */
+    @Override
+    public String toString() {
+        return getType() + ": " + value.toString();
+    }
 }

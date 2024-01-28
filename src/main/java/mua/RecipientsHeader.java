@@ -34,4 +34,14 @@ public class RecipientsHeader implements Header<Recipients> {
     public Recipients getValue() {
         return recipients;
     }
+
+    /**
+     * Returns a string representation of the RecipientsHeader object.
+     *
+     * @return a string representation of the RecipientsHeader object
+     */
+    @Override
+    public String toString() {
+        return getType() + ": " + recipients.toString();
+    }
 }
