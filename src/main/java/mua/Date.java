@@ -12,6 +12,15 @@ public class Date {
     private ZonedDateTime date;
 
     /**
+     * Constructs a Date object from a ZonedDateTime.
+     *
+     * @param date the ZonedDateTime to construct the Date object from
+     */
+    public Date(ZonedDateTime date) {
+        this.date = date;
+    }
+
+    /**
      * Constructs a Date object from an ASCIICharSequence.
      *
      * @param asciiCharSequence the ASCIICharSequence to decode the date from
