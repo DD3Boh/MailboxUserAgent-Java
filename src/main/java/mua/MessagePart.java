@@ -9,7 +9,6 @@ import utils.Fragment;
 public class MessagePart {
     private List<Header<?>> headers;
     private ASCIICharSequence body;
-    private Fragment fragment;
 
     /**
      * Construct a MessagePart object with the specified Fragment.
@@ -18,9 +17,9 @@ public class MessagePart {
      */
     public MessagePart(Fragment fragment) {
         this.headers = new ArrayList<>();
-        this.headers.add(parseHeader(fragment.rawHeaders().get(0)));
+        for (List<ASCIICharSequence> rawHeader : fragment.rawHeaders())
+            this.headers.add(parseHeader(rawHeader));
         this.body = fragment.rawBody();
-        this.fragment = fragment;
     }
 
     /**
@@ -51,14 +50,5 @@ public class MessagePart {
      */
     public ASCIICharSequence getBody() {
         return body;
-    }
-
-    /**
-     * Returns the Fragment of the message part.
-     *
-     * @return the Fragment
-     */
-    public Fragment getFragment() {
-        return fragment;
     }
 }
