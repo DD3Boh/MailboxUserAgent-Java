@@ -1,5 +1,10 @@
 package clients;
 
+import java.util.Scanner;
+
+import utils.ASCIICharSequence;
+import mua.Date;
+
 /** DateDecode */
 public class DateDecode {
 
@@ -11,6 +16,14 @@ public class DateDecode {
    *
    * @param args not used.
    */
-  // public static void main(String[] args) {}
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    String input = scanner.nextLine();
+    scanner.close();
 
+    ASCIICharSequence ascii = ASCIICharSequence.of(input);
+    Date date = new Date(ascii);
+
+    System.out.println(date.getDayOfWeek());
+  }
 }
