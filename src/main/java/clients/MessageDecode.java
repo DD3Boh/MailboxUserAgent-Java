@@ -1,6 +1,12 @@
 package clients;
 
-/** MessageDecode */
+import java.util.List;
+import java.util.Scanner;
+
+import utils.ASCIICharSequence;
+import utils.EntryEncoding;
+import utils.Fragment;
+
 public class MessageDecode {
 
   /**
@@ -25,6 +31,24 @@ public class MessageDecode {
    *
    * @param args not used.
    */
-  // public static void main(String[] args) {}
+  public static void main(String[] args) {
+    StringBuilder rawMessage = new StringBuilder();
+    Scanner scanner = new Scanner(System.in);
 
+    // Read lines from stdin until an empty line is entered
+    while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        rawMessage.append(line).append("\n");
+    }
+    scanner.close();
+
+    ASCIICharSequence sequence = ASCIICharSequence.of(rawMessage.toString());
+    List<Fragment> fragments = EntryEncoding.decode(sequence);
+    for (Fragment fragment : fragments) {
+      System.out.println("Fragment\n\tRaw headers:");
+      for (List<ASCIICharSequence> rawHeader : fragment.rawHeaders())
+        System.out.println("\t\tRaw type = " + rawHeader.get(0) + ", value = " + rawHeader.get(1));
+      System.out.println("\tRaw body: \n\t\t" + fragment.rawBody() + "\n");
+    }
+  }
 }
