@@ -40,7 +40,7 @@ public class MessagePart {
      *
      * @return the header
      */
-    public List<Header<?>> getHeader() {
+    public List<Header<?>> getHeaders() {
         return headers;
     }
 
