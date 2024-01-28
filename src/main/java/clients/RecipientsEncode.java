@@ -1,6 +1,7 @@
 package clients;
 
 import mua.Recipients;
+import mua.RecipientsHeader;
 
 import java.util.Scanner;
 
@@ -25,7 +26,7 @@ public class RecipientsEncode {
     while (scanner.hasNextLine())
       recipients.addAddress(scanner.nextLine());
 
-    System.out.println(recipients);
+    System.out.println(new RecipientsHeader(recipients));
 
     scanner.close();
   }
