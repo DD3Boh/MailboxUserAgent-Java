@@ -3,6 +3,9 @@ package mua;
 import java.util.ArrayList;
 import java.util.List;
 
+import utils.ASCIICharSequence;
+import utils.Fragment;
+
 /**
  * Represents a message composed of multiple message parts.
  */
@@ -17,12 +20,16 @@ public class Message {
     }
 
     /**
-     * Constructs a message with the given message parts.
+     * Constructs a message with the given List of Fragments.
      *
-     * @param messageParts the list of message parts
+     * @param fragments the list of Fragments
      */
-    public Message(List<MessagePart> messageParts) {
-        this.messageParts = messageParts;
+    public Message(List<Fragment> fragments) {
+        messageParts = new ArrayList<>();
+
+        for (Fragment fragment : fragments) {
+            messageParts.add(new MessagePart(fragment));
+        }
     }
 
     /**
