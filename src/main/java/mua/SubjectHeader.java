@@ -16,6 +16,16 @@ public class SubjectHeader implements Header<String> {
     }
 
     /**
+     * Returns a string representing the type of the header.
+     *
+     * @return a string representing the type of the header
+     */
+    @Override
+    public String getType() {
+        return "Subject";
+    }
+
+    /**
      * Returns the subject of the message.
      *
      * @return the subject of the message.

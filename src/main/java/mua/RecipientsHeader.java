@@ -16,6 +16,16 @@ public class RecipientsHeader implements Header<Recipients> {
     }
 
     /**
+     * Returns a string representing the type of the header.
+     *
+     * @return a string representing the type of the header
+     */
+    @Override
+    public String getType() {
+        return "To";
+    }
+
+    /**
      * Returns the Recipients object for the recipients.
      *
      * @return the Recipients object for the recipients.

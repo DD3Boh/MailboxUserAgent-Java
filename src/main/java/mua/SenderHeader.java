@@ -16,6 +16,16 @@ public class SenderHeader implements Header<Address> {
     }
 
     /**
+     * Returns a string representing the type of the header.
+     *
+     * @return a string representing the type of the header
+     */
+    @Override
+    public String getType() {
+        return "From";
+    }
+
+    /**
      * Returns the Address object of the sender.
      *
      * @return the Address object of the sender.
