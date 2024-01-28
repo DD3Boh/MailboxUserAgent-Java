@@ -3,15 +3,15 @@ package mua;
 /**
  * Represents the subject header of a message.
  */
-public class SubjectHeader implements Header<String> {
-    private String value;
+public class SubjectHeader implements Header<Subject> {
+    private Subject value;
 
     /**
      * Constructs a SubjectHeader object with the specified subject of the message.
      *
      * @param value
      */
-    public SubjectHeader(String value) {
+    public SubjectHeader(Subject value) {
         this.value = value;
     }
 
@@ -31,7 +31,7 @@ public class SubjectHeader implements Header<String> {
      * @return the subject of the message.
      */
     @Override
-    public String getValue() {
+    public Subject getValue() {
         return value;
     }
 }

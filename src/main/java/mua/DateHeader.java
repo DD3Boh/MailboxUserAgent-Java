@@ -1,19 +1,17 @@
 package mua;
 
-import java.time.ZonedDateTime;
-
 /**
  * Represents the date header of when the message was composed.
  */
-public class DateHeader implements Header<ZonedDateTime> {
-    private ZonedDateTime value;
+public class DateHeader implements Header<Date> {
+    private Date value;
 
     /**
      * Constructs a DateHeader object with the specified date and time when the message was composed.
      *
      * @param value
      */
-    public DateHeader(ZonedDateTime value) {
+    public DateHeader(Date value) {
         this.value = value;
     }
 
@@ -33,7 +31,7 @@ public class DateHeader implements Header<ZonedDateTime> {
      * @return the date and time when the message was composed.
      */
     @Override
-    public ZonedDateTime getValue() {
+    public Date getValue() {
         return value;
     }
 }
