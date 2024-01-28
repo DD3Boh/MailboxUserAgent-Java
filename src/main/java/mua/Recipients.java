@@ -92,7 +92,7 @@ public class Recipients implements Iterable<Address> {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("To: ");
+        StringBuilder sb = new StringBuilder();
         Iterator<Address> iterator = addresses.iterator();
 
         while (iterator.hasNext()) {
