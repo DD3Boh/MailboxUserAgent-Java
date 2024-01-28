@@ -20,6 +20,6 @@ public class SubjectEncode {
 
     Subject subject = new Subject(word);
 
-    System.out.println(subject.encodeToAscii());
+    System.out.println(subject);
   }
 }

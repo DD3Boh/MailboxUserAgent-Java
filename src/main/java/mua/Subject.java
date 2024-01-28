@@ -7,16 +7,19 @@ import utils.Base64Encoding;
  * Represents an email's header subject, allowing conversion between UTF-8 and ASCII using Base64 encoding.
  */
 public class Subject {
-    /* the subject text in UTF-8 */
-    private String subject;
+    /* the subject text in ASCII */
+    private ASCIICharSequence subject;
 
     /**
-     * Creates a new Subject with the given text.
+     * Creates a new Subject with the given String, converting it to ASCII using Base64 encoding.
      *
      * @param subject the subject text in UTF-8.
      */
     public Subject(String subject) {
-        this.subject = subject;
+        if (ASCIICharSequence.isAscii(subject))
+            this.subject = ASCIICharSequence.of(subject);
+        else
+            this.subject = Base64Encoding.encodeWord(subject);
     }
 
     /**
@@ -25,7 +28,7 @@ public class Subject {
      * @param asciiSubject the ASCII encoded subject text.
      */
     public Subject(ASCIICharSequence asciiSubject) {
-        this.subject = decodeFromAscii(asciiSubject);
+        this.subject = asciiSubject;
     }
 
     /**
@@ -33,11 +36,8 @@ public class Subject {
      *
      * @return the ASCII encoded subject text.
      */
-    public ASCIICharSequence encodeToAscii() {
-        if (ASCIICharSequence.isAscii(subject))
-            return ASCIICharSequence.of(subject);
-        else
-            return Base64Encoding.encodeWord(subject);
+    public String decodeFromAscii() {
+        return decodeFromAscii(subject);
     }
 
     /**
@@ -63,6 +63,6 @@ public class Subject {
      */
     @Override
     public String toString() {
-        return subject;
+        return subject.toString();
     }
 }
