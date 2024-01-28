@@ -4,15 +4,32 @@ package mua;
  * Represents a Content-Type header.
  */
 public class ContentTypeHeader implements Header<String> {
-    private final String value;
+    private final String textValue;
+    private final String charset;
+    private final String boundary;
 
     /**
-     * Constructs a new Content-Type header with the specified media type.
+     * Constructs a new Content-Type header parsing the specified content type.
+     * The string that needs parsing is of the form "<value>; boundary=frontier".
      *
-     * @param value the media type
+     * @param value the content type string, needs parsing.
      */
     public ContentTypeHeader(String value) {
-        this.value = value;
+        if (value.contains("boundary")) {
+            String[] split = value.split(";");
+            this.textValue = split[0].trim();
+            this.boundary = "boundary=frontier";
+            this.charset = null;
+        } else if (value.contains("charset")) {
+            String[] split = value.split(";");
+            this.textValue = split[0].trim();
+            this.charset = split[1].trim().replace("charset=", "").replace("\"", "");
+            this.boundary = null;
+        } else {
+            this.textValue = value;
+            this.charset = null;
+            this.boundary = null;
+        }
     }
 
     /**
@@ -32,7 +49,12 @@ public class ContentTypeHeader implements Header<String> {
      */
     @Override
     public String getValue() {
-        return value;
+        if (charset != null)
+            return textValue + "; charset=\"" + charset + "\"";
+        else if (boundary != null)
+            return textValue + "; " + boundary;
+        else
+            return textValue;
     }
 
     /**
