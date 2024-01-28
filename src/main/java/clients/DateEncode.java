@@ -1,6 +1,8 @@
 package clients;
 
-/** DateEncode */
+import java.util.Scanner;
+import mua.Date;
+
 public class DateEncode {
 
   /**
@@ -12,6 +14,15 @@ public class DateEncode {
    *
    * @param args not used.
    */
-  // public static void main(String[] args) {}
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    int year = scanner.nextInt();
+    int month = scanner.nextInt();
+    int day = scanner.nextInt();
+    scanner.close();
 
+    Date date = new Date(year, month, day);
+
+    System.out.println(date);
+  }
 }
