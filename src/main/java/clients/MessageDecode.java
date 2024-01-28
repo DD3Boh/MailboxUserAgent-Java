@@ -3,6 +3,8 @@ package clients;
 import java.util.List;
 import java.util.Scanner;
 
+import mua.Message;
+import mua.MessagePart;
 import utils.ASCIICharSequence;
 import utils.EntryEncoding;
 import utils.Fragment;
@@ -44,11 +46,14 @@ public class MessageDecode {
 
     ASCIICharSequence sequence = ASCIICharSequence.of(rawMessage.toString());
     List<Fragment> fragments = EntryEncoding.decode(sequence);
-    for (Fragment fragment : fragments) {
+    Message message = new Message(fragments);
+
+    for (MessagePart part : message.getParts()) {
       System.out.println("Fragment\n\tRaw headers:");
-      for (List<ASCIICharSequence> rawHeader : fragment.rawHeaders())
+      for (List<ASCIICharSequence> rawHeader : part.getFragment().rawHeaders())
         System.out.println("\t\tRaw type = " + rawHeader.get(0) + ", value = " + rawHeader.get(1));
-      System.out.println("\tRaw body: \n\t\t" + fragment.rawBody() + "\n");
+      System.out.println("\tRaw body: \n\t\t" + part.getFragment().rawBody() + "\n");
     }
+
   }
 }
