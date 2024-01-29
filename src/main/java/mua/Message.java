@@ -32,6 +32,15 @@ public class Message {
     }
 
     /**
+     * Constructs a message with the given List of MessageParts.
+     *
+     * @param messageParts the list of MessageParts
+     */
+    public Message(List<MessagePart> messageParts, boolean dummy) {
+        this.messageParts = messageParts;
+    }
+
+    /**
      * Adds a message part to the message.
      *
      * @param part the message part to add
@@ -56,5 +65,36 @@ public class Message {
      */
     public List<MessagePart> getParts() {
         return new ArrayList<>(messageParts);
+    }
+
+    /**
+     * Encodes the messsage into a String.
+     *
+     * @return the encoded message
+     */
+    public String encodeMessage() {
+        StringBuilder sb = new StringBuilder();
+        for (MessagePart part : messageParts) {
+            if (part.equals(messageParts.get(messageParts.size() - 1)))
+                sb.append(part.encodeMessagePart(true));
+            else
+                sb.append(part.encodeMessagePart(false) + "\n");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Returns a string representation of the message.
+     *
+     * @return a string representation of the message
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (MessagePart part : messageParts) {
+            sb.append(part.toString());
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 }

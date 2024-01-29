@@ -18,7 +18,7 @@ public class ContentTypeHeader implements Header<String> {
         if (value.contains("boundary")) {
             String[] split = value.split(";");
             this.textValue = split[0].trim();
-            this.boundary = "boundary=frontier";
+            this.boundary = "frontier";
             this.charset = null;
         } else if (value.contains("charset")) {
             String[] split = value.split(";");
@@ -30,6 +30,19 @@ public class ContentTypeHeader implements Header<String> {
             this.charset = null;
             this.boundary = null;
         }
+    }
+
+    /**
+     * Constructs a new Content-Type header with the specified text, charset and boundary values.
+     *
+     * @param textValue the text value of the header
+     * @param charset   the charset value of the header
+     * @param boundary  the boundary value of the header
+     */
+    public ContentTypeHeader(String textValue, String charset, String boundary) {
+        this.textValue = textValue;
+        this.charset = charset;
+        this.boundary = boundary;
     }
 
     /**
@@ -52,9 +65,36 @@ public class ContentTypeHeader implements Header<String> {
         if (charset != null)
             return textValue + "; charset=\"" + charset + "\"";
         else if (boundary != null)
-            return textValue + "; " + boundary;
+            return textValue + "; boundary=" + boundary;
         else
             return textValue;
+    }
+
+    /**
+     * Returns the text value of the Content-Type header.
+     *
+     * @return the text value
+     */
+    public String getTextValue() {
+        return textValue;
+    }
+
+    /**
+     * Returns the charset value of the Content-Type header.
+     *
+     * @return the charset value
+     */
+    public String getCharset() {
+        return charset;
+    }
+
+    /**
+     * Returns the boundary value of the Content-Type header.
+     *
+     * @return the boundary value
+     */
+    public String getBoundary() {
+        return boundary;
     }
 
     /**
