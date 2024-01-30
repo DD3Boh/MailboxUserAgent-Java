@@ -1,0 +1,64 @@
+From: Massimo Santini <santini@unimi.it>
+To: "Un Bravo Studente" <bravo@studenti.unimi.it>, Studente Pigro <pigro@studenti.unizzzzz.it>
+Subject: Tanti attachment
+Date: Sat, 10 Dec 2033 18:54:21 +0100
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary=frontier
+
+This is a message with multiple parts in MIME format.
+--frontier
+Content-Type: text/plain; charset="us-ascii"
+
+testo
+
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo1.txt"
+
+cGlwcG8xCg==
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo2.txt"
+
+cGlwcG8yCg==
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo3.txt"
+
+cGlwcG8zCg==
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo4.txt"
+
+cGlwcG80Cg==
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo5.txt"
+
+cGlwcG81Cg==
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo6.txt"
+
+cGlwcG82Cg==
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo7.txt"
+
+cGlwcG83Cg==
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo8.txt"
+
+cGlwcG84Cg==
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo9.txt"
+
+cGlwcG85Cg==
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo10.txt"
+
+cGlwcG8xMAo=
+--frontier--

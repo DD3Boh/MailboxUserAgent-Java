@@ -1,0 +1,7 @@
+From: Luca <prigioniero@di.base64.it>
+To: Massimo Santini <santini@di.unimi.it>, info@unimi.it
+Subject: Oggetto base64
+Date: Wed, 6 Dec 2023 12:30:20 +0100
+Content-Type: text/plain; charset="us-ascii"
+
+Questa versione testuale non ha solo caratteri non base64

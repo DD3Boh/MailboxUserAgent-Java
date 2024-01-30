@@ -1,0 +1,19 @@
+From: Massimo Santini <santini@unimi.it>
+To: "Un Bravo Studente" <bravo@studenti.unimi.it>, Studente Pigro <pigro@studenti.unizzzzz.it>
+Subject: HTML + attachment
+Date: Fri, 10 Dec 2032 18:48:36 +0100
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary=frontier
+
+This is a message with multiple parts in MIME format.
+--frontier
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+TWVubyBkaWZmaWNpbGUgbm9uCnNhcmViYmUgcG9zc2liaWxlCnNpYSBjaGlhcm8K
+--frontier
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pippo.txt"
+
+UXVlc3RvIMOoIGlsIGNvbnRlbnV0byAKZGVsIGZpbGUgcGlwcG8udHh0Cg==
+--frontier--

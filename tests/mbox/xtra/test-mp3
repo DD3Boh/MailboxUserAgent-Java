@@ -1,0 +1,19 @@
+From: Massimo Santini <santini@unimi.it>
+To: "Un Bravo Studente" <bravo@studenti.unimi.it>, Studente Pigro <pigro@studenti.unizzzzz.it>
+Subject: Alternative
+Date: Wed, 10 Dec 2031 18:49:17 +0100
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary=frontier
+
+This is a message with multiple parts in MIME format.
+--frontier
+Content-Type: text/plain; charset="us-ascii"
+
+Ora ce ne sono due
+
+--frontier
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset="utf-8"
+
+TWVubyBkaWZmaWNpbGUgbm9uCnNhcmViYmUgcG9zc2liaWxlCnNpYSBjaGlhcm8K
+--frontier--
