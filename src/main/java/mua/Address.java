@@ -38,20 +38,20 @@ public class Address {
      */
     public Address(String fullAddress) throws IllegalArgumentException {
         ASCIICharSequence ascii = ASCIICharSequence.of(fullAddress);
-        List<List<String>> addresses = AddressEncoding.decode(ascii);
+        List<List<ASCIICharSequence>> addresses = AddressEncoding.decode(ascii);
 
         if (addresses.size() != 1 || addresses.get(0).size() != 3)
             throw new IllegalArgumentException("Invalid email address");
 
-        if (!AddressEncoding.isValidAddressPart(addresses.get(0).get(1)))
+        if (!AddressEncoding.isValidAddressPart(addresses.get(0).get(1).toString()))
             throw new IllegalArgumentException("Invalid local part");
 
-        if (!AddressEncoding.isValidAddressPart(addresses.get(0).get(2)))
+        if (!AddressEncoding.isValidAddressPart(addresses.get(0).get(2).toString()))
             throw new IllegalArgumentException("Invalid domain part");
 
-        this.displayName = addresses.get(0).get(0);
-        this.local = addresses.get(0).get(1);
-        this.domain = addresses.get(0).get(2);
+        this.displayName = addresses.get(0).get(0).toString();
+        this.local = addresses.get(0).get(1).toString();
+        this.domain = addresses.get(0).get(2).toString();
     }
 
     /**
