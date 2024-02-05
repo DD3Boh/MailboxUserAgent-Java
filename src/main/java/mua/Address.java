@@ -9,6 +9,17 @@ import utils.AddressEncoding;
  * Represents an email address with display name, local part, and domain.
  */
 public class Address {
+    /*
+     * Abstraction Function:
+     * Represents an email address with a display name, local part, and domain.
+     * An instance a of Address represents an email address of the form "a.displayName <a.local@a.domain>".
+     * If a.displayName is an empty string, it represents an email address of the form "a.local@a.domain".
+     *
+     * Representation Invariant:
+     * - displayName, local, and domain are not null.
+     * - local and domain are valid parts of an email address, as defined by AddressEncoding.isValidAddressPart(String).
+     */
+
     /* the display name associated with the email address */
     private final String displayName;
     /* the local part of the email address (before the '@') */

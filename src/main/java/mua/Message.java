@@ -2,6 +2,7 @@ package mua;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import utils.Fragment;
 
@@ -9,6 +10,15 @@ import utils.Fragment;
  * Represents a message composed of multiple message parts.
  */
 public class Message {
+    /**
+     * Abstraction Function:
+     * A Message m represents a sequence of MessageParts mp[1], ..., mp[n] where n is the number of MessageParts.
+     * Each MessagePart mp[i] is represented by messageParts.get(i-1) for 1 <= i <= n.
+     *
+     * Representation Invariant:
+     * - messageParts != null
+     * - All elements in messageParts are not null
+     */
     private List<MessagePart> messageParts;
 
     /**
@@ -19,42 +29,51 @@ public class Message {
     }
 
     /**
-     * Constructs a message with the given List of Fragments.
-     *
-     * @param fragments the list of Fragments
-     */
-    public Message(List<Fragment> fragments) {
-        messageParts = new ArrayList<>();
-
-        for (Fragment fragment : fragments) {
-            messageParts.add(new MessagePart(fragment));
-        }
-    }
-
-    /**
      * Constructs a message with the given List of MessageParts.
      *
      * @param messageParts the list of MessageParts
      */
-    public Message(List<MessagePart> messageParts, boolean dummy) {
+    public Message(List<MessagePart> messageParts) {
         this.messageParts = messageParts;
     }
 
     /**
+     * Constructs a list of MessageParts from the given List of Fragments.
+     *
+     * @param fragments the list of Fragments
+     * @return a list of MessageParts
+     */
+    public static List<MessagePart> createMessageParts(List<Fragment> fragments) {
+        List<MessagePart> messageParts = new ArrayList<>();
+
+        for (Fragment fragment : fragments) {
+            if (fragment != null)
+                messageParts.add(new MessagePart(fragment));
+        }
+
+        return messageParts;
+    }
+
+    /**
      * Adds a message part to the message.
+     * The part cannot be null.
      *
      * @param part the message part to add
      */
     public void addPart(MessagePart part) {
-        messageParts.add(part);
+        messageParts.add(Objects.requireNonNull(part));
     }
 
     /**
      * Removes a message part from the message.
      *
      * @param part the message part to remove
+     * @throws IllegalArgumentException if the specified part is not present in the message
      */
     public void removePart(MessagePart part) {
+        if (!messageParts.contains(part))
+            throw new IllegalArgumentException("The specified part is not present in the message");
+
         messageParts.remove(part);
     }
 

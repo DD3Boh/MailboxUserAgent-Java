@@ -45,7 +45,7 @@ public class MessageDecode {
 
     ASCIICharSequence sequence = ASCIICharSequence.of(rawMessage.toString());
     List<Fragment> fragments = EntryEncoding.decode(sequence);
-    Message message = new Message(fragments);
+    Message message = new Message(Message.createMessageParts(fragments));
 
     for (MessagePart part : message.getParts()) {
       System.out.println("Fragment\n\tRaw headers:");

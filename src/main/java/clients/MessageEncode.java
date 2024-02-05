@@ -100,7 +100,7 @@ public class MessageEncode {
       parts.add(new MessagePart(headers, html));
     }
 
-    System.out.println(new Message(parts, true).encodeMessage());
+    System.out.println(new Message(parts).encodeMessage());
   }
 
 }
