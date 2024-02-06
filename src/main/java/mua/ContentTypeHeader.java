@@ -62,30 +62,7 @@ public class ContentTypeHeader implements Header<String> {
      */
     @Override
     public String getValue() {
-        if (charset != null)
-            return textValue + "; charset=\"" + charset + "\"";
-        else if (boundary != null)
-            return textValue + "; boundary=" + boundary;
-        else
-            return textValue;
-    }
-
-    /**
-     * Returns the text value of the Content-Type header.
-     *
-     * @return the text value
-     */
-    public String getTextValue() {
         return textValue;
-    }
-
-    /**
-     * Returns the charset value of the Content-Type header.
-     *
-     * @return the charset value
-     */
-    public String getCharset() {
-        return charset;
     }
 
     /**
@@ -104,6 +81,14 @@ public class ContentTypeHeader implements Header<String> {
      */
     @Override
     public String toString() {
-        return getType() + ": " + getValue();
+        String value = "";
+        if (charset != null)
+            value = textValue + "; charset=\"" + charset + "\"";
+        else if (boundary != null)
+            value = textValue + "; boundary=" + boundary;
+        else
+            value = textValue;
+
+        return getType() + ": " + value;
     }
 }

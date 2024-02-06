@@ -49,8 +49,10 @@ public class MessageDecode {
 
     for (MessagePart part : message.getParts()) {
       System.out.println("Fragment\n\tRaw headers:");
-      for (Header<?> header : part.getHeaders())
-        System.out.println("\t\tRaw type = " + header.getType().toString().toLowerCase() + ", value = " + header.getValue().toString());
+      for (Header<?> header : part.getHeaders()) {
+        String headerRawType = header.getType().toString();
+        System.out.println("\t\tRaw type = " + headerRawType.toLowerCase() + ", value = " + header.toString().replace(headerRawType + ": ", ""));
+      }
       System.out.println("\tRaw body: \n\t\t" + part.body + "\n");
     }
   }
