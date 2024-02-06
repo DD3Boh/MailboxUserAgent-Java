@@ -32,15 +32,6 @@ public class Subject {
     }
 
     /**
-     * Encodes the UTF-8 subject text into an ASCII string using Base64 encoding.
-     *
-     * @return the ASCII encoded subject text.
-     */
-    public String decodeFromAscii() {
-        return decodeFromAscii(subject);
-    }
-
-    /**
      * Decodes an ASCII encoded subject text back into a UTF-8 string.
      * If the given ASCII string is not a valid Base64 encoding, the original string is returned.
      *

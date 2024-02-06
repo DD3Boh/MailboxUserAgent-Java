@@ -20,7 +20,7 @@ public class SubjectDecode {
 
     ASCIICharSequence ascii = ASCIICharSequence.of(word);
 
-    System.out.println(new Subject(ascii).decodeFromAscii());
+    System.out.println(Subject.decodeFromAscii(ascii));
     scanner.close();
   }
 }
