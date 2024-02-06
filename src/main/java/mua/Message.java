@@ -88,22 +88,6 @@ public class Message {
     }
 
     /**
-     * Encodes the messsage into a String.
-     *
-     * @return the encoded message
-     */
-    public String encodeMessage() {
-        StringBuilder sb = new StringBuilder();
-        for (MessagePart part : messageParts) {
-            if (part.equals(messageParts.get(messageParts.size() - 1)))
-                sb.append(part.encodeMessagePart(true));
-            else
-                sb.append(part.encodeMessagePart(false) + "\n");
-        }
-        return sb.toString();
-    }
-
-    /**
      * Returns a string representation of the message.
      *
      * @return a string representation of the message
@@ -111,9 +95,19 @@ public class Message {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+
         for (MessagePart part : messageParts) {
+            ContentTypeHeader contentHeader = (ContentTypeHeader) part.getHeader(ContentTypeHeader.class);
             sb.append(part.toString());
             sb.append("\n");
+            if (contentHeader != null && contentHeader.getBoundary() != null) {
+                sb.append("--");
+                sb.append(contentHeader.getBoundary());
+                if (part.equals(messageParts.get(messageParts.size() - 1)))
+                    sb.append("--");
+                else
+                    sb.append("\n");
+            }
         }
         return sb.toString();
     }

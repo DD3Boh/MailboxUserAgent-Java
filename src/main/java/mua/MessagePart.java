@@ -109,30 +109,6 @@ public class MessagePart {
     }
 
     /**
-     * Encodes the message part into a string.
-     *
-     * @return the encoded message part
-     */
-    public String encodeMessagePart(boolean isLastPart) {
-        StringBuilder sb = new StringBuilder();
-        for (Header<?> header : headers) {
-            sb.append(header.toString());
-            sb.append("\n");
-        }
-        sb.append("\n");
-        sb.append(body.toString());
-        ContentTypeHeader contentHeader = (ContentTypeHeader) getHeader(ContentTypeHeader.class);
-        if (contentHeader != null && contentHeader.getBoundary() != null) {
-            sb.append("\n");
-            sb.append("--");
-            sb.append(contentHeader.getBoundary());
-            if (isLastPart)
-                sb.append("--");
-        }
-        return sb.toString();
-    }
-
-    /**
      * Returns a String representation of the message part.
      *
      * @return a String representation of the message part
@@ -144,15 +120,8 @@ public class MessagePart {
             sb.append(header.toString());
             sb.append("\n");
         }
-
-        String bodyString;
-        ContentTransferEncodingHeader contentEncodingHeader = (ContentTransferEncodingHeader) getHeader(ContentTransferEncodingHeader.class);
-        if (contentEncodingHeader != null)
-            bodyString = Base64Encoding.decode(body);
-        else
-            bodyString = body.toString();
-
-        sb.append(bodyString);
+        sb.append("\n");
+        sb.append(body.toString());
         return sb.toString();
     }
 }
