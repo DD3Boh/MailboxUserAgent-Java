@@ -35,18 +35,11 @@ public class MessagePart {
         for (Header<?> header : headers)
             this.headers.add(header);
 
-        ContentTypeHeader contentHeader = (ContentTypeHeader) getHeader(ContentTypeHeader.class);
-        if (contentHeader != null) {
-            if (contentHeader.getTextValue().contains("text/html"))
-                this.body = Base64Encoding.encode(body);
-            else if (contentHeader.getTextValue().contains("text/plain") &&
-                    contentHeader.getCharset().equals("utf-8"))
-                this.body = Base64Encoding.encode(body);
-            else
-                this.body = ASCIICharSequence.of(body);
-        } else {
+        ContentTransferEncodingHeader contentEncodingHeader = (ContentTransferEncodingHeader) getHeader(ContentTransferEncodingHeader.class);
+        if (contentEncodingHeader != null)
+            this.body = Base64Encoding.encode(body);
+        else
             this.body = ASCIICharSequence.of(body);
-        }
     }
 
     public void addHeader(Header<?> header) {
@@ -159,20 +152,13 @@ public class MessagePart {
             sb.append(header.toString());
             sb.append("\n");
         }
+
         String bodyString;
-        ContentTypeHeader contentHeader = (ContentTypeHeader) getHeader(ContentTypeHeader.class);
-        if (contentHeader != null) {
-            if (contentHeader.getTextValue().contains("text/html")) {
-                bodyString = Base64Encoding.decode(body);
-            } else if (contentHeader.getTextValue().contains("text/plain") &&
-                    contentHeader.getCharset().equals("utf-8")) {
-                bodyString = Base64Encoding.decode(body);
-            } else {
-                bodyString = body.toString();
-            }
-        } else {
+        ContentTransferEncodingHeader contentEncodingHeader = (ContentTransferEncodingHeader) getHeader(ContentTransferEncodingHeader.class);
+        if (contentEncodingHeader != null)
+            bodyString = Base64Encoding.decode(body);
+        else
             bodyString = body.toString();
-        }
 
         sb.append(bodyString);
         return sb.toString();
