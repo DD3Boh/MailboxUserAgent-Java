@@ -51,8 +51,7 @@ public class MessageDecode {
       System.out.println("Fragment\n\tRaw headers:");
       for (Header<?> header : part.getHeaders())
         System.out.println("\t\tRaw type = " + header.getType().toString().toLowerCase() + ", value = " + header.getValue().toString());
-      System.out.println("\tRaw body: \n\t\t" + part.getBody() + "\n");
+      System.out.println("\tRaw body: \n\t\t" + part.body + "\n");
     }
-
   }
 }

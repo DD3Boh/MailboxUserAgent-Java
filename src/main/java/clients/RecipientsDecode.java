@@ -24,9 +24,9 @@ public class RecipientsDecode {
         Recipients recipients = new Recipients(encodedHeader);
 
         for (Address address : recipients) {
-            String displayName = address.getDisplayName();
-            String localPart = address.getLocal();
-            String domain = address.getDomain();
+            String displayName = address.displayName;
+            String localPart = address.local;
+            String domain = address.domain;
 
             System.out.println(displayName + ", " + localPart + ", " + domain);
         }

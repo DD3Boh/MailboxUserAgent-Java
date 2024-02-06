@@ -21,11 +21,11 @@ public class Address {
      */
 
     /* the display name associated with the email address */
-    private final String displayName;
+    public final String displayName;
     /* the local part of the email address (before the '@') */
-    private final String local;
+    public final String local;
     /* domain the domain part of the email address (after the '@') */
-    private final String domain;
+    public final String domain;
 
     /**
      * Constructs a new Address instance from a full email address string that may include a display name.
@@ -71,33 +71,6 @@ public class Address {
         this.displayName = displayName;
         this.local = local;
         this.domain = domain;
-    }
-
-    /**
-     * Returns the display name associated with the email address.
-     *
-     * @return the display name.
-     */
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    /**
-     * Returns the local part of the email address.
-     *
-     * @return the local part.
-     */
-    public String getLocal() {
-        return local;
-    }
-
-    /**
-     * Returns the domain part of the email address.
-     *
-     * @return the domain part.
-     */
-    public String getDomain() {
-        return domain;
     }
 
     /**

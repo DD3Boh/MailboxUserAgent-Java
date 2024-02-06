@@ -20,9 +20,9 @@ public class AddressDecode {
     scanner.close();
 
     Address address = new Address(encodedAddress);
-    String displayName = address.getDisplayName();
-    String local = address.getLocal();
-    String domain = address.getDomain();
+    String displayName = address.displayName;
+    String local = address.local;
+    String domain = address.domain;
 
     System.out.println(displayName);
     System.out.println(local);

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import utils.Fragment;
+import java.util.Collections;
 
 /**
  * Represents a message composed of multiple message parts.
@@ -19,7 +20,7 @@ public class Message {
      * - messageParts != null
      * - All elements in messageParts are not null
      */
-    private List<MessagePart> messageParts;
+    private final List<MessagePart> messageParts;
 
     /**
      * Constructs an empty message.
@@ -83,7 +84,7 @@ public class Message {
      * @return a copy of the list of message parts
      */
     public List<MessagePart> getParts() {
-        return new ArrayList<>(messageParts);
+        return Collections.unmodifiableList(messageParts);
     }
 
     /**

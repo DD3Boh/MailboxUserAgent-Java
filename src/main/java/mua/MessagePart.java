@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import utils.ASCIICharSequence;
 import utils.Base64Encoding;
 import utils.Fragment;
+import java.util.Collections;
 
 public class MessagePart {
-    private List<Header<?>> headers;
-    private ASCIICharSequence body;
+    private final List<Header<?>> headers;
+    public final ASCIICharSequence body;
 
     /**
      * Construct a MessagePart object with the specified Fragment.
@@ -79,16 +80,7 @@ public class MessagePart {
      * @return the header
      */
     public List<Header<?>> getHeaders() {
-        return headers;
-    }
-
-    /**
-     * Returns the body of the message part.
-     *
-     * @return the body
-     */
-    public ASCIICharSequence getBody() {
-        return body;
+        return Collections.unmodifiableList(headers);
     }
 
     /**
