@@ -84,31 +84,6 @@ public class MessagePart {
     }
 
     /**
-     * Decodes an ASCII encoded sequence text back into a UTF-8 string.
-     * If the given ASCII string is not a valid Base64 encoding, the original string is returned.
-     *
-     * @param asciiSubject the ASCII encoded subject text.
-     * @return the UTF-8 decoded subject text.
-     */
-    public static String decodeFromAscii(ASCIICharSequence asciiSequence) {
-        String word = Base64Encoding.decodeWord(asciiSequence);
-
-        if (word == null)
-            word = asciiSequence.toString();
-
-        return word;
-    }
-
-    /**
-     * Encodes the UTF-8 subject text into an ASCII string using Base64 encoding.
-     *
-     * @return the ASCII encoded subject text.
-     */
-    public String decodeFromAscii() {
-        return decodeFromAscii(body);
-    }
-
-    /**
      * Returns a String representation of the message part.
      *
      * @return a String representation of the message part
