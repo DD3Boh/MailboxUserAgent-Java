@@ -1,16 +1,10 @@
 package mua;
 
-import utils.ASCIICharSequence;
-import utils.EntryEncoding;
-import utils.Fragment;
-import utils.Storage;
-import utils.UIInteract;
+import utils.*;
 
 import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 /** The application class */
 public class App {
@@ -32,20 +26,16 @@ public class App {
     Storage storage = new Storage(mailboxBaseDir);
     mailboxManager = new MailboxManager(storage);
 
-    for (Storage.Box box : storage.boxes()) {
-      System.out.println(box);
-    }
-
     try (UIInteract ui = UIInteract.getInstance()) {
-      for (;;) {
-        String[] input = ui.command("> ");
+      while (true) {
+        String prefix = "> ";
+        String[] input = ui.command(prefix);
         if (input == null) break;
         switch (input[0]) {
           case "LSM":
-            ui.output("You requested an lsm...");
-            printMailboxes(new ArrayList<>(mailboxManager.getMailboxMap().keySet()));
+            printMailBoxes(new ArrayList<>(mailboxManager.getMailboxMap().keySet()));
             break;
-          case "CD":
+          case "MBOX":
             ui.output("You requested a cd...");
             break;
           default:
@@ -61,9 +51,14 @@ public class App {
    *
    * @param mailboxes the list of mailboxes
    */
-  public static void printMailboxes(List<Mailbox> mailboxes) {
+  public static void printMailBoxes(List<Mailbox> mailboxes) {
+    List<String> headers = new ArrayList<>(List.of("Mailbox", "# messages"));
+    List<List<String>> rows = new ArrayList<>();
+
     for (Mailbox mailbox : mailboxes) {
-      System.out.println(mailboxManager.getMailboxMap().get(mailbox));
+      rows.add(List.of(mailboxManager.getMailboxMap().get(mailbox).toString(), Integer.toString(mailbox.getMessages().size())));
     }
+
+    System.out.println(UITable.table(headers, rows, true, false));
   }
 }
