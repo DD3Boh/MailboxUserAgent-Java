@@ -20,7 +20,7 @@ public class HeaderFactory {
             case "subject":
                 return new SubjectHeader(new Subject(ASCIICharSequence.of(value)));
             case "date":
-                return new DateHeader(new Date(ASCIICharSequence.of(value)));
+                return new DateHeader(new Date(value));
             case "mime-version":
                 return new MimeVersionHeader(Double.parseDouble(value));
             case "content-type":

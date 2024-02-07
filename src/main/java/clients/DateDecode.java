@@ -2,7 +2,6 @@ package clients;
 
 import java.util.Scanner;
 
-import utils.ASCIICharSequence;
 import mua.Date;
 
 /** DateDecode */
@@ -21,8 +20,7 @@ public class DateDecode {
     String input = scanner.nextLine();
     scanner.close();
 
-    ASCIICharSequence ascii = ASCIICharSequence.of(input);
-    Date date = new Date(ascii);
+    Date date = new Date(input);
 
     System.out.println(date.getDayOfWeek());
   }

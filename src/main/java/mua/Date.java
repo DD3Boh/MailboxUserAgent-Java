@@ -25,8 +25,8 @@ public class Date {
      *
      * @param asciiCharSequence the ASCIICharSequence to decode the date from
      */
-    public Date(ASCIICharSequence asciiCharSequence) {
-        this.date = DateEncoding.decode(asciiCharSequence);
+    public Date(String dateString) {
+        this.date = DateEncoding.decode(ASCIICharSequence.of(dateString));
     }
 
     /**
