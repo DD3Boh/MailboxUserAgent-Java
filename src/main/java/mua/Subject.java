@@ -23,15 +23,6 @@ public class Subject {
     }
 
     /**
-     * Creates a new Subject with the given ASCII encoded subject text.
-     *
-     * @param asciiSubject the ASCII encoded subject text.
-     */
-    public Subject(ASCIICharSequence asciiSubject) {
-        this.subject = asciiSubject;
-    }
-
-    /**
      * Decodes an ASCII encoded subject text back into a UTF-8 string.
      * If the given ASCII string is not a valid Base64 encoding, the original string is returned.
      *

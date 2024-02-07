@@ -1,7 +1,5 @@
 package mua;
 
-import utils.ASCIICharSequence;
-
 public class HeaderFactory {
 
     /**
@@ -18,7 +16,7 @@ public class HeaderFactory {
             case "to":
                 return new RecipientsHeader(new Recipients(value));
             case "subject":
-                return new SubjectHeader(new Subject(ASCIICharSequence.of(value)));
+                return new SubjectHeader(new Subject(value));
             case "date":
                 return new DateHeader(new Date(value));
             case "mime-version":
