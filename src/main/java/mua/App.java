@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /** The application class */
 public class App {
-  static private MailboxManager mailboxManager;
+  private static MailboxManager mailboxManager;
 
   /**
    * Runs the REPL.
@@ -26,6 +26,15 @@ public class App {
     Storage storage = new Storage(mailboxBaseDir);
     mailboxManager = new MailboxManager(storage);
 
+    startREPL();
+  }
+
+  /**
+   * Starts the REPL.
+   *
+   * <p>Reads commands from the standard input and executes them.
+   */
+  public static void startREPL() throws IOException {
     try (UIInteract ui = UIInteract.getInstance()) {
       while (true) {
         String prefix = "> ";
