@@ -5,12 +5,10 @@ import utils.*;
 import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.time.format.DateTimeFormatter;
 
 /** The application class */
 public class App {
-  private static MailboxManager mailboxManager;
   private static final UIInteract ui = UIInteract.getInstance();
 
   /**
@@ -27,7 +25,7 @@ public class App {
 
     String mailboxBaseDir = args[0];
     Storage storage = new Storage(mailboxBaseDir);
-    mailboxManager = new MailboxManager(storage);
+    MailboxManager mailboxManager = new MailboxManager(storage);
 
     startREPL(mailboxManager);
   }
@@ -129,7 +127,7 @@ public class App {
     List<List<String>> rows = new ArrayList<>();
 
     for (Mailbox mailbox : mailboxes) {
-      rows.add(List.of(mailboxManager.getMailboxMap().get(mailbox).toString(), Integer.toString(mailbox.getMessages().size())));
+      rows.add(List.of(mailbox.name, Integer.toString(mailbox.getMessages().size())));
     }
 
     ui.output(UITable.table(headers, rows, true, false));
