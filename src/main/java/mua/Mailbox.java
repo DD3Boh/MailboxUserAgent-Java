@@ -1,16 +1,11 @@
 package mua;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Represents a mailbox that stores messages.
  */
-public class Mailbox implements Iterable<Message> {
+public class Mailbox {
     public final String name;
     private final List<Message> messages;
 
@@ -58,44 +53,5 @@ public class Mailbox implements Iterable<Message> {
      */
     public void removeMessage(int index) {
         messages.remove(index);
-    }
-
-    /**
-     * Returns an iterator over the messages in the mailbox.
-     * The messages are sorted by date in descending order.
-     *
-     * @return an iterator over the messages in the mailbox
-     */
-    @Override
-    public Iterator<Message> iterator() {
-        return new Iterator<Message>() {
-            private int currentIndex = 0;
-            private List<Message> sortedMessages;
-
-            {
-                sortedMessages = new ArrayList<>(messages);
-                Collections.sort(sortedMessages, new Comparator<Message>() {
-                    @Override
-                    public int compare(Message m1, Message m2) {
-                        Date date1 = (Date) m1.getParts().get(0).getHeader(DateHeader.class).getValue();
-                        Date date2 = (Date) m2.getParts().get(0).getHeader(DateHeader.class).getValue();
-                        return date2.date.compareTo(date1.date);
-                    }
-                });
-            }
-
-            @Override
-            public boolean hasNext() {
-                return currentIndex < sortedMessages.size();
-            }
-
-            @Override
-            public Message next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                return sortedMessages.get(currentIndex++);
-            }
-        };
     }
 }
