@@ -82,7 +82,7 @@ public class App {
               break;
             }
             Message message = messages.get(index);
-            ui.output(message.toString());
+            ui.output(getMessageString(message));
             break;
           case "#":
             break;
@@ -143,5 +143,21 @@ public class App {
     return UITable.table(headers, rows, true, false);
   }
 
+  /**
+   * Returns a message as a String.
+   *
+   * @param message the message
+   */
+  public static String getMessageString(Message message) {
+    List<String> headersList = new ArrayList<>();
+    List<String> values = new ArrayList<>();
 
+    for (MessagePart part : message.getParts()) {
+      for (Header<?> header : part.getHeaders()) {
+        headersList.add(header.getType());
+        values.add(header.getValue().toString());
+      }
+    }
+    return UICard.card(headersList, values);
+  }
 }
