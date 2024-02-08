@@ -49,7 +49,7 @@ public class App {
               ui.error("LSM command is only available when no mailbox is selected.");
               break;
             }
-            ui.output(getMailboxeString(new ArrayList<>(mailboxManager.getMailboxMap().keySet())));
+            ui.output(getMailboxString(new ArrayList<>(mailboxManager.getMailboxMap().keySet())));
             break;
           case "LSE":
             if (curMailbox == null) {
@@ -65,6 +65,24 @@ public class App {
             }
             List<Mailbox> mailboxes = new ArrayList<Mailbox>(mailboxManager.getMailboxMap().keySet());
             curMailbox = mailboxes.get(Integer.parseInt(input[1]) - 1);
+            break;
+          case "READ":
+            if (curMailbox == null) {
+              ui.error("No mailbox selected");
+              break;
+            }
+            if (input.length < 2) {
+              ui.error("Usage: READ <message>");
+              break;
+            }
+            List<Message> messages = curMailbox.getMessages();
+            int index = Integer.parseInt(input[1]) - 1;
+            if (index < 0 || index >= messages.size()) {
+              ui.error("Invalid message index");
+              break;
+            }
+            Message message = messages.get(index);
+            ui.output(message.toString());
             break;
           case "#":
             break;
@@ -114,7 +132,7 @@ public class App {
    *
    * @param mailboxes the list of mailboxes
    */
-  public static String getMailboxeString(List<Mailbox> mailboxes) {
+  public static String getMailboxString(List<Mailbox> mailboxes) {
     List<String> headers = new ArrayList<>(List.of("Mailbox", "# messages"));
     List<List<String>> rows = new ArrayList<>();
 
@@ -124,4 +142,6 @@ public class App {
 
     return UITable.table(headers, rows, true, false);
   }
+
+
 }

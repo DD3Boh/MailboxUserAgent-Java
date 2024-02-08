@@ -2,7 +2,6 @@ package clients;
 
 import mua.*;
 import utils.Storage;
-import utils.UIInteract;
 
 import java.io.IOException;
 
@@ -19,6 +18,6 @@ public class MailboxList {
     Storage storage = new Storage("tests/mbox");
     MailboxManager mailboxManager = new MailboxManager(storage);
 
-    App.startREPL(mailboxManager, UIInteract.getInstance());
+    App.startREPL(mailboxManager);
   }
 }
