@@ -9,7 +9,7 @@ import utils.DateEncoding;
  * Represents a date.
  */
 public class Date {
-    private ZonedDateTime date;
+    public final ZonedDateTime date;
 
     /**
      * Constructs a Date object from a ZonedDateTime.

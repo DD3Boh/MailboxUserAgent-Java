@@ -6,6 +6,7 @@ import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.time.format.DateTimeFormatter;
 
 /** The application class */
 public class App {
@@ -94,12 +95,28 @@ public class App {
     List<String> headers = new ArrayList<>(List.of("Date", "From", "To", "Subject"));
     List<List<String>> rows = new ArrayList<>();
 
-    /*for (Message message : messages) {
-      Header 
-      rows.add(List.of(message.toString(), message.getFrom().toString(), message.getTo().toString(), message.getSubject()));
-    }*/
+    for (Message message : messages) {
+      Date date = (Date) message.getParts().get(0).getHeader(DateHeader.class).getValue();
+      Address from = (Address) message.getParts().get(0).getHeader(SenderHeader.class).getValue();
+      Recipients to = (Recipients) message.getParts().get(0).getHeader(RecipientsHeader.class).getValue();
+      Subject subject = (Subject) message.getParts().get(0).getHeader(SubjectHeader.class).getValue();
+      StringBuilder sb = new StringBuilder();
+      for (Address recipient : to) {
+        sb.append(recipient.local);
+        sb.append("@");
+        sb.append(recipient.domain);
+        sb.append("\n");
+      }
+      String toStr = sb.toString();
+      rows.add(List.of(
+        date.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd\nHH:mm:ss")),
+        from.local + "@" + from.domain,
+        toStr,
+        Subject.decodeFromAscii(subject.subject)
+        ));
+    }
 
-    ui.output(UITable.table(headers, rows, true, false));
+    ui.output(UITable.table(headers, rows, true, true));
   }
 
   /**

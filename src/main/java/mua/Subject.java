@@ -8,7 +8,7 @@ import utils.Base64Encoding;
  */
 public class Subject {
     /* the subject text in ASCII */
-    private ASCIICharSequence subject;
+    public final ASCIICharSequence subject;
 
     /**
      * Creates a new Subject with the given String, converting it to ASCII using Base64 encoding.
