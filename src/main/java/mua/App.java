@@ -5,10 +5,12 @@ import utils.*;
 import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 /** The application class */
 public class App {
   private static MailboxManager mailboxManager;
+  private static final UIInteract ui = UIInteract.getInstance();
 
   /**
    * Runs the REPL.
@@ -26,7 +28,7 @@ public class App {
     Storage storage = new Storage(mailboxBaseDir);
     mailboxManager = new MailboxManager(storage);
 
-    startREPL();
+    startREPL(mailboxManager);
   }
 
   /**
@@ -34,8 +36,8 @@ public class App {
    *
    * <p>Reads commands from the standard input and executes them.
    */
-  public static void startREPL() throws IOException {
-    try (UIInteract ui = UIInteract.getInstance()) {
+  public static void startREPL(MailboxManager mailboxManager) throws IOException {
+    try (ui) {
       while (true) {
         String prefix = "> ";
         String[] input = ui.command(prefix);
@@ -45,7 +47,12 @@ public class App {
             printMailBoxes(new ArrayList<>(mailboxManager.getMailboxMap().keySet()));
             break;
           case "MBOX":
-            ui.output("You requested a cd...");
+            if (input.length < 2) {
+              ui.error("Usage: MBOX <mailbox>");
+              break;
+            }
+            List<Mailbox> mailboxes = new ArrayList<Mailbox>(mailboxManager.getMailboxMap().keySet());
+            mailboxREPL(mailboxes.get(Integer.parseInt(input[1]) - 1));
             break;
           default:
             ui.error("Unknown command: " + input[0]);
@@ -53,6 +60,46 @@ public class App {
         }
       }
     }
+  }
+
+  /**
+   * REPL for the mailbox.
+   *
+   * @param mailboxManager the mailbox manager
+   */
+  public static void mailboxREPL(Mailbox mailbox) throws IOException {
+    try (ui) {
+      while (true) {
+        String prefix = mailbox.name + "> ";
+        String[] input = ui.command(prefix);
+        if (input == null) break;
+        switch (input[0]) {
+          case "LSE":
+            printMessagesList(mailbox.getMessages());
+            break;
+          default:
+            ui.error("Unknown command: " + input[0]);
+            break;
+        }
+      }
+    }
+  }
+
+  /**
+   * Prints the list of messages to the standard output.
+   *
+   * @param messages the list of messages
+   */
+  public static void printMessagesList(List<Message> messages) {
+    List<String> headers = new ArrayList<>(List.of("Date", "From", "To", "Subject"));
+    List<List<String>> rows = new ArrayList<>();
+
+    /*for (Message message : messages) {
+      Header 
+      rows.add(List.of(message.toString(), message.getFrom().toString(), message.getTo().toString(), message.getSubject()));
+    }*/
+
+    ui.output(UITable.table(headers, rows, true, false));
   }
 
   /**
@@ -68,6 +115,6 @@ public class App {
       rows.add(List.of(mailboxManager.getMailboxMap().get(mailbox).toString(), Integer.toString(mailbox.getMessages().size())));
     }
 
-    System.out.println(UITable.table(headers, rows, true, false));
+    ui.output(UITable.table(headers, rows, true, false));
   }
 }

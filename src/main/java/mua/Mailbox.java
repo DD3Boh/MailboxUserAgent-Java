@@ -6,6 +6,7 @@ import java.util.List;
  * Represents a mailbox that stores messages.
  */
 public class Mailbox {
+    public final String name;
     private final List<Message> messages;
 
     /**
@@ -13,8 +14,9 @@ public class Mailbox {
      * 
      * @param messages the list of messages to be stored in the mailbox
      */
-    public Mailbox(List<Message> messages) {
+    public Mailbox(List<Message> messages, String name) {
         this.messages = messages;
+        this.name = name;
     }
 
     /**

@@ -34,7 +34,7 @@ public class MailboxManager {
                 messages.add(message);
                 messageMap.put(message, entry);
             }
-            Mailbox mailbox = new Mailbox(messages);
+            Mailbox mailbox = new Mailbox(messages, storageBox.toString());
             mailboxMap.put(mailbox, storageBox);
         }
     }
