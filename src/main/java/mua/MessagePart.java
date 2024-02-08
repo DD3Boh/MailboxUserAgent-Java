@@ -111,6 +111,22 @@ public class MessagePart {
     }
 
     /**
+     * Returns the ASCII representation of the message part.
+     *
+     * @return the ASCII representation of the message part
+     */
+    public ASCIICharSequence encodeToASCII() {
+        StringBuilder sb = new StringBuilder();
+        for (Header<?> header : headers) {
+            sb.append(header.encodeToASCII());
+            sb.append("\n");
+        }
+        sb.append("\n");
+        sb.append(body.toString());
+        return ASCIICharSequence.of(sb.toString());
+    }
+
+    /**
      * Returns a String representation of the message part.
      *
      * @return a String representation of the message part

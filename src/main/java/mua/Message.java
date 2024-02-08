@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import utils.ASCIICharSequence;
 import utils.Fragment;
 import java.util.Collections;
 
@@ -85,6 +86,32 @@ public class Message {
      */
     public List<MessagePart> getParts() {
         return Collections.unmodifiableList(messageParts);
+    }
+
+    /**
+     * Returns the ASCII representation of the message.
+     * The ASCII representation of the message is the concatenation of the ASCII representations of its parts.
+     * Each part is separated by a newline character.
+     *
+     * @return the ASCII representation of the message
+     */
+    public ASCIICharSequence encodeToASCII() {
+        StringBuilder sb = new StringBuilder();
+
+        for (MessagePart part : messageParts) {
+            ContentTypeHeader contentHeader = (ContentTypeHeader) part.getHeader(ContentTypeHeader.class);
+            sb.append(part.encodeToASCII());
+            sb.append("\n");
+            if (contentHeader != null && contentHeader.getBoundary() != null) {
+                sb.append("--");
+                sb.append(contentHeader.getBoundary());
+                if (part.equals(messageParts.get(messageParts.size() - 1)))
+                    sb.append("--");
+                else
+                    sb.append("\n");
+            }
+        }
+        return ASCIICharSequence.of(sb.toString());
     }
 
     /**
