@@ -23,10 +23,9 @@ public class App {
 
     String mailboxBaseDir = args[0];
     Storage storage = new Storage(mailboxBaseDir);
-    UIInteract ui = UIInteract.getInstance();
     MailboxManager mailboxManager = new MailboxManager(storage);
 
-    startREPL(mailboxManager, ui);
+    startREPL(mailboxManager);
   }
 
   /**
@@ -34,15 +33,30 @@ public class App {
    *
    * <p>Reads commands from the standard input and executes them.
    */
-  public static void startREPL(MailboxManager mailboxManager, UIInteract ui) throws IOException {
-    try (ui) {
+  public static void startREPL(MailboxManager mailboxManager) throws IOException {
+    Mailbox curMailbox = null;
+    try (UIInteract ui = UIInteract.getInstance()) {
       while (true) {
-        String prefix = "> ";
+        String mailboxString;
+        if (curMailbox == null) mailboxString = "*";
+        else mailboxString = curMailbox.name;
+        String prefix = "[" + mailboxString + "] > ";
         String[] input = ui.command(prefix);
         if (input == null) break;
         switch (input[0]) {
           case "LSM":
-            printMailBoxes(new ArrayList<>(mailboxManager.getMailboxMap().keySet()), ui);
+            if (curMailbox != null) {
+              ui.error("LSM command is only available when no mailbox is selected.");
+              break;
+            }
+            ui.output(getMailboxeString(new ArrayList<>(mailboxManager.getMailboxMap().keySet())));
+            break;
+          case "LSE":
+            if (curMailbox == null) {
+              ui.error("No mailbox selected");
+              break;
+            }
+            ui.output(getMessagesString(curMailbox.getMessages()));
             break;
           case "MBOX":
             if (input.length < 2) {
@@ -50,7 +64,9 @@ public class App {
               break;
             }
             List<Mailbox> mailboxes = new ArrayList<Mailbox>(mailboxManager.getMailboxMap().keySet());
-            mailboxREPL(mailboxes.get(Integer.parseInt(input[1]) - 1), ui);
+            curMailbox = mailboxes.get(Integer.parseInt(input[1]) - 1);
+            break;
+          case "#":
             break;
           default:
             ui.error("Unknown command: " + input[0]);
@@ -61,34 +77,11 @@ public class App {
   }
 
   /**
-   * REPL for the mailbox.
-   *
-   * @param mailboxManager the mailbox manager
-   */
-  public static void mailboxREPL(Mailbox mailbox, UIInteract ui) throws IOException {
-    try (ui) {
-      while (true) {
-        String prefix = mailbox.name + "> ";
-        String[] input = ui.command(prefix);
-        if (input == null) break;
-        switch (input[0]) {
-          case "LSE":
-            printMessagesList(mailbox.getMessages(), ui);
-            break;
-          default:
-            ui.error("Unknown command: " + input[0]);
-            break;
-        }
-      }
-    }
-  }
-
-  /**
-   * Prints the list of messages to the standard output.
+   * Returns the list of messages as a String.
    *
    * @param messages the list of messages
    */
-  public static void printMessagesList(List<Message> messages, UIInteract ui) {
+  public static String getMessagesString(List<Message> messages) {
     List<String> headers = new ArrayList<>(List.of("Date", "From", "To", "Subject"));
     List<List<String>> rows = new ArrayList<>();
 
@@ -113,15 +106,15 @@ public class App {
         ));
     }
 
-    ui.output(UITable.table(headers, rows, true, true));
+    return UITable.table(headers, rows, true, true);
   }
 
   /**
-   * Prints the list of mailboxes to the standard output.
+   * Returns the list of mailboxes as a String.
    *
    * @param mailboxes the list of mailboxes
    */
-  public static void printMailBoxes(List<Mailbox> mailboxes, UIInteract ui) {
+  public static String getMailboxeString(List<Mailbox> mailboxes) {
     List<String> headers = new ArrayList<>(List.of("Mailbox", "# messages"));
     List<List<String>> rows = new ArrayList<>();
 
@@ -129,6 +122,6 @@ public class App {
       rows.add(List.of(mailbox.name, Integer.toString(mailbox.getMessages().size())));
     }
 
-    ui.output(UITable.table(headers, rows, true, false));
+    return UITable.table(headers, rows, true, false);
   }
 }
