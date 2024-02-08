@@ -9,8 +9,6 @@ import java.time.format.DateTimeFormatter;
 
 /** The application class */
 public class App {
-  private static final UIInteract ui = UIInteract.getInstance();
-
   /**
    * Runs the REPL.
    *
@@ -25,9 +23,10 @@ public class App {
 
     String mailboxBaseDir = args[0];
     Storage storage = new Storage(mailboxBaseDir);
+    UIInteract ui = UIInteract.getInstance();
     MailboxManager mailboxManager = new MailboxManager(storage);
 
-    startREPL(mailboxManager);
+    startREPL(mailboxManager, ui);
   }
 
   /**
@@ -35,7 +34,7 @@ public class App {
    *
    * <p>Reads commands from the standard input and executes them.
    */
-  public static void startREPL(MailboxManager mailboxManager) throws IOException {
+  public static void startREPL(MailboxManager mailboxManager, UIInteract ui) throws IOException {
     try (ui) {
       while (true) {
         String prefix = "> ";
@@ -43,7 +42,7 @@ public class App {
         if (input == null) break;
         switch (input[0]) {
           case "LSM":
-            printMailBoxes(new ArrayList<>(mailboxManager.getMailboxMap().keySet()));
+            printMailBoxes(new ArrayList<>(mailboxManager.getMailboxMap().keySet()), ui);
             break;
           case "MBOX":
             if (input.length < 2) {
@@ -51,7 +50,7 @@ public class App {
               break;
             }
             List<Mailbox> mailboxes = new ArrayList<Mailbox>(mailboxManager.getMailboxMap().keySet());
-            mailboxREPL(mailboxes.get(Integer.parseInt(input[1]) - 1));
+            mailboxREPL(mailboxes.get(Integer.parseInt(input[1]) - 1), ui);
             break;
           default:
             ui.error("Unknown command: " + input[0]);
@@ -66,7 +65,7 @@ public class App {
    *
    * @param mailboxManager the mailbox manager
    */
-  public static void mailboxREPL(Mailbox mailbox) throws IOException {
+  public static void mailboxREPL(Mailbox mailbox, UIInteract ui) throws IOException {
     try (ui) {
       while (true) {
         String prefix = mailbox.name + "> ";
@@ -74,7 +73,7 @@ public class App {
         if (input == null) break;
         switch (input[0]) {
           case "LSE":
-            printMessagesList(mailbox.getMessages());
+            printMessagesList(mailbox.getMessages(), ui);
             break;
           default:
             ui.error("Unknown command: " + input[0]);
@@ -89,7 +88,7 @@ public class App {
    *
    * @param messages the list of messages
    */
-  public static void printMessagesList(List<Message> messages) {
+  public static void printMessagesList(List<Message> messages, UIInteract ui) {
     List<String> headers = new ArrayList<>(List.of("Date", "From", "To", "Subject"));
     List<List<String>> rows = new ArrayList<>();
 
@@ -122,7 +121,7 @@ public class App {
    *
    * @param mailboxes the list of mailboxes
    */
-  public static void printMailBoxes(List<Mailbox> mailboxes) {
+  public static void printMailBoxes(List<Mailbox> mailboxes, UIInteract ui) {
     List<String> headers = new ArrayList<>(List.of("Mailbox", "# messages"));
     List<List<String>> rows = new ArrayList<>();
 
