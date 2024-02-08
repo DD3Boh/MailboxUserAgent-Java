@@ -56,7 +56,7 @@ public class App {
               ui.error("No mailbox selected");
               break;
             }
-            ui.output(getMessagesString(curMailbox.getMessages()));
+            ui.output(getMessagesString(curMailbox));
             break;
           case "MBOX":
             if (input.length < 2) {
@@ -99,11 +99,11 @@ public class App {
    *
    * @param messages the list of messages
    */
-  public static String getMessagesString(List<Message> messages) {
+  public static String getMessagesString(Mailbox mailbox) {
     List<String> headers = new ArrayList<>(List.of("Date", "From", "To", "Subject"));
     List<List<String>> rows = new ArrayList<>();
 
-    for (Message message : messages) {
+    for (Message message : mailbox) {
       Date date = (Date) message.getParts().get(0).getHeader(DateHeader.class).getValue();
       Address from = (Address) message.getParts().get(0).getHeader(SenderHeader.class).getValue();
       Recipients to = (Recipients) message.getParts().get(0).getHeader(RecipientsHeader.class).getValue();
