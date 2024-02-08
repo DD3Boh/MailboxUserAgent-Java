@@ -1,6 +1,9 @@
 package mua;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Represents a mailbox that stores messages.
@@ -20,12 +23,21 @@ public class Mailbox {
     }
 
     /**
-     * Returns the list of messages stored in the mailbox.
-     * 
-     * @return the list of messages
+     * Returns the list of messages sorted by date in descending order.
+     *
+     * @return the sorted list of messages
      */
     public List<Message> getMessages() {
-        return messages;
+        List<Message> sortedMessages = new ArrayList<>(messages);
+        Collections.sort(sortedMessages, new Comparator<Message>() {
+            @Override
+            public int compare(Message m1, Message m2) {
+                Date date1 = (Date) m1.getParts().get(0).getHeader(DateHeader.class).getValue();
+                Date date2 = (Date) m2.getParts().get(0).getHeader(DateHeader.class).getValue();
+                return date2.date.compareTo(date1.date);
+            }
+        });
+        return sortedMessages;
     }
 
     /**
