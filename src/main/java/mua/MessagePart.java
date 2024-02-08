@@ -7,6 +7,7 @@ import utils.ASCIICharSequence;
 import utils.Base64Encoding;
 import utils.Fragment;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class MessagePart {
     private final List<Header<?>> headers;
@@ -22,6 +23,7 @@ public class MessagePart {
         for (List<ASCIICharSequence> rawHeader : fragment.rawHeaders())
             this.headers.add(parseHeader(rawHeader));
         this.body = fragment.rawBody();
+        reorderHeaders();
     }
 
     /**
@@ -36,6 +38,8 @@ public class MessagePart {
         for (Header<?> header : headers)
             this.headers.add(header);
 
+        reorderHeaders();
+
         ContentTransferEncodingHeader contentEncodingHeader = (ContentTransferEncodingHeader) getHeader(ContentTransferEncodingHeader.class);
         if (contentEncodingHeader != null)
             this.body = Base64Encoding.encode(body);
@@ -45,6 +49,29 @@ public class MessagePart {
 
     public void addHeader(Header<?> header) {
         this.headers.add(header);
+        reorderHeaders();
+    }
+
+    /**
+     * Reorder the headers of the message part.
+     */
+    private void reorderHeaders() {
+        List<String> orderList = new ArrayList<>(List.of("From", "To", "Subject", "Date", "MIME-Version", "Content-Type", "Content-Transfer-Encoding"));
+
+        Comparator<Header<?>> comparator = new Comparator<Header<?>>() {
+            @Override
+            public int compare(Header<?> h1, Header<?> h2) {
+                int index1 = orderList.indexOf(h1.getType());
+                int index2 = orderList.indexOf(h2.getType());
+
+                if (index1 == -1) index1 = Integer.MAX_VALUE;
+                if (index2 == -1) index2 = Integer.MAX_VALUE;
+
+                return Integer.compare(index1, index2);
+            }
+        };
+
+        Collections.sort(headers, comparator);
     }
 
     /**
