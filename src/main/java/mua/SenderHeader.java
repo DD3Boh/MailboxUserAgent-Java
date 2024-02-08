@@ -54,6 +54,6 @@ public class SenderHeader implements Header<Address> {
      */
     @Override
     public String toString() {
-        return getType() + ": " + value.toString();
+        return value.toString();
     }
 }

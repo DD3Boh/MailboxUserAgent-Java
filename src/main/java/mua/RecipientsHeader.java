@@ -54,6 +54,6 @@ public class RecipientsHeader implements Header<Recipients> {
      */
     @Override
     public String toString() {
-        return getType() + ": " + recipients.toString();
+        return recipients.toString();
     }
 }

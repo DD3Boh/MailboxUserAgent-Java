@@ -126,7 +126,7 @@ public class Recipients implements Iterable<Address> {
             sb.append(address);
 
             if (iterator.hasNext())
-                sb.append(", ");
+                sb.append("\n");
         }
 
         return sb.toString();
