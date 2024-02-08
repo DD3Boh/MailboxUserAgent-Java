@@ -1,5 +1,11 @@
 package clients;
 
+import mua.*;
+import utils.Storage;
+import utils.UIInteract;
+
+import java.io.IOException;
+
 /** MailboxList */
 public class MailboxList {
   /**
@@ -9,6 +15,10 @@ public class MailboxList {
    *
    * @param args not used
    */
-  // public static void main(String[] args) {}
+  public static void main(String[] args) throws IOException {
+    Storage storage = new Storage("tests/mbox");
+    MailboxManager mailboxManager = new MailboxManager(storage);
 
+    App.startREPL(mailboxManager, UIInteract.getInstance());
+  }
 }
