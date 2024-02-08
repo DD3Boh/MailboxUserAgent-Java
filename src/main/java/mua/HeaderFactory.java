@@ -25,6 +25,8 @@ public class HeaderFactory {
                 return new ContentTypeHeader(value);
             case "content-transfer-encoding":
                 return new ContentTransferEncodingHeader(value);
+            case "content-disposition":
+                return new ContentDispositionHeader(value);
             default:
                 System.out.println("Unknown header type: " + type);
                 return null;
