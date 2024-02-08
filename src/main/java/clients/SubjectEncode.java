@@ -2,6 +2,7 @@ package clients;
 
 import java.util.Scanner;
 import mua.Subject;
+import mua.SubjectHeader;
 
 public class SubjectEncode {
 
@@ -20,6 +21,6 @@ public class SubjectEncode {
 
     Subject subject = new Subject(word);
 
-    System.out.println(subject);
+    System.out.println(new SubjectHeader(subject).getValue());
   }
 }

@@ -23,7 +23,7 @@ public class AddressEncode {
 
     Address address = new Address(displayName, local, domain);
 
-    System.out.println(address);
+    System.out.println(address.encodeToASCII());
 
     scanner.close();
   }

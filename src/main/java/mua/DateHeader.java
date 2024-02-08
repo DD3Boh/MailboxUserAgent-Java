@@ -1,5 +1,7 @@
 package mua;
 
+import utils.ASCIICharSequence;
+
 /**
  * Represents the date header of when the message was composed.
  */
@@ -33,6 +35,16 @@ public class DateHeader implements Header<Date> {
     @Override
     public Date getValue() {
         return value;
+    }
+
+    /**
+     * Returns an ASCII representation of the DateHeader object.
+     *
+     * @return an ASCII representation of the DateHeader object
+     */
+    @Override
+    public ASCIICharSequence encodeToASCII() {
+        return ASCIICharSequence.of(getType() + ": " + value.encodeToASCII());
     }
 
     /**

@@ -26,7 +26,7 @@ public class RecipientsEncode {
     while (scanner.hasNextLine())
       recipients.addAddress(scanner.nextLine());
 
-    System.out.println(new RecipientsHeader(recipients));
+    System.out.println(new RecipientsHeader(recipients).encodeToASCII());
 
     scanner.close();
   }

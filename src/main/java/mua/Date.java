@@ -51,6 +51,15 @@ public class Date {
     }
 
     /**
+     * Returns the ASCII representation of the date.
+     *
+     * @return the ASCII representation of the date
+     */
+    public ASCIICharSequence encodeToASCII() {
+        return DateEncoding.encode(date);
+    }
+
+    /**
      * Returns a string representation of the date.
      *
      * @return a string representation of the date

@@ -1,5 +1,7 @@
 package mua;
 
+import utils.ASCIICharSequence;
+
 /**
  * Represents the recipients header of a message, using a Recipients object.
  */
@@ -33,6 +35,16 @@ public class RecipientsHeader implements Header<Recipients> {
     @Override
     public Recipients getValue() {
         return recipients;
+    }
+
+    /**
+     * Returns an ASCII representation of the RecipientsHeader object.
+     *
+     * @return an ASCII representation of the RecipientsHeader object
+     */
+    @Override
+    public ASCIICharSequence encodeToASCII() {
+        return ASCIICharSequence.of(getType() + ": " + recipients.encodeToASCII());
     }
 
     /**

@@ -2,6 +2,7 @@ package clients;
 
 import java.util.Scanner;
 import mua.Date;
+import mua.DateHeader;
 
 public class DateEncode {
 
@@ -23,6 +24,6 @@ public class DateEncode {
 
     Date date = new Date(year, month, day);
 
-    System.out.println(date);
+    System.out.println(new DateHeader(date).getValue());
   }
 }

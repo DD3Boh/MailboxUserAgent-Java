@@ -1,5 +1,7 @@
 package mua;
 
+import utils.ASCIICharSequence;
+
 /**
  * Represents a MIME-Version header.
  */
@@ -33,6 +35,16 @@ public class MimeVersionHeader implements Header<Double> {
     @Override
     public Double getValue() {
         return value;
+    }
+
+    /**
+     * Returns an ASCII representation of the MIME-Version header.
+     *
+     * @return an ASCII representation of the MIME-Version header
+     */
+    @Override
+    public ASCIICharSequence encodeToASCII() {
+        return ASCIICharSequence.of(getType() + ": " + getValue());
     }
 
     /**

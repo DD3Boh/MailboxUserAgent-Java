@@ -1,5 +1,7 @@
 package mua;
 
+import utils.ASCIICharSequence;
+
 /**
  * Represents a Content-Transfer-Encoding header.
  */
@@ -33,6 +35,11 @@ public class ContentTransferEncodingHeader implements Header<String> {
     @Override
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public ASCIICharSequence encodeToASCII() {
+        return ASCIICharSequence.of(getType() + ": " + getValue());
     }
 
     /**

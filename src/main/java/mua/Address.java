@@ -74,6 +74,26 @@ public class Address {
     }
 
     /**
+     * Returns the ASCII representation of the Address object.
+     * If the display name is not present, it returns the address in the format "local@domain".
+     * If the display name is present and is made of one or two words, it returns the address in the format "Display Name <local@domain>".
+     * If the display name is present and is made of more than two words, it returns the address in the format ""Display Name" <local@domain>".
+     *
+     * @return the ASCII representation of the Address object
+     */
+    public ASCIICharSequence encodeToASCII() {
+        if (displayName.trim().isEmpty())
+            return ASCIICharSequence.of(String.format("%s@%s", local, domain));
+
+        String[] nameParts = displayName.split("\\s+");
+
+        if (nameParts.length <= 2)
+            return ASCIICharSequence.of(String.format("%s <%s@%s>", displayName, local, domain));
+        else
+            return ASCIICharSequence.of(String.format("\"%s\" <%s@%s>", displayName, local, domain));
+    }
+
+    /**
      * Returns a string representation of the Address object.
      * If the display name is not present, it returns the address in the format "local@domain".
      * If the display name is present and is made of one or two words, it returns the address in the format "Display Name <local@domain>".

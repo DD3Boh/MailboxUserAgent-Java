@@ -1,5 +1,7 @@
 package mua;
 
+import utils.ASCIICharSequence;
+
 /**
  * Represents the subject header of a message.
  */
@@ -33,6 +35,16 @@ public class SubjectHeader implements Header<Subject> {
     @Override
     public Subject getValue() {
         return value;
+    }
+
+    /**
+     * Returns an ASCII representation of the SubjectHeader object.
+     *
+     * @return an ASCII representation of the SubjectHeader object
+     */
+    @Override
+    public ASCIICharSequence encodeToASCII() {
+        return ASCIICharSequence.of(getType() + ": " + value.encodeToASCII());
     }
 
     /**

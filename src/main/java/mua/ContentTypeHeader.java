@@ -1,5 +1,7 @@
 package mua;
 
+import utils.ASCIICharSequence;
+
 /**
  * Represents a Content-Type header.
  */
@@ -63,6 +65,25 @@ public class ContentTypeHeader implements Header<String> {
     @Override
     public String getValue() {
         return textValue;
+    }
+
+    /**
+     * Returns the ASCII representation of the Content-Type header.
+     * The representation is of the form "Content-Type: <value>".
+     *
+     * @return the ASCII representation of the Content-Type header
+     */
+    @Override
+    public ASCIICharSequence encodeToASCII() {
+        String value = "";
+        if (charset != null)
+            value = textValue + "; charset=\"" + charset + "\"";
+        else if (boundary != null)
+            value = textValue + "; boundary=" + boundary;
+        else
+            value = textValue;
+
+        return ASCIICharSequence.of(getType() + ": " + value);
     }
 
     /**

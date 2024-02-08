@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import utils.ASCIICharSequence;
+
 /**
  * Represents a collection of email recipients.
  * Implements the Iterable interface to enable iteration over the recipients.
@@ -82,6 +84,29 @@ public class Recipients implements Iterable<Address> {
     @Override
     public Iterator<Address> iterator() {
         return addresses.iterator();
+    }
+
+    /**
+     * Returns the ASCII representation of the Recipients object.
+     * The ASCII representation of the Recipients object is the concatenation of the ASCII representations of its addresses.
+     * Each address is separated by a comma and a space.
+     *
+     * @return the ASCII representation of the Recipients object
+     */
+    public ASCIICharSequence encodeToASCII() {
+        StringBuilder sb = new StringBuilder();
+        Iterator<Address> iterator = addresses.iterator();
+
+        while (iterator.hasNext()) {
+            Address address = iterator.next();
+
+            sb.append(address);
+
+            if (iterator.hasNext())
+                sb.append(", ");
+        }
+
+        return ASCIICharSequence.of(sb.toString());
     }
 
     /**

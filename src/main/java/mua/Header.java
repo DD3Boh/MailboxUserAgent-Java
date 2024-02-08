@@ -1,5 +1,7 @@
 package mua;
 
+import utils.ASCIICharSequence;
+
 /**
  * Represents a generic interface for message headers.
  */
@@ -17,4 +19,11 @@ public interface Header<T> {
      * @return the value of the header
      */
     T getValue();
+
+    /**
+     * Returns an ASCII representation of the header.
+     *
+     * @return an ASCII representation of the header
+     */
+    ASCIICharSequence encodeToASCII();
 }

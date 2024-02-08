@@ -39,6 +39,15 @@ public class Subject {
     }
 
     /**
+     * Returns an ASCII representation of the Subject object.
+     *
+     * @return an ASCII representation of the Subject object.
+     */
+    public ASCIICharSequence encodeToASCII() {
+        return subject;
+    }
+
+    /**
      * Returns a string representation of the Subject object.
      *
      * @return a string representation of the Subject object.

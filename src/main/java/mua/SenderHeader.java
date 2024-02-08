@@ -1,5 +1,7 @@
 package mua;
 
+import utils.ASCIICharSequence;
+
 /**
  * Represents the sender header of a message, using an Address object.
  */
@@ -33,6 +35,16 @@ public class SenderHeader implements Header<Address> {
     @Override
     public Address getValue() {
         return value;
+    }
+
+    /**
+     * Returns an ASCII representation of the SenderHeader object.
+     *
+     * @return an ASCII representation of the SenderHeader object
+     */
+    @Override
+    public ASCIICharSequence encodeToASCII() {
+        return ASCIICharSequence.of(getType() + ": " + value.encodeToASCII());
     }
 
     /**

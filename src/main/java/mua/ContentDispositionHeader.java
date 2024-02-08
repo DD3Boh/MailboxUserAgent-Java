@@ -1,5 +1,7 @@
 package mua;
 
+import utils.ASCIICharSequence;
+
 public class ContentDispositionHeader implements Header<String> {
     private final String value;
 
@@ -19,6 +21,11 @@ public class ContentDispositionHeader implements Header<String> {
     @Override
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public ASCIICharSequence encodeToASCII() {
+        return ASCIICharSequence.of(getType() + ": attachment; filename=\"" + getValue() + "\"");
     }
 
     @Override
