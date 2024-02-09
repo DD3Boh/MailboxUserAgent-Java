@@ -127,6 +127,19 @@ public class MessagePart {
     }
 
     /**
+     * Returns the decoded body of the message part.
+     * If the body is not encoded, the original body is returned.
+     *
+     * @return the decoded body of the message part
+     */
+    public String getBodyDecoded() {
+        ContentTransferEncodingHeader contentEncodingHeader = (ContentTransferEncodingHeader) getHeader(ContentTransferEncodingHeader.class);
+        if (contentEncodingHeader == null) return this.body.toString();
+
+        return Base64Encoding.decode(this.body);
+    }
+
+    /**
      * Returns a String representation of the message part.
      *
      * @return a String representation of the message part

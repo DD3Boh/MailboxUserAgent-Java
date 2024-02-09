@@ -149,13 +149,22 @@ public class App {
    * @param message the message
    */
   public static String getMessageString(Message message) {
+    List<String> regularHeaders = new ArrayList<>(List.of("From", "To", "Subject", "Date"));
     List<String> headersList = new ArrayList<>();
     List<String> values = new ArrayList<>();
 
     for (MessagePart part : message.getParts()) {
       for (Header<?> header : part.getHeaders()) {
-        headersList.add(header.getType());
-        values.add(header.getValue().toString());
+        if (regularHeaders.contains(header.getType())) {
+          headersList.add(header.getType());
+          values.add(header.getValue().toString());
+        } else if (header.getType().equals("Content-Type")) {
+            headersList.add("Part\n" + header.getValue());
+            values.add(part.getBodyDecoded());
+        } else if (header.getType().equals("Content-Disposition")) {
+            headersList.add("Text Attachment\n" + header.getValue());
+            values.add(part.getBodyDecoded());
+        }
       }
     }
     return UICard.card(headersList, values);
