@@ -1,19 +1,26 @@
 package mua;
 
 import utils.ASCIICharSequence;
+import utils.DateEncoding;
+
+import java.time.ZonedDateTime;
 
 /**
  * Represents the date header of when the message was composed.
  */
-public class DateHeader implements Header<Date> {
-    private Date value;
+public class DateHeader implements Header<ZonedDateTime> {
+    private ZonedDateTime value;
 
     /**
      * Constructs a DateHeader object with the specified date and time when the message was composed.
      *
      * @param value
      */
-    public DateHeader(Date value) {
+    public DateHeader(String value) {
+        this.value = DateEncoding.decode(ASCIICharSequence.of(value));
+    }
+
+    public DateHeader(ZonedDateTime value) {
         this.value = value;
     }
 
@@ -33,7 +40,7 @@ public class DateHeader implements Header<Date> {
      * @return the date and time when the message was composed.
      */
     @Override
-    public Date getValue() {
+    public ZonedDateTime getValue() {
         return value;
     }
 
@@ -44,7 +51,7 @@ public class DateHeader implements Header<Date> {
      */
     @Override
     public ASCIICharSequence encodeToASCII() {
-        return ASCIICharSequence.of(getType() + ": " + value.encodeToASCII());
+        return ASCIICharSequence.of(getType() + ": " + DateEncoding.encode(value));
     }
 
     /**

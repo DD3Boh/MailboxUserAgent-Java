@@ -1,7 +1,8 @@
 package clients;
 
 import java.util.Scanner;
-import mua.Date;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import mua.DateHeader;
 import utils.DateEncoding;
 
@@ -23,8 +24,9 @@ public class DateEncode {
     int day = scanner.nextInt();
     scanner.close();
 
-    Date date = new Date(year, month, day);
+    String dateString = ZonedDateTime.of(year, month, day, 0, 0, 0, 0, DateEncoding.EUROPE_ROME).format(DateTimeFormatter.RFC_1123_DATE_TIME);
+    DateHeader date = new DateHeader(dateString);
 
-    System.out.println(DateEncoding.encode(new DateHeader(date).getValue().date));
+    System.out.println(date.encodeToASCII().toString().replace(date.getType() + ": ", ""));
   }
 }

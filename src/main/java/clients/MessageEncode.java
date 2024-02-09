@@ -5,6 +5,7 @@ import utils.ASCIICharSequence;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class MessageEncode {
     String subject = scanner.nextLine();
     headers.add(new SubjectHeader(new Subject(subject)));
 
-    headers.add(new DateHeader(new Date(DATE)));
+    headers.add(new DateHeader(DATE.format(DateTimeFormatter.RFC_1123_DATE_TIME)));
 
     String text = scanner.nextLine();
     String html = scanner.nextLine();

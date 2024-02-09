@@ -18,7 +18,7 @@ public class HeaderFactory {
             case "subject":
                 return new SubjectHeader(new Subject(value));
             case "date":
-                return new DateHeader(new Date(value));
+                return new DateHeader(value);
             case "mime-version":
                 return new MimeVersionHeader(Double.parseDouble(value));
             case "content-type":

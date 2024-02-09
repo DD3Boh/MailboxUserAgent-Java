@@ -6,6 +6,7 @@ import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
+import java.time.ZonedDateTime;
 
 /** The application class */
 public class App {
@@ -123,7 +124,7 @@ public class App {
     List<List<String>> rows = new ArrayList<>();
 
     for (Message message : messages) {
-      Date date = (Date) message.getParts().get(0).getHeader(DateHeader.class).getValue();
+      ZonedDateTime date = (ZonedDateTime) message.getParts().get(0).getHeader(DateHeader.class).getValue();
       Address from = (Address) message.getParts().get(0).getHeader(SenderHeader.class).getValue();
       Recipients to = (Recipients) message.getParts().get(0).getHeader(RecipientsHeader.class).getValue();
       Subject subject = (Subject) message.getParts().get(0).getHeader(SubjectHeader.class).getValue();
@@ -136,7 +137,7 @@ public class App {
       }
       String toStr = sb.toString();
       rows.add(List.of(
-        date.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd\nHH:mm:ss")),
+        date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd\nHH:mm:ss")),
         from.local + "@" + from.domain,
         toStr,
         Subject.decodeFromAscii(subject.subject)

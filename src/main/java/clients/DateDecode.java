@@ -2,7 +2,7 @@ package clients;
 
 import java.util.Scanner;
 
-import mua.Date;
+import mua.DateHeader;
 
 /** DateDecode */
 public class DateDecode {
@@ -20,8 +20,8 @@ public class DateDecode {
     String input = scanner.nextLine();
     scanner.close();
 
-    Date date = new Date(input);
+    DateHeader header = new DateHeader(input);
 
-    System.out.println(date.getDayOfWeek());
+    System.out.println(header.getValue().getDayOfWeek());
   }
 }

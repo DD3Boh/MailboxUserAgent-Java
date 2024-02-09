@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
+import java.time.ZonedDateTime;
 
 /**
  * Represents a mailbox that stores messages.
@@ -32,9 +33,9 @@ public class Mailbox {
         Collections.sort(sortedMessages, new Comparator<Message>() {
             @Override
             public int compare(Message m1, Message m2) {
-                Date date1 = (Date) m1.getParts().get(0).getHeader(DateHeader.class).getValue();
-                Date date2 = (Date) m2.getParts().get(0).getHeader(DateHeader.class).getValue();
-                return date2.date.compareTo(date1.date);
+                ZonedDateTime date1 = (ZonedDateTime) m1.getParts().get(0).getHeader(DateHeader.class).getValue();
+                ZonedDateTime date2 = (ZonedDateTime) m2.getParts().get(0).getHeader(DateHeader.class).getValue();
+                return date2.compareTo(date1);
             }
         });
         return sortedMessages;
