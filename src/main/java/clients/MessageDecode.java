@@ -31,8 +31,9 @@ public class MessageDecode {
    * }</pre>
    *
    * @param args not used.
+   * @throws MissingHeaderException if the message is missing a required header.
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws MissingHeaderException {
     StringBuilder rawMessage = new StringBuilder();
     Scanner scanner = new Scanner(System.in);
 

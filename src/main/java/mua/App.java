@@ -18,7 +18,7 @@ public class App {
    * @param args the first argument is the mailbox base directory.
    * @throws IOException
    */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, MissingHeaderException {
     if (args.length <= 0)
       return;
 

@@ -34,8 +34,9 @@ public class MessageEncode {
    * To such information, the program adds the date corresponding to {@link #DATE}.
    *
    * @param args not used
+   * @throws MissingHeaderException if the message is missing a required header.
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws MissingHeaderException {
     String displayName, local, domain;
     List<Header<?>> headers = new ArrayList<>();
     List<MessagePart> parts = new ArrayList<>();

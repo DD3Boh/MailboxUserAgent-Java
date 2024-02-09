@@ -20,8 +20,9 @@ public class MailboxManager {
      * Constructs a new MailboxManager object with the given list of mailboxes.
      *
      * @param mailboxes the list of mailboxes
+     * @throws MissingHeaderException if the first part of a message does not contain the From, To, Subject, and Date headers
      */
-    public MailboxManager(Storage storage) {
+    public MailboxManager(Storage storage) throws MissingHeaderException {
         mailboxMap = new LinkedHashMap<>();
         messageMap = new LinkedHashMap<>();
 
