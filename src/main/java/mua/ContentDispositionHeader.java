@@ -30,6 +30,6 @@ public class ContentDispositionHeader implements Header<String> {
 
     @Override
     public String toString() {
-        return getType() + ": attachment; filename=\"" + getValue() + "\"";
+        return getValue();
     }
 }
