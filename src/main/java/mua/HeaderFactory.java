@@ -16,7 +16,7 @@ public class HeaderFactory {
             case "to":
                 return new RecipientsHeader(new Recipients(value));
             case "subject":
-                return new SubjectHeader(new Subject(value));
+                return new SubjectHeader(value);
             case "date":
                 return new DateHeader(value);
             case "mime-version":

@@ -1,8 +1,8 @@
 package clients;
 
 import java.util.Scanner;
-import utils.ASCIICharSequence;
-import mua.Subject;
+
+import mua.SubjectHeader;
 
 public class SubjectDecode {
 
@@ -18,9 +18,9 @@ public class SubjectDecode {
     Scanner scanner = new Scanner(System.in);
     String word = scanner.nextLine();
 
-    ASCIICharSequence ascii = ASCIICharSequence.of(word);
+    SubjectHeader subject = new SubjectHeader(word);
 
-    System.out.println(Subject.decodeFromAscii(ascii));
+    System.out.println(subject);
     scanner.close();
   }
 }

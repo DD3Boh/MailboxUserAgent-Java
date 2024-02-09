@@ -127,7 +127,7 @@ public class App {
       ZonedDateTime date = (ZonedDateTime) message.getParts().get(0).getHeader(DateHeader.class).getValue();
       Address from = (Address) message.getParts().get(0).getHeader(SenderHeader.class).getValue();
       Recipients to = (Recipients) message.getParts().get(0).getHeader(RecipientsHeader.class).getValue();
-      Subject subject = (Subject) message.getParts().get(0).getHeader(SubjectHeader.class).getValue();
+      String subject = (String) message.getParts().get(0).getHeader(SubjectHeader.class).getValue();
       StringBuilder sb = new StringBuilder();
       for (Address recipient : to) {
         sb.append(recipient.local);
@@ -140,7 +140,7 @@ public class App {
         date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd\nHH:mm:ss")),
         from.local + "@" + from.domain,
         toStr,
-        Subject.decodeFromAscii(subject.subject)
+        subject
         ));
     }
 

@@ -1,20 +1,32 @@
 package mua;
 
 import utils.ASCIICharSequence;
+import utils.Base64Encoding;
 
 /**
  * Represents the subject header of a message.
  */
-public class SubjectHeader implements Header<Subject> {
-    private Subject value;
+public class SubjectHeader implements Header<String> {
+    private String value;
 
     /**
-     * Constructs a SubjectHeader object with the specified subject of the message.
+     * Constructs a SubjectHeader object with the specified String.
+     * The value is decoded if it is encoded in Base64.
      *
      * @param value
      */
-    public SubjectHeader(Subject value) {
-        this.value = value;
+    public SubjectHeader(String value) {
+        String subject;
+        if (ASCIICharSequence.isAscii(value)) {
+            ASCIICharSequence ascii = ASCIICharSequence.of(value);
+
+            subject = Base64Encoding.decodeWord(ascii);
+
+            if (subject == null) subject = ascii.toString();
+        } else
+            subject = value;
+
+        this.value = subject;
     }
 
     /**
@@ -33,7 +45,7 @@ public class SubjectHeader implements Header<Subject> {
      * @return the subject of the message.
      */
     @Override
-    public Subject getValue() {
+    public String getValue() {
         return value;
     }
 
@@ -44,7 +56,13 @@ public class SubjectHeader implements Header<Subject> {
      */
     @Override
     public ASCIICharSequence encodeToASCII() {
-        return ASCIICharSequence.of(getType() + ": " + value.encodeToASCII());
+        ASCIICharSequence encodedSubject;
+        if (ASCIICharSequence.isAscii(value))
+            encodedSubject = ASCIICharSequence.of(value);
+        else
+            encodedSubject = Base64Encoding.encodeWord(value);
+
+        return ASCIICharSequence.of(getType() + ": " + encodedSubject);
     }
 
     /**
@@ -54,6 +72,6 @@ public class SubjectHeader implements Header<Subject> {
      */
     @Override
     public String toString() {
-        return value.toString();
+        return value;
     }
 }

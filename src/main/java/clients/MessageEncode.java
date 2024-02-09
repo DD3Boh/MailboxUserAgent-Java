@@ -62,7 +62,7 @@ public class MessageEncode {
     headers.add(new RecipientsHeader(recipients));
 
     String subject = scanner.nextLine();
-    headers.add(new SubjectHeader(new Subject(subject)));
+    headers.add(new SubjectHeader(subject));
 
     headers.add(new DateHeader(DATE.format(DateTimeFormatter.RFC_1123_DATE_TIME)));
 
