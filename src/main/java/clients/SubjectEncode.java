@@ -21,6 +21,6 @@ public class SubjectEncode {
 
     Subject subject = new Subject(word);
 
-    System.out.println(new SubjectHeader(subject).getValue());
+    System.out.println(new SubjectHeader(subject).getValue().subject);
   }
 }

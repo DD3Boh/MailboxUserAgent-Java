@@ -54,6 +54,6 @@ public class DateHeader implements Header<Date> {
      */
     @Override
     public String toString() {
-        return getType() + ": " + value.toString();
+        return value.toString();
     }
 }

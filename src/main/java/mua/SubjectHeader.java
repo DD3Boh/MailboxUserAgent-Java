@@ -54,6 +54,6 @@ public class SubjectHeader implements Header<Subject> {
      */
     @Override
     public String toString() {
-        return getType() + ": " + value.toString();
+        return value.toString();
     }
 }

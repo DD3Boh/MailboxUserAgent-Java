@@ -54,6 +54,6 @@ public class Subject {
      */
     @Override
     public String toString() {
-        return subject.toString();
+        return decodeFromAscii(subject);
     }
 }

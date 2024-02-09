@@ -1,6 +1,7 @@
 package mua;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import utils.ASCIICharSequence;
 import utils.DateEncoding;
@@ -66,6 +67,6 @@ public class Date {
      */
     @Override
     public String toString() {
-        return DateEncoding.encode(date).toString();
+        return date.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
 }
