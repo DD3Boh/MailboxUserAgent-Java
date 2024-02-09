@@ -84,6 +84,25 @@ public class App {
             Message message = messages.get(index);
             ui.output(getMessageString(message));
             break;
+          case "DELETE":
+            if (curMailbox == null) {
+              ui.error("No mailbox selected");
+              break;
+            }
+            if (input.length < 2) {
+              ui.error("Usage: DELETE <message>");
+              break;
+            }
+            messages = curMailbox.getMessages();
+            index = Integer.parseInt(input[1]) - 1;
+            if (index < 0 || index >= messages.size()) {
+              ui.error("Invalid message index");
+              break;
+            }
+            message = messages.get(index);
+            mailboxManager.deleteMessage(curMailbox, message);
+            ui.output("Message deleted");
+            break;
           case "#":
             break;
           default:

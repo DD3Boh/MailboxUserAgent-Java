@@ -64,6 +64,19 @@ public class MailboxManager {
     }*/
 
     /**
+     * Deletes a message from the mailbox.
+     *
+     * @param mailbox the mailbox
+     * @param message the message
+     */
+    public void deleteMessage(Mailbox mailbox, Message message) {
+        Storage.Box.Entry entry = messageMap.get(message);
+        messageMap.remove(message);
+        mailbox.removeMessage(message);
+        entry.delete();
+    }
+
+    /**
      * Returns the Map of mailboxes and their corresponding Storage.Box.
      *
      * @return the Map of mailboxes and their corresponding Storage.Box
