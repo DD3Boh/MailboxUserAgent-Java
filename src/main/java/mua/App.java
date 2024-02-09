@@ -104,6 +104,9 @@ public class App {
             mailboxManager.deleteMessage(curMailbox, message);
             ui.output("Message deleted");
             break;
+          case "COMPOSE":
+            handleCompose(ui);
+            break;
           case "#":
             break;
           default:
@@ -111,6 +114,29 @@ public class App {
             break;
         }
       }
+    }
+  }
+
+  private static void handleCompose(UIInteract ui) throws IOException {
+    List<String> headersStrings = new ArrayList<>(List.of("From", "To", "Subject"));
+    List<Header<?>> headers = new ArrayList<>();
+    String line = "";
+
+    for (String headerString : headersStrings) {
+      line = ui.line(headerString + ": ");
+      headers.add(HeaderFactory.createHeader(headerString, line));
+    }
+
+    String dateNow = ZonedDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME);
+    ui.prompt("Date: " + dateNow);
+    headers.add(HeaderFactory.createHeader("Date", dateNow));
+
+    String body = "";
+
+    while ((line = ui.line()) != null && !line.isEmpty()) {
+      body += line + "\n";
+      if (line == ".")
+        
     }
   }
 
