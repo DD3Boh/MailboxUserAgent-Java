@@ -34,9 +34,22 @@ public class Message {
      * Constructs a message with the given List of MessageParts.
      *
      * @param messageParts the list of MessageParts
+     * @throws MissingHeaderException if the first part of the message does not contain the From, To, Subject, and Date headers
      */
-    public Message(List<MessagePart> messageParts) {
+    public Message(List<MessagePart> messageParts) throws MissingHeaderException, IllegalArgumentException {
         this.messageParts = messageParts;
+
+        MessagePart part = messageParts.get(0);
+
+        if (part == null) throw new IllegalArgumentException("The first part of the message cannot be null");
+
+        boolean containsFrom = part.getHeader(SenderHeader.class) != null;
+        boolean containsTo = part.getHeader(RecipientsHeader.class) != null;
+        boolean containsSubject = part.getHeader(SubjectHeader.class) != null;
+        boolean containsDate = part.getHeader(DateHeader.class) != null;
+
+        if (!(containsFrom && containsTo && containsSubject && containsDate))
+            throw new MissingHeaderException("The first part of the message must contain the From, To, Subject, and Date headers");
     }
 
     /**
