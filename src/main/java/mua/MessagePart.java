@@ -140,6 +140,29 @@ public class MessagePart {
     }
 
     /**
+     * Merge two message parts into a single message part.
+     * The merged message part has the headers of both message parts and the body of the second message part.
+     * If a header is present in both message parts, the header of the second message part is used.
+     *
+     * @param messagePart1 the first message part
+     * @param messagePart2 the second message part
+     * @return the merged message part
+     */
+    public static MessagePart mergeMessageParts(MessagePart messagePart1, MessagePart messagePart2) {
+        List<Header<?>> mergedHeaders = new ArrayList<>(messagePart1.getHeaders());
+
+        for (Header<?> header : messagePart2.getHeaders()) {
+            Header<?> existingHeader = messagePart1.getHeader(header.getClass());
+            if (existingHeader != null) mergedHeaders.remove(existingHeader);
+            mergedHeaders.add(header);
+        }
+
+        String mergedBody = messagePart2.getBodyDecoded();
+
+        return new MessagePart(mergedHeaders, mergedBody);
+    }
+
+    /**
      * Returns a String representation of the message part.
      *
      * @return a String representation of the message part

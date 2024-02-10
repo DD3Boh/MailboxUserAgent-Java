@@ -120,6 +120,7 @@ public class App {
   private static void handleCompose(UIInteract ui) throws IOException {
     List<String> headersStrings = new ArrayList<>(List.of("From", "To", "Subject"));
     List<Header<?>> headers = new ArrayList<>();
+    List<MessagePart> parts = new ArrayList<>();
     String line = "";
 
     for (String headerString : headersStrings) {
@@ -131,12 +132,49 @@ public class App {
     ui.prompt("Date: " + dateNow);
     headers.add(HeaderFactory.createHeader("Date", dateNow));
 
-    String body = "";
+    headers.add(new MimeVersionHeader(Double.valueOf(1.0)));
+    headers.add(new ContentTypeHeader("multipart/alternative", null, "frontier"));
 
-    while ((line = ui.line()) != null && !line.isEmpty()) {
+    String body = "This is a message with multiple parts in MIME format.\n";
+    parts.add(new MessagePart(headers, body));
+
+    ui.prompt("Text Body (. to end): ");
+    body = "";
+    while ((line = ui.line()) != null && !line.equals("."))
       body += line + "\n";
-      if (line == ".")
-        
+
+    headers.clear();
+    if (ASCIICharSequence.isAscii(body)) {
+      headers.add(new ContentTypeHeader("text/plain", "us-ascii", "frontier"));
+    } else {
+      headers.add(new ContentTypeHeader("text/plain", "utf-8", "frontier"));
+      headers.add(new ContentTransferEncodingHeader("base64"));
+    }
+
+    parts.add(new MessagePart(headers, body));
+
+    ui.prompt("Html Body (. to end): ");
+
+    body = "";
+    headers.clear();
+
+    while ((line = ui.line()) != null && !line.equals("."))
+      body += line + "\n";
+
+    if (!body.isEmpty()) {
+      headers.add(new ContentTypeHeader("text/html", "utf-8", "frontier"));
+      headers.add(new ContentTransferEncodingHeader("base64"));
+      parts.add(new MessagePart(headers, body));
+    } else {
+      MessagePart part0 = parts.get(0);
+      MessagePart part1 = parts.get(1);
+      MessagePart merged = MessagePart.mergeMessageParts(part0, part1);
+      MimeVersionHeader mimeVersionHeader = (MimeVersionHeader) merged.getHeader(MimeVersionHeader.class);
+      headers = new ArrayList<>(merged.getHeaders());
+      headers.remove(mimeVersionHeader);
+      MessagePart part = new MessagePart(headers, merged.body.toString());
+      parts.remove(1);
+      parts.set(0, part);
     }
   }
 
