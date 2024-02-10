@@ -6,29 +6,32 @@ import utils.ASCIICharSequence;
  * Represents a Content-Type header.
  */
 public class ContentTypeHeader implements Header<String> {
-    private final String textValue;
+    /** the text value of the Content-Type header */
+    private final String value;
+    /** the charset value of the Content-Type header */
     private final String charset;
+    /** the boundary value of the Content-Type header */
     private final String boundary;
 
     /**
      * Constructs a new Content-Type header parsing the specified content type.
-     * The string that needs parsing is of the form "<value>; boundary=frontier".
+     * The string that needs parsing is of the form "value; boundary=frontier".
      *
      * @param value the content type string, needs parsing.
      */
     public ContentTypeHeader(String value) {
         if (value.contains("boundary")) {
             String[] split = value.split(";");
-            this.textValue = split[0].trim();
+            this.value = split[0].trim();
             this.boundary = "frontier";
             this.charset = null;
         } else if (value.contains("charset")) {
             String[] split = value.split(";");
-            this.textValue = split[0].trim();
+            this.value = split[0].trim();
             this.charset = split[1].trim().replace("charset=", "").replace("\"", "");
             this.boundary = null;
         } else {
-            this.textValue = value;
+            this.value = value;
             this.charset = null;
             this.boundary = null;
         }
@@ -42,7 +45,7 @@ public class ContentTypeHeader implements Header<String> {
      * @param boundary  the boundary value of the header
      */
     public ContentTypeHeader(String textValue, String charset, String boundary) {
-        this.textValue = textValue;
+        this.value = textValue;
         this.charset = charset;
         this.boundary = boundary;
     }
@@ -64,26 +67,27 @@ public class ContentTypeHeader implements Header<String> {
      */
     @Override
     public String getValue() {
-        return textValue;
+        return value;
     }
 
     /**
      * Returns the ASCII representation of the Content-Type header.
-     * The representation is of the form "Content-Type: <value>".
+     * The representation is of the form "Content-Type: value; charset=charset" if charset is not null,
+     * "Content-Type: value; boundary=boundary" if boundary is not null.
      *
      * @return the ASCII representation of the Content-Type header
      */
     @Override
     public ASCIICharSequence encodeToASCII() {
-        String value = "";
+        String valueString = "";
         if (charset != null)
-            value = textValue + "; charset=\"" + charset + "\"";
+            valueString = value + "; charset=\"" + charset + "\"";
         else if (boundary != null)
-            value = textValue + "; boundary=" + boundary;
+            valueString = value + "; boundary=" + boundary;
         else
-            value = textValue;
+            valueString = value;
 
-        return ASCIICharSequence.of(getType() + ": " + value);
+        return ASCIICharSequence.of(getType() + ": " + valueString);
     }
 
     /**
@@ -102,14 +106,14 @@ public class ContentTypeHeader implements Header<String> {
      */
     @Override
     public String toString() {
-        String value = "";
+        String valueString = "";
         if (charset != null)
-            value = textValue + "; charset=\"" + charset + "\"";
+            valueString = value + "; charset=\"" + charset + "\"";
         else if (boundary != null)
-            value = textValue + "; boundary=" + boundary;
+            valueString = value + "; boundary=" + boundary;
         else
-            value = textValue;
+            valueString = value;
 
-        return getType() + ": " + value;
+        return getType() + ": " + valueString;
     }
 }

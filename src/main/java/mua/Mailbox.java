@@ -10,13 +10,16 @@ import java.time.ZonedDateTime;
  * Represents a mailbox that stores messages.
  */
 public class Mailbox {
+    /** The name of the mailbox */
     public final String name;
+    /** The list of messages stored in the mailbox */
     private final List<Message> messages;
 
     /**
      * Constructs a Mailbox object with the given list of messages.
      * 
      * @param messages the list of messages to be stored in the mailbox
+     * @param name the name of the mailbox
      */
     public Mailbox(List<Message> messages, String name) {
         this.messages = messages;

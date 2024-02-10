@@ -6,12 +6,13 @@ import utils.ASCIICharSequence;
  * Represents the recipients header of a message, using a Recipients object.
  */
 public class RecipientsHeader implements Header<Recipients> {
+    /** The value of the Recipients header, represented as a Recipients object */
     private Recipients recipients;
 
     /**
      * Constructs a RecipientsHeader object with the specified Recipients objects.
      *
-     * @param values the Recipients object of the recipients
+     * @param recipients the Recipients object of the recipients.
      */
     public RecipientsHeader(Recipients recipients) {
         this.recipients = recipients;

@@ -6,6 +6,7 @@ import utils.ASCIICharSequence;
  * Represents a MIME-Version header.
  */
 public class MimeVersionHeader implements Header<Double> {
+    /** The value of the MIME-Version header, represented as a Double */
     private final Double value;
 
     /**

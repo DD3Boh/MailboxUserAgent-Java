@@ -6,6 +6,7 @@ import utils.ASCIICharSequence;
  * Represents the sender header of a message, using an Address object.
  */
 public class SenderHeader implements Header<Address> {
+    /** The value of the Sender header, represented as an Address object */
     private Address value;
 
     /**

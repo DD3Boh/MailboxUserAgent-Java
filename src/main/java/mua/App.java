@@ -16,7 +16,7 @@ public class App {
    * <p>Develop here the REPL, see the README.md for more details.
    *
    * @param args the first argument is the mailbox base directory.
-   * @throws IOException
+   * @throws IOException if the mailbox base directory is not found.
    */
   public static void main(String[] args) throws IOException, MissingHeaderException {
     if (args.length <= 0)
@@ -32,7 +32,11 @@ public class App {
   /**
    * Starts the REPL.
    *
-   * <p>Reads commands from the standard input and executes them.
+   * Reads commands from the standard input and executes them.
+   * The commands are limited to: LSM, LSE, MBOX, READ, DELETE, COMPOSE.
+   *
+   * @param mailboxManager the mailbox manager
+   * @throws IOException if an I/O error occurs
    */
   public static void startREPL(MailboxManager mailboxManager) throws IOException {
     Mailbox curMailbox = null;
@@ -121,6 +125,16 @@ public class App {
     }
   }
 
+  /**
+   * Handles the COMPOSE command.
+   *
+   * Reads the message parts from the standard input and adds the message to the mailbox.
+   *
+   * @param mailboxManager the mailbox manager
+   * @param mailbox the mailbox
+   * @param ui the UIInteract instance
+   * @throws IOException if an I/O error occurs
+   */
   private static void handleCompose(MailboxManager mailboxManager, Mailbox mailbox, UIInteract ui) throws IOException {
     List<String> headersStrings = new ArrayList<>(List.of("From", "To", "Subject", "Date"));
     List<Header<?>> headers = new ArrayList<>();
@@ -209,9 +223,10 @@ public class App {
   }
 
   /**
-   * Returns the list of messages as a String.
+   * Returns the list of messages as a String, formatted as a table.
    *
    * @param messages the list of messages
+   * @return the list of messages as a String, formatted as a table
    */
   public static String getMessagesString(List<Message> messages) {
     List<String> headers = new ArrayList<>(List.of("Date", "From", "To", "Subject"));
@@ -245,6 +260,7 @@ public class App {
    * Returns the list of mailboxes as a String.
    *
    * @param mailboxes the list of mailboxes
+   * @return the list of mailboxes as a String
    */
   public static String getMailboxString(List<Mailbox> mailboxes) {
     List<String> headers = new ArrayList<>(List.of("Mailbox", "# messages"));
@@ -258,9 +274,10 @@ public class App {
   }
 
   /**
-   * Returns a message as a String.
+   * Returns a message as a String, formatted as a card.
    *
    * @param message the message
+   * @return the message as a String, formatted as a card.
    */
   public static String getMessageString(Message message) {
     List<String> regularHeaders = new ArrayList<>(List.of("From", "To", "Subject", "Date"));

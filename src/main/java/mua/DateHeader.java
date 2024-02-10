@@ -9,17 +9,23 @@ import java.time.ZonedDateTime;
  * Represents the date header of when the message was composed.
  */
 public class DateHeader implements Header<ZonedDateTime> {
+    /** The value of the Date header, represented as a ZonedDateTime object */
     private ZonedDateTime value;
 
     /**
      * Constructs a DateHeader object with the specified date and time when the message was composed.
      *
-     * @param value
+     * @param value a string in format RFC_1123_DATE_TIME representing the date and time when the message was composed.
      */
     public DateHeader(String value) {
         this.value = DateEncoding.decode(ASCIICharSequence.of(value));
     }
 
+    /**
+     * Constructs a DateHeader object with the specified ZonedDateTime object.
+     *
+     * @param value the date and time when the message was composed, represented as a ZonedDateTime object.
+     */
     public DateHeader(ZonedDateTime value) {
         this.value = value;
     }

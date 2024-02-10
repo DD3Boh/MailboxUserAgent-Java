@@ -13,13 +13,15 @@ import utils.*;
  * It provides methods to add and remove mailboxes.
  */
 public class MailboxManager {
+    /** Map of mailboxes and their corresponding Storage.Box */
     private final Map<Mailbox, Storage.Box> mailboxMap;
+    /** Map of messages and their corresponding Storage.Box.Entry */
     private final Map<Message, Storage.Box.Entry> messageMap;
 
     /**
-     * Constructs a new MailboxManager object with the given list of mailboxes.
+     * Constructs a new MailboxManager object with the given storage.
      *
-     * @param mailboxes the list of mailboxes
+     * @param storage the storage element of the root directory of the mailboxes.
      * @throws MissingHeaderException if the first part of a message does not contain the From, To, Subject, and Date headers
      */
     public MailboxManager(Storage storage) throws MissingHeaderException {

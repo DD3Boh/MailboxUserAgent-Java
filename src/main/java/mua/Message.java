@@ -12,7 +12,7 @@ import java.util.Collections;
  * Represents a message composed of multiple message parts.
  */
 public class Message {
-    /**
+    /*
      * Abstraction Function:
      * A Message m represents a sequence of MessageParts mp[1], ..., mp[n] where n is the number of MessageParts.
      * Each MessagePart mp[i] is represented by messageParts.get(i-1) for 1 <= i <= n.
@@ -21,6 +21,7 @@ public class Message {
      * - messageParts != null
      * - All elements in messageParts are not null
      */
+    /** The list of message parts */
     private final List<MessagePart> messageParts;
 
     /**

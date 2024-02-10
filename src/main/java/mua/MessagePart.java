@@ -9,8 +9,13 @@ import utils.Fragment;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Represents a message part of a message.
+ */
 public class MessagePart {
+    /** The list of headers of the message part */
     private final List<Header<?>> headers;
+    /** The body of the message part */
     public final ASCIICharSequence body;
 
     /**
@@ -47,11 +52,6 @@ public class MessagePart {
             this.body = ASCIICharSequence.of(body);
     }
 
-    public void addHeader(Header<?> header) {
-        this.headers.add(header);
-        reorderHeaders();
-    }
-
     /**
      * Reorder the headers of the message part.
      */
@@ -78,7 +78,7 @@ public class MessagePart {
      * Find the istance of the header with the specified Header type.
      * If the header is not found, null is returned.
      *
-     * @param headerType the type of the header.
+     * @param headerClass the class of the header to find
      * @return the header with the specified type, or null if not found.
      */
     public Header<?> getHeader(Class<?> headerClass) {
@@ -92,7 +92,8 @@ public class MessagePart {
     /**
      * Parse the header of the message part, given the raw header.
      *
-     * @param fragment the Fragment
+     * @param rawHeader the raw header
+     * @return the parsed Header object.
      */
     private Header<?> parseHeader(List<ASCIICharSequence> rawHeader) {
         String headerName = rawHeader.get(0).toString();
@@ -102,9 +103,9 @@ public class MessagePart {
     }
 
     /**
-     * Returns the header of the message part.
+     * Returns the headers of the message part.
      *
-     * @return the header
+     * @return the list of headers of the message part
      */
     public List<Header<?>> getHeaders() {
         return Collections.unmodifiableList(headers);

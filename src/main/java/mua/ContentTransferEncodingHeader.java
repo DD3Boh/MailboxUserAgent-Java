@@ -6,6 +6,7 @@ import utils.ASCIICharSequence;
  * Represents a Content-Transfer-Encoding header.
  */
 public class ContentTransferEncodingHeader implements Header<String> {
+    /** the value of the Content-Transfer-Encoding header */
     private final String value;
 
     /**

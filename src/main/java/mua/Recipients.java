@@ -11,6 +11,7 @@ import utils.ASCIICharSequence;
  * Implements the Iterable interface to enable iteration over the recipients.
  */
 public class Recipients implements Iterable<Address> {
+    /** The list of addresses of the recipients */
     private final List<Address> addresses;
 
     /**

@@ -7,13 +7,14 @@ import utils.Base64Encoding;
  * Represents the subject header of a message.
  */
 public class SubjectHeader implements Header<String> {
+    /** The value of the Subject header */
     private String value;
 
     /**
      * Constructs a SubjectHeader object with the specified String.
      * The value is decoded if it is encoded in Base64.
      *
-     * @param value
+     * @param value the subject of the message as a String.
      */
     public SubjectHeader(String value) {
         String subject;

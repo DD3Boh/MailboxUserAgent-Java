@@ -20,17 +20,17 @@ public class Address {
      * - local and domain are valid parts of an email address, as defined by AddressEncoding.isValidAddressPart(String).
      */
 
-    /* the display name associated with the email address */
+    /** the display name associated with the email address */
     public final String displayName;
-    /* the local part of the email address (before the '@') */
+    /** the local part of the email address (before the '@') */
     public final String local;
-    /* domain the domain part of the email address (after the '@') */
+    /** domain the domain part of the email address (after the '@') */
     public final String domain;
 
     /**
      * Constructs a new Address instance from a full email address string that may include a display name.
      *
-     * The expected format is "Display Name <local@domain>". If the display name is not present,
+     * The expected format is "Display Name local@domain". If the display name is not present,
      * the format should be "local@domain".
      *
      * @param fullAddress the full email address string
@@ -60,6 +60,9 @@ public class Address {
      * @param displayName the display name
      * @param local the local part
      * @param domain the domain part
+     *
+     * @throws IllegalArgumentException if the local part is invalid, according to AddressEncoding.isValidAddressPart(String)
+     * @throws IllegalArgumentException if the domain part is invalid, according to AddressEncoding.isValidAddressPart(String)
      */
     public Address(String displayName, String local, String domain) {
         if (!AddressEncoding.isValidAddressPart(local))
@@ -76,8 +79,8 @@ public class Address {
     /**
      * Returns the ASCII representation of the Address object.
      * If the display name is not present, it returns the address in the format "local@domain".
-     * If the display name is present and is made of one or two words, it returns the address in the format "Display Name <local@domain>".
-     * If the display name is present and is made of more than two words, it returns the address in the format ""Display Name" <local@domain>".
+     * If the display name is present and is made of one or two words, it returns the address in the format "Display Name local@domain".
+     * If the display name is present and is made of more than two words, it returns the address in the format ""Display Name" local@domain".
      *
      * @return the ASCII representation of the Address object
      */
@@ -96,8 +99,8 @@ public class Address {
     /**
      * Returns a string representation of the Address object.
      * If the display name is not present, it returns the address in the format "local@domain".
-     * If the display name is present and is made of one or two words, it returns the address in the format "Display Name <local@domain>".
-     * If the display name is present and is made of more than two words, it returns the address in the format ""Display Name" <local@domain>".
+     * If the display name is present and is made of one or two words, it returns the address in the format "Display Name local@domain".
+     * If the display name is present and is made of more than two words, it returns the address in the format ""Display Name" local@domain".
      *
      * @return a string representation of the Address object
      */
