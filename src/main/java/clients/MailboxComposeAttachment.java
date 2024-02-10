@@ -1,5 +1,11 @@
 package clients;
 
+import mua.App;
+import mua.MailboxManager;
+import mua.MissingHeaderException;
+import utils.Storage;
+import java.io.IOException;
+
 /** MailboxCompose */
 public class MailboxComposeAttachment {
 
@@ -11,6 +17,11 @@ public class MailboxComposeAttachment {
    *
    * @param args not used
    */
-  // public static void main(String[] args) {}
+  public static void main(String[] args) throws IOException, MissingHeaderException {
+    Storage storage = new Storage("tests/mbox");
+    MailboxManager mailboxManager = new MailboxManager(storage);
+
+    App.startREPL(mailboxManager);
+  }
 
 }
