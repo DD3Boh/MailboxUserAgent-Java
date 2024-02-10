@@ -105,6 +105,10 @@ public class App {
             ui.prompt("Message deleted");
             break;
           case "COMPOSE":
+            if (curMailbox == null) {
+              ui.error("No mailbox selected");
+              break;
+            }
             handleCompose(mailboxManager, curMailbox, ui);
             break;
           case "#":
