@@ -132,9 +132,6 @@ public class App {
       headers.add(HeaderFactory.createHeader(headerString, line));
     }
 
-    headers.add(new MimeVersionHeader(Double.valueOf(1.0)));
-    headers.add(new ContentTypeHeader("multipart/alternative", null, "frontier"));
-
     String body = "This is a message with multiple parts in MIME format.\n";
     parts.add(new MessagePart(headers, body));
 
@@ -168,15 +165,42 @@ public class App {
       parts.add(new MessagePart(headers, body));
     }
 
+    boolean hasAttachment = false;
+    while (true) {
+      headers.clear();
+      String attachmentFilename = ui.line("Attachment filename (empty to stop): ");
+      if (attachmentFilename.isEmpty()) break;
+
+      headers.add(new ContentDispositionHeader("attachment", attachmentFilename));
+      headers.add(new ContentTransferEncodingHeader("base64"));
+
+      body = "";
+      ui.prompt("Attachment (. to end): ");
+      while ((line = ui.line()) != null && !line.equals("."))
+        body += line + "\n";
+
+      parts.add(new MessagePart(headers, body));
+      hasAttachment = true;
+    }
+
     if (parts.size() < 3) {
       MessagePart part0 = parts.get(0);
       MessagePart part1 = parts.get(1);
       MessagePart merged = MessagePart.mergeMessageParts(part0, part1);
-      MimeVersionHeader mimeVersionHeader = (MimeVersionHeader) merged.getHeader(MimeVersionHeader.class);
-      headers = new ArrayList<>(merged.getHeaders());
-      headers.remove(mimeVersionHeader);
-      MessagePart part = new MessagePart(headers, merged.getBodyDecoded());
+      MessagePart part = new MessagePart(merged.getHeaders(), merged.getBodyDecoded());
       parts.remove(1);
+      parts.set(0, part);
+    } else {
+      MessagePart part0 = parts.get(0);
+      headers = new ArrayList<>(part0.getHeaders());
+      headers.add(new MimeVersionHeader(Double.valueOf(1.0)));
+
+      if (hasAttachment)
+        headers.add(new ContentTypeHeader("multipart/mixed", null, "frontier"));
+      else
+        headers.add(new ContentTypeHeader("multipart/alternative", null, "frontier"));
+
+      MessagePart part = new MessagePart(headers, part0.getBodyDecoded());
       parts.set(0, part);
     }
 
