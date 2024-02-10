@@ -1,10 +1,10 @@
 package clients;
 
+import java.io.IOException;
 import mua.App;
 import mua.MailboxManager;
 import mua.MissingHeaderException;
 import utils.Storage;
-import java.io.IOException;
 
 /** MailboxCompose */
 public class MailboxCompose {
@@ -23,5 +23,4 @@ public class MailboxCompose {
 
     App.startREPL(mailboxManager);
   }
-
 }

@@ -1,9 +1,8 @@
 package clients;
 
+import java.util.Scanner;
 import mua.Recipients;
 import mua.RecipientsHeader;
-
-import java.util.Scanner;
 
 /** RecipientsEncode */
 public class RecipientsEncode {
@@ -23,8 +22,7 @@ public class RecipientsEncode {
 
     Recipients recipients = new Recipients();
 
-    while (scanner.hasNextLine())
-      recipients.addAddress(scanner.nextLine());
+    while (scanner.hasNextLine()) recipients.addAddress(scanner.nextLine());
 
     System.out.println(new RecipientsHeader(recipients).encodeToASCII());
 

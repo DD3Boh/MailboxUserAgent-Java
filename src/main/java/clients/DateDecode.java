@@ -1,7 +1,6 @@
 package clients;
 
 import java.util.Scanner;
-
 import mua.DateHeader;
 
 /** DateDecode */

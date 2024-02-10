@@ -2,7 +2,6 @@ package clients;
 
 import java.util.List;
 import java.util.Scanner;
-
 import mua.*;
 import utils.ASCIICharSequence;
 import utils.EntryEncoding;
@@ -39,8 +38,8 @@ public class MessageDecode {
 
     // Read lines from stdin until an empty line is entered
     while (scanner.hasNextLine()) {
-        String line = scanner.nextLine();
-        rawMessage.append(line).append("\n");
+      String line = scanner.nextLine();
+      rawMessage.append(line).append("\n");
     }
     scanner.close();
 
@@ -52,7 +51,11 @@ public class MessageDecode {
       System.out.println("Fragment\n\tRaw headers:");
       for (Header<?> header : part.getHeaders()) {
         String headerRawType = header.getType().toString();
-        System.out.println("\t\tRaw type = " + headerRawType.toLowerCase() + ", value = " + header.encodeToASCII().toString().replace(headerRawType + ": ", ""));
+        System.out.println(
+            "\t\tRaw type = "
+                + headerRawType.toLowerCase()
+                + ", value = "
+                + header.encodeToASCII().toString().replace(headerRawType + ": ", ""));
       }
       System.out.println("\tRaw body: \n\t\t" + part.body + "\n");
     }

@@ -1,9 +1,8 @@
 package clients;
 
+import java.io.IOException;
 import mua.*;
 import utils.Storage;
-
-import java.io.IOException;
 
 /** MailboxList */
 public class MailboxList {

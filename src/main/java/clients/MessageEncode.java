@@ -1,14 +1,13 @@
 package clients;
 
-import mua.*;
-import utils.ASCIICharSequence;
-
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import mua.*;
+import utils.ASCIICharSequence;
 
 /** MessageEncode */
 public class MessageEncode {
@@ -104,5 +103,4 @@ public class MessageEncode {
 
     System.out.println(new Message(parts).encodeToASCII());
   }
-
 }

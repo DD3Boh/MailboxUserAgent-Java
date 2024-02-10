@@ -1,7 +1,6 @@
 package clients;
 
 import java.io.IOException;
-
 import mua.App;
 import mua.MailboxManager;
 import mua.MissingHeaderException;

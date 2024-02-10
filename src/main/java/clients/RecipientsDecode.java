@@ -1,8 +1,8 @@
 package clients;
 
+import java.util.Scanner;
 import mua.Address;
 import mua.Recipients;
-import java.util.Scanner;
 
 public class RecipientsDecode {
 
@@ -16,19 +16,19 @@ public class RecipientsDecode {
    *
    * @param args not used.
    */
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String encodedHeader = scanner.nextLine();
-        scanner.close();
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    String encodedHeader = scanner.nextLine();
+    scanner.close();
 
-        Recipients recipients = new Recipients(encodedHeader);
+    Recipients recipients = new Recipients(encodedHeader);
 
-        for (Address address : recipients) {
-            String displayName = address.displayName;
-            String localPart = address.local;
-            String domain = address.domain;
+    for (Address address : recipients) {
+      String displayName = address.displayName;
+      String localPart = address.local;
+      String domain = address.domain;
 
-            System.out.println(displayName + ", " + localPart + ", " + domain);
-        }
+      System.out.println(displayName + ", " + localPart + ", " + domain);
     }
+  }
 }

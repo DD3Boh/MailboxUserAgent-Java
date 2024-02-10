@@ -1,12 +1,11 @@
 package mua;
 
-import utils.*;
-
-import java.util.List;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.time.format.DateTimeFormatter;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import utils.*;
 
 /** The application class */
 public class App {
@@ -19,8 +18,7 @@ public class App {
    * @throws IOException if the mailbox base directory is not found.
    */
   public static void main(String[] args) throws IOException, MissingHeaderException {
-    if (args.length <= 0)
-      return;
+    if (args.length <= 0) return;
 
     String mailboxBaseDir = args[0];
     Storage storage = new Storage(mailboxBaseDir);
@@ -32,8 +30,8 @@ public class App {
   /**
    * Starts the REPL.
    *
-   * Reads commands from the standard input and executes them.
-   * The commands are limited to: LSM, LSE, MBOX, READ, DELETE, COMPOSE.
+   * <p>Reads commands from the standard input and executes them. The commands are limited to: LSM,
+   * LSE, MBOX, READ, DELETE, COMPOSE.
    *
    * @param mailboxManager the mailbox manager
    * @throws IOException if an I/O error occurs
@@ -68,7 +66,8 @@ public class App {
               ui.error("Usage: MBOX <mailbox>");
               break;
             }
-            List<Mailbox> mailboxes = new ArrayList<Mailbox>(mailboxManager.getMailboxMap().keySet());
+            List<Mailbox> mailboxes =
+                new ArrayList<Mailbox>(mailboxManager.getMailboxMap().keySet());
             curMailbox = mailboxes.get(Integer.parseInt(input[1]) - 1);
             break;
           case "READ":
@@ -128,14 +127,15 @@ public class App {
   /**
    * Handles the COMPOSE command.
    *
-   * Reads the message parts from the standard input and adds the message to the mailbox.
+   * <p>Reads the message parts from the standard input and adds the message to the mailbox.
    *
    * @param mailboxManager the mailbox manager
    * @param mailbox the mailbox
    * @param ui the UIInteract instance
    * @throws IOException if an I/O error occurs
    */
-  private static void handleCompose(MailboxManager mailboxManager, Mailbox mailbox, UIInteract ui) throws IOException {
+  private static void handleCompose(MailboxManager mailboxManager, Mailbox mailbox, UIInteract ui)
+      throws IOException {
     List<String> headersStrings = new ArrayList<>(List.of("From", "To", "Subject", "Date"));
     List<Header<?>> headers = new ArrayList<>();
     List<MessagePart> parts = new ArrayList<>();
@@ -151,8 +151,7 @@ public class App {
 
     ui.prompt("Text Body (. to end): ");
     body = "";
-    while ((line = ui.line()) != null && !line.equals("."))
-      body += line + "\n";
+    while ((line = ui.line()) != null && !line.equals(".")) body += line + "\n";
 
     headers.clear();
     if (!body.isEmpty()) {
@@ -170,8 +169,7 @@ public class App {
     body = "";
     headers.clear();
 
-    while ((line = ui.line()) != null && !line.equals("."))
-      body += line + "\n";
+    while ((line = ui.line()) != null && !line.equals(".")) body += line + "\n";
 
     if (!body.isEmpty()) {
       headers.add(new ContentTypeHeader("text/html", "utf-8", "frontier"));
@@ -190,8 +188,7 @@ public class App {
 
       body = "";
       ui.prompt("Attachment (. to end): ");
-      while ((line = ui.line()) != null && !line.equals("."))
-        body += line + "\n";
+      while ((line = ui.line()) != null && !line.equals(".")) body += line + "\n";
 
       parts.add(new MessagePart(headers, body));
       hasAttachment = true;
@@ -209,10 +206,8 @@ public class App {
       headers = new ArrayList<>(part0.getHeaders());
       headers.add(new MimeVersionHeader(Double.valueOf(1.0)));
 
-      if (hasAttachment)
-        headers.add(new ContentTypeHeader("multipart/mixed", null, "frontier"));
-      else
-        headers.add(new ContentTypeHeader("multipart/alternative", null, "frontier"));
+      if (hasAttachment) headers.add(new ContentTypeHeader("multipart/mixed", null, "frontier"));
+      else headers.add(new ContentTypeHeader("multipart/alternative", null, "frontier"));
 
       MessagePart part = new MessagePart(headers, part0.getBodyDecoded());
       parts.set(0, part);
@@ -233,9 +228,11 @@ public class App {
     List<List<String>> rows = new ArrayList<>();
 
     for (Message message : messages) {
-      ZonedDateTime date = (ZonedDateTime) message.getParts().get(0).getHeader(DateHeader.class).getValue();
+      ZonedDateTime date =
+          (ZonedDateTime) message.getParts().get(0).getHeader(DateHeader.class).getValue();
       Address from = (Address) message.getParts().get(0).getHeader(SenderHeader.class).getValue();
-      Recipients to = (Recipients) message.getParts().get(0).getHeader(RecipientsHeader.class).getValue();
+      Recipients to =
+          (Recipients) message.getParts().get(0).getHeader(RecipientsHeader.class).getValue();
       String subject = (String) message.getParts().get(0).getHeader(SubjectHeader.class).getValue();
       StringBuilder sb = new StringBuilder();
       for (Address recipient : to) {
@@ -245,12 +242,12 @@ public class App {
         sb.append("\n");
       }
       String toStr = sb.toString();
-      rows.add(List.of(
-        date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd\nHH:mm:ss")),
-        from.local + "@" + from.domain,
-        toStr,
-        subject
-        ));
+      rows.add(
+          List.of(
+              date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd\nHH:mm:ss")),
+              from.local + "@" + from.domain,
+              toStr,
+              subject));
     }
 
     return UITable.table(headers, rows, true, true);
@@ -290,11 +287,11 @@ public class App {
           headersList.add(header.getType());
           values.add(header.getValue().toString());
         } else if (header.getType().equals("Content-Type")) {
-            headersList.add("Part\n" + header.getValue());
-            values.add(part.getBodyDecoded());
+          headersList.add("Part\n" + header.getValue());
+          values.add(part.getBodyDecoded());
         } else if (header.getType().equals("Content-Disposition")) {
-            headersList.add("Text Attachment\n" + header.getValue());
-            values.add(part.getBodyDecoded());
+          headersList.add("Text Attachment\n" + header.getValue());
+          values.add(part.getBodyDecoded());
         }
       }
     }
