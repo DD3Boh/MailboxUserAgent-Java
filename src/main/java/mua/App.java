@@ -105,7 +105,7 @@ public class App {
             ui.output("Message deleted");
             break;
           case "COMPOSE":
-            handleCompose(ui);
+            handleCompose(mailboxManager, curMailbox, ui);
             break;
           case "#":
             break;
@@ -117,8 +117,8 @@ public class App {
     }
   }
 
-  private static void handleCompose(UIInteract ui) throws IOException {
-    List<String> headersStrings = new ArrayList<>(List.of("From", "To", "Subject"));
+  private static void handleCompose(MailboxManager mailboxManager, Mailbox mailbox, UIInteract ui) throws IOException {
+    List<String> headersStrings = new ArrayList<>(List.of("From", "To", "Subject", "Date"));
     List<Header<?>> headers = new ArrayList<>();
     List<MessagePart> parts = new ArrayList<>();
     String line = "";
@@ -127,10 +127,6 @@ public class App {
       line = ui.line(headerString + ": ");
       headers.add(HeaderFactory.createHeader(headerString, line));
     }
-
-    String dateNow = ZonedDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME);
-    ui.prompt("Date: " + dateNow);
-    headers.add(HeaderFactory.createHeader("Date", dateNow));
 
     headers.add(new MimeVersionHeader(Double.valueOf(1.0)));
     headers.add(new ContentTypeHeader("multipart/alternative", null, "frontier"));
@@ -176,6 +172,9 @@ public class App {
       parts.remove(1);
       parts.set(0, part);
     }
+
+    Message message = new Message(parts);
+    mailboxManager.addMessage(mailbox, message);
   }
 
   /**

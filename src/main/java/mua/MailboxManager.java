@@ -78,6 +78,19 @@ public class MailboxManager {
     }
 
     /**
+     * Adds a message to the mailbox.
+     *
+     * @param mailbox the mailbox
+     * @param message the message
+     */
+    public void addMessage(Mailbox mailbox, Message message) {
+        Storage.Box storageBox = mailboxMap.get(mailbox);
+        Storage.Box.Entry entry = storageBox.entry(message.encodeToASCII());
+        messageMap.put(message, entry);
+        mailbox.addMessage(message);
+    }
+
+    /**
      * Returns the Map of mailboxes and their corresponding Storage.Box.
      *
      * @return the Map of mailboxes and their corresponding Storage.Box
