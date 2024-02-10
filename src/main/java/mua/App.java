@@ -144,14 +144,15 @@ public class App {
       body += line + "\n";
 
     headers.clear();
-    if (ASCIICharSequence.isAscii(body)) {
-      headers.add(new ContentTypeHeader("text/plain", "us-ascii", "frontier"));
-    } else {
-      headers.add(new ContentTypeHeader("text/plain", "utf-8", "frontier"));
-      headers.add(new ContentTransferEncodingHeader("base64"));
+    if (!body.isEmpty()) {
+      if (ASCIICharSequence.isAscii(body)) {
+        headers.add(new ContentTypeHeader("text/plain", "us-ascii", "frontier"));
+      } else {
+        headers.add(new ContentTypeHeader("text/plain", "utf-8", "frontier"));
+        headers.add(new ContentTransferEncodingHeader("base64"));
+      }
+      parts.add(new MessagePart(headers, body));
     }
-
-    parts.add(new MessagePart(headers, body));
 
     ui.prompt("Html Body (. to end): ");
 
@@ -165,14 +166,16 @@ public class App {
       headers.add(new ContentTypeHeader("text/html", "utf-8", "frontier"));
       headers.add(new ContentTransferEncodingHeader("base64"));
       parts.add(new MessagePart(headers, body));
-    } else {
+    }
+
+    if (parts.size() < 3) {
       MessagePart part0 = parts.get(0);
       MessagePart part1 = parts.get(1);
       MessagePart merged = MessagePart.mergeMessageParts(part0, part1);
       MimeVersionHeader mimeVersionHeader = (MimeVersionHeader) merged.getHeader(MimeVersionHeader.class);
       headers = new ArrayList<>(merged.getHeaders());
       headers.remove(mimeVersionHeader);
-      MessagePart part = new MessagePart(headers, merged.body.toString());
+      MessagePart part = new MessagePart(headers, merged.getBodyDecoded());
       parts.remove(1);
       parts.set(0, part);
     }
