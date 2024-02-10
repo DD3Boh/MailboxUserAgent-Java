@@ -3,7 +3,8 @@ package mua;
 /**
  * Represents an exception that is thrown when a header is missing from a message.
  */
-public class MissingHeaderException extends Exception {
+@SuppressWarnings("serial")
+public class MissingHeaderException extends RuntimeException {
     /**
      * Constructs a MissingHeaderException object with the specified message.
      *
