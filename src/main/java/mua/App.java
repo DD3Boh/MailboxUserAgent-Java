@@ -102,7 +102,7 @@ public class App {
             }
             message = messages.get(index);
             mailboxManager.deleteMessage(curMailbox, message);
-            ui.output("Message deleted");
+            ui.prompt("Message deleted");
             break;
           case "COMPOSE":
             handleCompose(mailboxManager, curMailbox, ui);
