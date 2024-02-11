@@ -166,21 +166,4 @@ public class MessagePart {
 
     return new MessagePart(mergedHeaders, mergedBody);
   }
-
-  /**
-   * Returns a String representation of the message part.
-   *
-   * @return a String representation of the message part
-   */
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    for (Header<?> header : headers) {
-      sb.append(header.toString());
-      sb.append("\n");
-    }
-    sb.append("\n");
-    sb.append(body.toString());
-    return sb.toString();
-  }
 }
