@@ -2,7 +2,7 @@ package clients;
 
 import java.util.Scanner;
 import mua.Address;
-import mua.Recipients;
+import mua.RecipientsHeader;
 
 public class RecipientsDecode {
 
@@ -21,9 +21,9 @@ public class RecipientsDecode {
     String encodedHeader = scanner.nextLine();
     scanner.close();
 
-    Recipients recipients = new Recipients(encodedHeader);
+    RecipientsHeader recipients = new RecipientsHeader(encodedHeader);
 
-    for (Address address : recipients) {
+    for (Address address : recipients.getValue()) {
       String displayName = address.displayName;
       String localPart = address.local;
       String domain = address.domain;

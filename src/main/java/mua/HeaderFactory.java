@@ -21,7 +21,7 @@ public class HeaderFactory {
       case "from":
         return new SenderHeader(new Address(value));
       case "to":
-        return new RecipientsHeader(new Recipients(value));
+        return new RecipientsHeader(value);
       case "subject":
         return new SubjectHeader(value);
       case "date":

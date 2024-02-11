@@ -1,7 +1,6 @@
 package mua;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -228,14 +227,12 @@ public class App {
     List<List<String>> rows = new ArrayList<>();
 
     for (Message message : messages) {
-      ZonedDateTime date =
-          (ZonedDateTime) message.getParts().get(0).getHeader(DateHeader.class).getValue();
-      Address from = (Address) message.getParts().get(0).getHeader(SenderHeader.class).getValue();
-      Recipients to =
-          (Recipients) message.getParts().get(0).getHeader(RecipientsHeader.class).getValue();
-      String subject = (String) message.getParts().get(0).getHeader(SubjectHeader.class).getValue();
+      DateHeader date = (DateHeader) message.getParts().get(0).getHeader(DateHeader.class);
+      SenderHeader from = (SenderHeader) message.getParts().get(0).getHeader(SenderHeader.class);
+      RecipientsHeader to = (RecipientsHeader) message.getParts().get(0).getHeader(RecipientsHeader.class);
+      SubjectHeader subject = (SubjectHeader) message.getParts().get(0).getHeader(SubjectHeader.class);
       StringBuilder sb = new StringBuilder();
-      for (Address recipient : to) {
+      for (Address recipient : to.getValue()) {
         sb.append(recipient.local);
         sb.append("@");
         sb.append(recipient.domain);
@@ -244,10 +241,10 @@ public class App {
       String toStr = sb.toString();
       rows.add(
           List.of(
-              date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd\nHH:mm:ss")),
-              from.local + "@" + from.domain,
+              date.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd\nHH:mm:ss")),
+              from.getValue().local + "@" + from.getValue().domain,
               toStr,
-              subject));
+              subject.getValue()));
     }
 
     return UITable.table(headers, rows, true, true);

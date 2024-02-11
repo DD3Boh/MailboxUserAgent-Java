@@ -1,19 +1,48 @@
 package mua;
 
+import java.util.ArrayList;
+import java.util.List;
 import utils.ASCIICharSequence;
+import java.util.Iterator;
 
 /** Represents the recipients header of a message, using a Recipients object. */
-public class RecipientsHeader implements Header<Recipients> {
+public class RecipientsHeader implements Header<List<Address>> {
   /** The value of the Recipients header, represented as a Recipients object */
-  private Recipients recipients;
+  private final List<Address> addresses;
 
   /**
    * Constructs a RecipientsHeader object with the specified Recipients objects.
    *
    * @param recipients the Recipients object of the recipients.
    */
-  public RecipientsHeader(Recipients recipients) {
-    this.recipients = recipients;
+  public RecipientsHeader(String addressList) {
+    this.addresses = new ArrayList<>();
+
+    if (addressList.startsWith("To: ")) addressList = addressList.substring("To: ".length());
+
+    String[] addressArray = addressList.split(", ");
+    for (String addressString : addressArray) {
+      Address address = new Address(addressString);
+      addAddress(address);
+    }
+  }
+
+  /**
+   * Constructs a RecipientsHeader object with the specified list of addresses.
+   *
+   * @param addresses the list of addresses
+   */
+  public RecipientsHeader(List<Address> addresses) {
+    this.addresses = addresses;
+  }
+
+  /**
+   * Adds an address to the recipients list.
+   *
+   * @param address The address to be added.
+   */
+  public void addAddress(Address address) {
+    this.addresses.add(address);
   }
 
   /**
@@ -32,27 +61,52 @@ public class RecipientsHeader implements Header<Recipients> {
    * @return the Recipients object for the recipients.
    */
   @Override
-  public Recipients getValue() {
-    return recipients;
+  public List<Address> getValue() {
+    return addresses;
   }
 
   /**
-   * Returns an ASCII representation of the RecipientsHeader object.
+   * Returns the ASCII representation of the Recipients object. The ASCII representation of the
+   * Recipients object is the concatenation of the ASCII representations of its addresses. Each
+   * address is separated by a comma and a space.
    *
-   * @return an ASCII representation of the RecipientsHeader object
+   * @return the ASCII representation of the Recipients object
    */
   @Override
   public ASCIICharSequence encodeToASCII() {
-    return ASCIICharSequence.of(getType() + ": " + recipients.encodeToASCII());
+    StringBuilder sb = new StringBuilder();
+    Iterator<Address> iterator = addresses.iterator();
+
+    while (iterator.hasNext()) {
+      Address address = iterator.next();
+
+      sb.append(address.encodeToASCII());
+
+      if (iterator.hasNext()) sb.append(", ");
+    }
+
+    return ASCIICharSequence.of(getType() + ": " + sb.toString());
   }
 
   /**
-   * Returns a string representation of the RecipientsHeader object.
+   * Returns a string representation of the Recipients object. The string includes all the addresses
+   * in the Recipients object, separated by commas.
    *
-   * @return a string representation of the RecipientsHeader object
+   * @return a string representation of the Recipients object
    */
   @Override
   public String toString() {
-    return recipients.toString();
+    StringBuilder sb = new StringBuilder();
+    Iterator<Address> iterator = addresses.iterator();
+
+    while (iterator.hasNext()) {
+      Address address = iterator.next();
+
+      sb.append(address);
+
+      if (iterator.hasNext()) sb.append("\n");
+    }
+
+    return sb.toString();
   }
 }

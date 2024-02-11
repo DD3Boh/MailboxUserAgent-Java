@@ -1,8 +1,10 @@
 package clients;
 
 import java.util.Scanner;
-import mua.Recipients;
 import mua.RecipientsHeader;
+import mua.Address;
+import java.util.ArrayList;
+import java.util.List;
 
 /** RecipientsEncode */
 public class RecipientsEncode {
@@ -19,13 +21,12 @@ public class RecipientsEncode {
    */
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
-
-    Recipients recipients = new Recipients();
+    List<Address> recipients = new ArrayList<>();
 
     while (scanner.hasNextLine()) {
       String[] address = scanner.nextLine().split(", ");
       if (address.length == 3)
-        recipients.addAddress(new mua.Address(address[0], address[1], address[2]));
+        recipients.add(new mua.Address(address[0], address[1], address[2]));
     }
 
     System.out.println(new RecipientsHeader(recipients).encodeToASCII());

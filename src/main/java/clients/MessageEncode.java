@@ -51,15 +51,15 @@ public class MessageEncode {
     local = scanner.nextLine();
     domain = scanner.nextLine();
 
-    Recipients recipients = new Recipients();
-    recipients.addAddress(new Address(displayName, local, domain));
+    List<Address> recipientsList = new ArrayList<>();
+    recipientsList.add(new Address(displayName, local, domain));
 
     displayName = scanner.nextLine();
     local = scanner.nextLine();
     domain = scanner.nextLine();
-    recipients.addAddress(new Address(displayName, local, domain));
+    recipientsList.add(new Address(displayName, local, domain));
 
-    headers.add(new RecipientsHeader(recipients));
+    headers.add(new RecipientsHeader(recipientsList));
 
     String subject = scanner.nextLine();
     headers.add(new SubjectHeader(subject));
