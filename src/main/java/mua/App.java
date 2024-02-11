@@ -113,6 +113,8 @@ public class App {
             }
             handleCompose(mailboxManager, curMailbox, ui);
             break;
+          case "EXIT":
+            return;
           case "#":
             break;
           default:
