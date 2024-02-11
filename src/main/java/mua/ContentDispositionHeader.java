@@ -79,12 +79,15 @@ public final class ContentDispositionHeader implements Header<String> {
   }
 
   /**
-   * Returns the string representation of the Content-Disposition header.
+   * Encodes the Content Disposition Header's name to its UI representation, in a String format.
+   * The UI representation is the representation of the header's name that needs to be displayed to the user
+   * when creating cards or tables.
+   * The UI representation of the header's name is "Text Attachment\n" followed by the value of the header.
    *
-   * @return the string representation of the Content-Disposition header
+   * @return the UI representation of the header
    */
   @Override
-  public String toString() {
+  public String encodeUIName() {
     return "Text Attachment\n" + value;
   }
 }

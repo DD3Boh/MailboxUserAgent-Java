@@ -92,22 +92,29 @@ public final class Address {
    * @return the ASCII representation of the Address object
    */
   public ASCIICharSequence encodeToASCII() {
-    return ASCIICharSequence.of(this.toString());
+    if (displayName.trim().isBlank())
+      return ASCIICharSequence.of(String.format("%s@%s", local, domain));
+
+    String[] nameParts = displayName.split("\\s+");
+
+    if (nameParts.length <= 2)
+      return ASCIICharSequence.of(String.format("%s <%s@%s>", displayName, local, domain));
+    else
+      return ASCIICharSequence.of(String.format("\"%s\" <%s@%s>", displayName, local, domain));
   }
 
   /**
-   * Returns the String representation of the Address object.
-   * If the display name is not present, it returns the address in the format "local@domain".
-   * If the display name is present and is made of one or two words, it returns the address
-   * in the format "Display Name local@domain".
-   * If the display name is present and is made of more than two words, it returns the address
-   * in the format ""Display Long Name" local@domain".
+   * Encodes the Address object to its UI representation, in a String format.
+   * The UI representation is the representation of the address that needs to be displayed to the user
+   * when creating cards or tables.
+   * The extended version of the representation returns the address in the format "Display Name xxxxxx@xxxxxxx".
+   * The compressed version of the representation returns the address in the format "xxxxxx@xxxxxx".
+   * If the display name is not present, the compressed version is returned, regardless of the value of the extended parameter.
    *
-   * @return a String representation of the Address object
+   * @param extended whether to return the extended version of the representation.
    */
-  @Override
-  public String toString() {
-    if (displayName.trim().isBlank())
+  public String encodeToUI(boolean extended) {
+    if (displayName.trim().isBlank() || !extended)
       return String.format("%s@%s", local, domain);
 
     String[] nameParts = displayName.split("\\s+");

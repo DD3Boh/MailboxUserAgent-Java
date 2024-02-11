@@ -7,6 +7,8 @@ import java.util.Iterator;
 
 /** Represents the recipients header of a message, using a Recipients object. */
 public final class RecipientsHeader implements Header<List<Address>> {
+  /** The type of the header */
+  private static final String TYPE = "To";
   /** The value of the Recipients header, represented as a Recipients object */
   private final List<Address> addresses;
 
@@ -51,7 +53,7 @@ public final class RecipientsHeader implements Header<List<Address>> {
    */
   @Override
   public String getType() {
-    return "To";
+    return TYPE;
   }
 
   /**
@@ -84,28 +86,44 @@ public final class RecipientsHeader implements Header<List<Address>> {
       if (iterator.hasNext()) sb.append(", ");
     }
 
-    return ASCIICharSequence.of(getType() + ": " + sb.toString());
+    return ASCIICharSequence.of(TYPE + ": " + sb.toString());
   }
 
   /**
-   * Returns a string representation of the Recipients object. The string includes all the addresses
-   * in the Recipients object, separated by commas.
+   * Encodes the Recipients Header's value to its UI representation, in a string format.
+   * The UI representation is the representation of the header's value that needs to be displayed
+   * to the user when creating cards or tables.
+   * This consists of the UI representation of each address in the list, separated by a newline.
    *
-   * @return a string representation of the Recipients object
+   * @param extended whether to return the extended version of the header
+   * @return the UI representation of the header
    */
   @Override
-  public String toString() {
+  public String encodeUIValue(boolean extended) {
     StringBuilder sb = new StringBuilder();
     Iterator<Address> iterator = addresses.iterator();
 
     while (iterator.hasNext()) {
       Address address = iterator.next();
 
-      sb.append(address);
+      sb.append(address.encodeToUI(extended));
 
       if (iterator.hasNext()) sb.append("\n");
     }
 
     return sb.toString();
+  }
+
+  /**
+   * Encodes the Recipients Header's name to its UI representation, in a string format.
+   * The UI representation is the representation of the header's name that needs to be displayed to the user
+   * when creating cards or tables.
+   * The String generated matches the name of the header.
+   *
+   * @return the UI representation of the Recipients Header
+   */
+  @Override
+  public String encodeUIName() {
+    return TYPE;
   }
 }

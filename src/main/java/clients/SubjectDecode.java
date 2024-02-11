@@ -19,7 +19,7 @@ public class SubjectDecode {
 
     SubjectHeader subject = new SubjectHeader(word);
 
-    System.out.println(subject);
+    System.out.println(subject.encodeUIValue(false));
     scanner.close();
   }
 }

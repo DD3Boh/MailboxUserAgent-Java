@@ -4,6 +4,8 @@ import utils.ASCIICharSequence;
 
 /** Represents the sender header of a message, using an Address object. */
 public final class SenderHeader implements Header<Address> {
+  /** The type of the header */
+  public static final String TYPE = "From";
   /** The value of the Sender header, represented as an Address object */
   private Address value;
 
@@ -23,7 +25,7 @@ public final class SenderHeader implements Header<Address> {
    */
   @Override
   public String getType() {
-    return "From";
+    return TYPE;
   }
 
   /**
@@ -43,16 +45,34 @@ public final class SenderHeader implements Header<Address> {
    */
   @Override
   public ASCIICharSequence encodeToASCII() {
-    return ASCIICharSequence.of(getType() + ": " + value.encodeToASCII());
+    return ASCIICharSequence.of(TYPE + ": " + value.encodeToASCII());
   }
 
   /**
-   * Returns a string representation of the SenderHeader object.
+   * Encodes the Sender Header's value to its UI representation, in a string format.
+   * The UI representation is the representation of the header's value that needs to be displayed to the user
+   * when creating cards or tables.
+   * This consists of the UI representation of the Address object in "value".
    *
-   * @return a string representation of the SenderHeader object
+   * @param extended whether to return the extended version of the header
+   * @return the UI representation of the header
    */
   @Override
-  public String toString() {
-    return value.toString();
+  public String encodeUIValue(boolean extended) {
+    return value.encodeToUI(extended);
+  }
+
+  /**
+   * Encodes the Sender Header's name to its UI representation, in a string format.
+   * The UI representation is the representation of the header's name that needs to be displayed to the user
+   * when creating cards or tables.
+   * This header does not have an extended version, so the extended parameter is ignored.
+   * The UI representation of the header's name is "From".
+   *
+   * @return the UI representation of the header's name
+   */
+  @Override
+  public String encodeUIName() {
+    return TYPE;
   }
 }

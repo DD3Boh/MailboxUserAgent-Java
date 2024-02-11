@@ -1,7 +1,6 @@
 package mua;
 
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import utils.*;
@@ -228,24 +227,12 @@ public class App {
     List<List<String>> rows = new ArrayList<>();
 
     for (Message message : messages) {
-      DateHeader date = (DateHeader) message.getParts().get(0).getHeader(DateHeader.class);
-      SenderHeader from = (SenderHeader) message.getParts().get(0).getHeader(SenderHeader.class);
-      RecipientsHeader to = (RecipientsHeader) message.getParts().get(0).getHeader(RecipientsHeader.class);
-      SubjectHeader subject = (SubjectHeader) message.getParts().get(0).getHeader(SubjectHeader.class);
-      StringBuilder sb = new StringBuilder();
-      for (Address recipient : to.getValue()) {
-        sb.append(recipient.local);
-        sb.append("@");
-        sb.append(recipient.domain);
-        sb.append("\n");
+      List<String> row = new ArrayList<>(headers);
+      for (Header<?> header : message.getParts().get(0).getHeaders()) {
+        if (headers.contains(header.getType()))
+          row.set(headers.indexOf(header.encodeUIName()), header.encodeUIValue(false));
       }
-      String toStr = sb.toString();
-      rows.add(
-          List.of(
-              date.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd\nHH:mm:ss")),
-              from.getValue().local + "@" + from.getValue().domain,
-              toStr,
-              subject.getValue()));
+      rows.add(row);
     }
 
     return UITable.table(headers, rows, true, true);
@@ -275,18 +262,17 @@ public class App {
    * @return the message as a String, formatted as a card.
    */
   public static String getMessageString(Message message) {
-    List<String> regularHeaders = new ArrayList<>(List.of("From", "To", "Subject", "Date"));
     List<String> headersList = new ArrayList<>();
     List<String> values = new ArrayList<>();
 
     for (MessagePart part : message.getParts()) {
       for (Header<?> header : part.getHeaders()) {
-        if (regularHeaders.contains(header.getType())) {
-          headersList.add(header.getType());
-          values.add(header.toString());
-        } else if (header.getType().equals("Content-Type") || header.getType().equals("Content-Disposition")) {
-          headersList.add(header.toString());
-          values.add(part.getBodyDecoded());
+        if (header.encodeUIName() != null) {
+          headersList.add(header.encodeUIName());
+          if (header.encodeUIValue(true) != null)
+            values.add(header.encodeUIValue(true));
+          else
+            values.add(part.getBodyDecoded());
         }
       }
     }

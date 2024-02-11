@@ -45,14 +45,4 @@ public final class MimeVersionHeader implements Header<Double> {
   public ASCIICharSequence encodeToASCII() {
     return ASCIICharSequence.of(getType() + ": " + getValue());
   }
-
-  /**
-   * Returns a string representation of the MIME-Version header.
-   *
-   * @return a string representation of the MIME-Version header
-   */
-  @Override
-  public String toString() {
-    return value.toString();
-  }
 }

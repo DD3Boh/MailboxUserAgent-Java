@@ -97,12 +97,15 @@ public final class ContentTypeHeader implements Header<String> {
   }
 
   /**
-   * Returns a string representation of the Content-Type header.
+   * Encodes the UI representation of the Content Type Header's name, in a string format.
+   * The UI representation is the representation of the header's name that needs to be displayed to the user
+   * when creating cards or tables.
+   * The String generated is of the form "Part\nvalue".
    *
-   * @return a string representation of the Content-Type header
+   * @return the UI representation of the Content-Type Header
    */
   @Override
-  public String toString() {
+  public String encodeUIName() {
     return "Part\n" + value;
   }
 }
