@@ -7,9 +7,6 @@ public class ContentDispositionHeader implements Header<String> {
   /** the value of the Content-Disposition header */
   private final String value;
 
-  /** the type of the Content-Disposition header */
-  private final String dispositionType;
-
   /**
    * Constructs a ContentDispositionHeader object with the given value. Parses the value to extract
    * the disposition type and filename.
@@ -17,34 +14,15 @@ public class ContentDispositionHeader implements Header<String> {
    * @param value the value of the Content-Disposition header
    */
   public ContentDispositionHeader(String value) {
-    int typeIndex = 0;
     int filenameIndex = value.indexOf("filename=");
 
-    if (filenameIndex != -1) {
-      String type = value.substring(0, typeIndex).trim();
+    if (filenameIndex == -1) {
+      if (value.isEmpty())
+        throw new IllegalArgumentException("Content-Disposition header value cannot be empty");
+      else
+        this.value = value;
+    } else
       this.value = value.substring(filenameIndex + 9).replace("\"", "");
-
-      String[] parts = type.split(";");
-      if (parts.length > 1) {
-        this.dispositionType = parts[1].trim();
-      } else {
-        this.dispositionType = null;
-      }
-    } else {
-      this.value = null;
-      this.dispositionType = null;
-    }
-  }
-
-  /**
-   * Constructs a ContentDispositionHeader object with the given disposition type and value.
-   *
-   * @param dispositionType the disposition type of the Content-Disposition header
-   * @param value the value of the Content-Disposition header
-   */
-  public ContentDispositionHeader(String dispositionType, String value) {
-    this.value = value;
-    this.dispositionType = dispositionType;
   }
 
   /**
@@ -75,7 +53,7 @@ public class ContentDispositionHeader implements Header<String> {
   @Override
   public ASCIICharSequence encodeToASCII() {
     return ASCIICharSequence.of(
-        getType() + ": " + dispositionType + " ; filename=\"" + value + "\"");
+        getType() + ": attachment; filename=\"" + value + "\"");
   }
 
   /**
@@ -85,6 +63,6 @@ public class ContentDispositionHeader implements Header<String> {
    */
   @Override
   public String toString() {
-    return getValue();
+    return "Text Attachment\n" + value;
   }
 }

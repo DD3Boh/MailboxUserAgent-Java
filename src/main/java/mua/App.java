@@ -182,7 +182,7 @@ public class App {
       String attachmentFilename = ui.line("Attachment filename (empty to stop): ");
       if (attachmentFilename.isEmpty()) break;
 
-      headers.add(new ContentDispositionHeader("attachment", attachmentFilename));
+      headers.add(new ContentDispositionHeader(attachmentFilename));
       headers.add(new ContentTransferEncodingHeader("base64"));
 
       body = "";
@@ -282,12 +282,9 @@ public class App {
       for (Header<?> header : part.getHeaders()) {
         if (regularHeaders.contains(header.getType())) {
           headersList.add(header.getType());
-          values.add(header.getValue().toString());
-        } else if (header.getType().equals("Content-Type")) {
-          headersList.add("Part\n" + header.getValue());
-          values.add(part.getBodyDecoded());
-        } else if (header.getType().equals("Content-Disposition")) {
-          headersList.add("Text Attachment\n" + header.getValue());
+          values.add(header.toString());
+        } else if (header.getType().equals("Content-Type") || header.getType().equals("Content-Disposition")) {
+          headersList.add(header.toString());
           values.add(part.getBodyDecoded());
         }
       }

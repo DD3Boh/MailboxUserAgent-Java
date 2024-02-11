@@ -48,6 +48,6 @@ public class ContentTransferEncodingHeader implements Header<String> {
    */
   @Override
   public String toString() {
-    return getType() + ": " + getValue();
+    return value;
   }
 }

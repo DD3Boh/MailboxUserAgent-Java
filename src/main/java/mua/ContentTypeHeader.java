@@ -103,11 +103,6 @@ public class ContentTypeHeader implements Header<String> {
    */
   @Override
   public String toString() {
-    String valueString = "";
-    if (charset != null) valueString = value + "; charset=\"" + charset + "\"";
-    else if (boundary != null) valueString = value + "; boundary=" + boundary;
-    else valueString = value;
-
-    return getType() + ": " + valueString;
+    return "Part\n" + value;
   }
 }

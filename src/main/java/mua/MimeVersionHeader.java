@@ -53,6 +53,6 @@ public class MimeVersionHeader implements Header<Double> {
    */
   @Override
   public String toString() {
-    return getType() + ": " + getValue();
+    return value.toString();
   }
 }
