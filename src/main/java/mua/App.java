@@ -17,7 +17,10 @@ public class App {
    * @throws IOException if the mailbox base directory is not found.
    */
   public static void main(String[] args) throws IOException, MissingHeaderException {
-    if (args.length <= 0) return;
+    if (args.length <= 0) {
+      System.err.println("No command line arguments found. Please provide the mailbox base directory.");
+      return;
+    }
 
     String mailboxBaseDir = args[0];
     Storage storage = new Storage(mailboxBaseDir);
