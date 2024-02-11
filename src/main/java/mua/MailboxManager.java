@@ -44,33 +44,6 @@ public class MailboxManager {
   }
 
   /**
-   * Adds a mailbox to the manager.
-   *
-   * @param mailbox The mailbox to be added.
-   */
-  /*public void addMailbox(Mailbox mailbox) {
-      mailboxes.add(mailbox);
-  }*/
-
-  /**
-   * Removes a mailbox from the manager.
-   *
-   * @param mailbox The mailbox to be removed.
-   */
-  /*public void removeMailbox(Mailbox mailbox) {
-      mailboxes.remove(mailbox);
-  }*/
-
-  /**
-   * Returns the list of mailboxes.
-   *
-   * @return the list of mailboxes
-   */
-  /*public List<Mailbox> getMailboxes() {
-      return Collections.unmodifiableList(mailboxes);
-  }*/
-
-  /**
    * Deletes a message from the mailbox.
    *
    * @param mailbox the mailbox
