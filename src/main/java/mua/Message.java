@@ -3,7 +3,6 @@ package mua;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import utils.ASCIICharSequence;
 import utils.Fragment;
 
@@ -28,11 +27,6 @@ public class Message {
 
   /** The list of message parts */
   private final List<MessagePart> messageParts;
-
-  /** Constructs an empty message. */
-  public Message() {
-    messageParts = new ArrayList<>();
-  }
 
   /**
    * Constructs a message with the given List of MessageParts.
@@ -71,33 +65,10 @@ public class Message {
   public static List<MessagePart> createMessageParts(List<Fragment> fragments) {
     List<MessagePart> messageParts = new ArrayList<>();
 
-    for (Fragment fragment : fragments) {
+    for (Fragment fragment : fragments)
       if (fragment != null) messageParts.add(new MessagePart(fragment));
-    }
 
     return messageParts;
-  }
-
-  /**
-   * Adds a message part to the message. The part cannot be null.
-   *
-   * @param part the message part to add
-   */
-  public void addPart(MessagePart part) {
-    messageParts.add(Objects.requireNonNull(part));
-  }
-
-  /**
-   * Removes a message part from the message.
-   *
-   * @param part the message part to remove
-   * @throws IllegalArgumentException if the specified part is not present in the message
-   */
-  public void removePart(MessagePart part) {
-    if (!messageParts.contains(part))
-      throw new IllegalArgumentException("The specified part is not present in the message");
-
-    messageParts.remove(part);
   }
 
   /**
@@ -131,28 +102,5 @@ public class Message {
       }
     }
     return ASCIICharSequence.of(sb.toString());
-  }
-
-  /**
-   * Returns a string representation of the message.
-   *
-   * @return a string representation of the message
-   */
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-
-    for (MessagePart part : messageParts) {
-      ContentTypeHeader contentHeader = (ContentTypeHeader) part.getHeader(ContentTypeHeader.class);
-      sb.append(part.toString());
-      sb.append("\n");
-      if (contentHeader != null && contentHeader.getBoundary() != null) {
-        sb.append("--");
-        sb.append(contentHeader.getBoundary());
-        if (part.equals(messageParts.get(messageParts.size() - 1))) sb.append("--");
-        else sb.append("\n");
-      }
-    }
-    return sb.toString();
   }
 }
