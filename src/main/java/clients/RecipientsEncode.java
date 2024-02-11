@@ -22,7 +22,11 @@ public class RecipientsEncode {
 
     Recipients recipients = new Recipients();
 
-    while (scanner.hasNextLine()) recipients.addAddress(scanner.nextLine());
+    while (scanner.hasNextLine()) {
+      String[] address = scanner.nextLine().split(", ");
+      if (address.length == 3)
+        recipients.addAddress(new mua.Address(address[0], address[1], address[2]));
+    }
 
     System.out.println(new RecipientsHeader(recipients).encodeToASCII());
 

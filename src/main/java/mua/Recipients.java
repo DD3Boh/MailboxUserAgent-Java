@@ -40,23 +40,6 @@ public class Recipients implements Iterable<Address> {
   }
 
   /**
-   * Adds an address starting from its decoded string representation. The string representation is
-   * split into display name, local part, and domain. The variables are separated by commas. The
-   * display name may be empty.
-   *
-   * @param addressString The string representation of the address.
-   */
-  public void addAddress(String addressString) {
-    String addressArray[] = addressString.split(",");
-    String displayName = addressArray[0].trim();
-    String local = addressArray[1].trim();
-    String domain = addressArray[2].trim();
-
-    Address address = new Address(displayName, local, domain);
-    addAddress(address);
-  }
-
-  /**
    * Adds an address to the recipients list.
    *
    * @param address The address to be added.
