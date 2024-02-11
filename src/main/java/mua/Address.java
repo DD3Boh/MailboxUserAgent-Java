@@ -9,12 +9,13 @@ public class Address {
   /*
    * Abstraction Function:
    * Represents an email address with a display name, local part, and domain.
-   * An instance a of Address represents an email address of the form "a.displayName <a.local@a.domain>".
-   * If a.displayName is an empty string, it represents an email address of the form "a.local@a.domain".
+   * An instance a of Address represents an email address of the form "displayName local@domain".
+   * If displayName is an empty string, it represents an email address of the form "local@domain".
    *
    * Representation Invariant:
    * - displayName, local, and domain are not null.
    * - local and domain are valid parts of an email address, as defined by AddressEncoding.isValidAddressPart(String).
+   * - displayName can be an empty string.
    */
 
   /** the display name associated with the email address */
@@ -30,7 +31,7 @@ public class Address {
    * Constructs a new Address instance from a full email address string that may include a display
    * name.
    *
-   * <p>The expected format is "Display Name local@domain". If the display name is not present, the
+   * The expected format is "Display Name local@domain". If the display name is not present, the
    * format should be "local@domain".
    *
    * @param fullAddress the full email address string
@@ -65,8 +66,12 @@ public class Address {
    *     AddressEncoding.isValidAddressPart(String)
    * @throws IllegalArgumentException if the domain part is invalid, according to
    *     AddressEncoding.isValidAddressPart(String)
+   * @throws IllegalArgumentException if displayName, local, or domain are null.
    */
-  public Address(String displayName, String local, String domain) {
+  public Address(String displayName, String local, String domain) throws IllegalArgumentException {
+    if (displayName == null || local == null || domain == null)
+      throw new IllegalArgumentException("Arguments cannot be null");
+
     if (!AddressEncoding.isValidAddressPart(local))
       throw new IllegalArgumentException("Invalid local part");
 
@@ -79,41 +84,40 @@ public class Address {
   }
 
   /**
-   * Returns the ASCII representation of the Address object. If the display name is not present, it
-   * returns the address in the format "local@domain". If the display name is present and is made of
-   * one or two words, it returns the address in the format "Display Name local@domain". If the
-   * display name is present and is made of more than two words, it returns the address in the
-   * format ""Display Name" local@domain".
+   * Returns the ASCII representation of the Address object, ready to be written to the disk.
+   *
+   * If the display name is not present, it returns the address in the format "local@domain".
+   * If the display name is present and is made of one or two words, it returns the address
+   * in the format "Display Name local@domain".
+   * If the display name is present and is made of more than two words, it returns the address
+   * in the format ""Display Name" local@domain".
    *
    * @return the ASCII representation of the Address object
    */
   public ASCIICharSequence encodeToASCII() {
-    if (displayName.trim().isEmpty())
-      return ASCIICharSequence.of(String.format("%s@%s", local, domain));
+    return ASCIICharSequence.of(this.toString());
+  }
+
+  /**
+   * Returns the String representation of the Address object.
+   * If the display name is not present, it returns the address in the format "local@domain".
+   * If the display name is present and is made of one or two words, it returns the address
+   * in the format "Display Name local@domain".
+   * If the display name is present and is made of more than two words, it returns the address
+   * in the format ""Display Name" local@domain".
+   *
+   * @return a String representation of the Address object
+   */
+  @Override
+  public String toString() {
+    if (displayName.trim().isBlank())
+      return String.format("%s@%s", local, domain);
 
     String[] nameParts = displayName.split("\\s+");
 
     if (nameParts.length <= 2)
-      return ASCIICharSequence.of(String.format("%s <%s@%s>", displayName, local, domain));
-    else return ASCIICharSequence.of(String.format("\"%s\" <%s@%s>", displayName, local, domain));
-  }
-
-  /**
-   * Returns a string representation of the Address object. If the display name is not present, it
-   * returns the address in the format "local@domain". If the display name is present and is made of
-   * one or two words, it returns the address in the format "Display Name local@domain". If the
-   * display name is present and is made of more than two words, it returns the address in the
-   * format ""Display Name" local@domain".
-   *
-   * @return a string representation of the Address object
-   */
-  @Override
-  public String toString() {
-    if (displayName.trim().isEmpty()) return String.format("%s@%s", local, domain);
-
-    String[] nameParts = displayName.split("\\s+");
-
-    if (nameParts.length <= 2) return String.format("%s <%s@%s>", displayName, local, domain);
-    else return String.format("\"%s\" <%s@%s>", displayName, local, domain);
+      return String.format("%s <%s@%s>", displayName, local, domain);
+    else
+      return String.format("\"%s\" <%s@%s>", displayName, local, domain);
   }
 }
