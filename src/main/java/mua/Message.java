@@ -1,7 +1,6 @@
 package mua;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import utils.ASCIICharSequence;
 import utils.Fragment;
@@ -61,9 +60,13 @@ public class Message {
    *
    * @param fragments the list of Fragments
    * @return a list of MessageParts
+   * @throws IllegalArgumentException if the fragments are null or empty
    */
-  public static List<MessagePart> createMessageParts(List<Fragment> fragments) {
+  public static List<MessagePart> createMessageParts(List<Fragment> fragments) throws IllegalArgumentException {
     List<MessagePart> messageParts = new ArrayList<>();
+
+    if (fragments == null) throw new IllegalArgumentException("The fragments cannot be null");
+    if (fragments.isEmpty()) throw new IllegalArgumentException("The message must contain at least one part");
 
     for (Fragment fragment : fragments)
       if (fragment != null) messageParts.add(new MessagePart(fragment));
@@ -77,15 +80,16 @@ public class Message {
    * @return a copy of the list of message parts
    */
   public List<MessagePart> getParts() {
-    return Collections.unmodifiableList(messageParts);
+    return new ArrayList<>(messageParts);
   }
 
   /**
-   * Returns the ASCII representation of the message. The ASCII representation of the message is the
-   * concatenation of the ASCII representations of its parts. Each part is separated by a newline
-   * character.
+   * Returns the ASCII representation of the message.
    *
-   * @return the ASCII representation of the message
+   * The ASCII representation of the message is the concatenation of the ASCII representations of its parts.
+   * Each part is separated by a newline character.
+   *
+   * @return the ASCII representation of the message.
    */
   public ASCIICharSequence encodeToASCII() {
     StringBuilder sb = new StringBuilder();
