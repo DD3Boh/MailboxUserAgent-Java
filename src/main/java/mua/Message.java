@@ -11,13 +11,21 @@ import utils.Fragment;
 public class Message {
   /*
    * Abstraction Function:
-   * A Message m represents a sequence of MessageParts mp[1], ..., mp[n] where n is the number of MessageParts.
-   * Each MessagePart mp[i] is represented by messageParts.get(i-1) for 1 <= i <= n.
+   * Represents a message composed of multiple message parts. An instance of Message represents a
+   * message with the following parts: messageParts.get(0), messageParts.get(1), ..., messageParts.get(n).
+   * Each message needs to contain at least one part.
+   * The first part of the message must contain the From, To, Subject, and Date headers.
+   * The ASCII representation of the message is the concatenation of the ASCII representations of its parts,
+   * separated by a newline character.
    *
    * Representation Invariant:
-   * - messageParts != null
-   * - All elements in messageParts are not null
+   * - messageParts is not null and does not contain null elements.
+   * - messageParts is not empty.
+   * - The first part of the message must contain the From, To, Subject, and Date headers.
+   * - The ASCII representation of the message is the concatenation of the ASCII representations of its parts,
+   *   separated by a newline character.
    */
+
   /** The list of message parts */
   private final List<MessagePart> messageParts;
 
@@ -37,10 +45,12 @@ public class Message {
       throws MissingHeaderException, IllegalArgumentException {
     this.messageParts = messageParts;
 
+    if (messageParts == null) throw new IllegalArgumentException("The message parts cannot be null");
+    if (messageParts.isEmpty()) throw new IllegalArgumentException("The message must contain at least one part");
+
     MessagePart part = messageParts.get(0);
 
-    if (part == null)
-      throw new IllegalArgumentException("The first part of the message cannot be null");
+    if (part == null) throw new IllegalArgumentException("The first part of the message cannot be null");
 
     boolean containsFrom = part.getHeader(SenderHeader.class) != null;
     boolean containsTo = part.getHeader(RecipientsHeader.class) != null;
