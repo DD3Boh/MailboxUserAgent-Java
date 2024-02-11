@@ -50,10 +50,6 @@ public class App {
         if (input == null) break;
         switch (input[0]) {
           case "LSM":
-            if (curMailbox != null) {
-              ui.error("LSM command is only available when no mailbox is selected.");
-              break;
-            }
             ui.output(getMailboxString(new ArrayList<>(mailboxManager.getMailboxMap().keySet())));
             break;
           case "LSE":
