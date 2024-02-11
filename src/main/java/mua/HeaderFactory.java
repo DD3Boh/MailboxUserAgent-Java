@@ -19,7 +19,7 @@ public class HeaderFactory {
   public static Header<?> createHeader(String type, String value) {
     switch (type.toLowerCase()) {
       case "from":
-        return new SenderHeader(new Address(value));
+        return new SenderHeader(Address.fromFullAddress(value));
       case "to":
         return new RecipientsHeader(value);
       case "subject":

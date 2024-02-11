@@ -21,10 +21,9 @@ public class RecipientsHeader implements Header<List<Address>> {
     if (addressList.startsWith("To: ")) addressList = addressList.substring("To: ".length());
 
     String[] addressArray = addressList.split(", ");
-    for (String addressString : addressArray) {
-      Address address = new Address(addressString);
-      addAddress(address);
-    }
+
+    for (String addressString : addressArray)
+      addAddress(Address.fromFullAddress(addressString));
   }
 
   /**

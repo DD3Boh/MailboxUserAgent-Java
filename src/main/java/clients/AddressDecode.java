@@ -18,7 +18,7 @@ public class AddressDecode {
     String encodedAddress = scanner.nextLine();
     scanner.close();
 
-    Address address = new Address(encodedAddress);
+    Address address = Address.fromFullAddress(encodedAddress);
     String displayName = address.displayName;
     String local = address.local;
     String domain = address.domain;

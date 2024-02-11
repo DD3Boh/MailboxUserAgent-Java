@@ -28,35 +28,6 @@ public class Address {
   public final String domain;
 
   /**
-   * Constructs a new Address instance from a full email address string that may include a display
-   * name.
-   *
-   * The expected format is "Display Name local@domain". If the display name is not present, the
-   * format should be "local@domain".
-   *
-   * @param fullAddress the full email address string
-   * @throws IllegalArgumentException if the email address is invalid, according to exceptions
-   *     thrown by the helper methods
-   */
-  public Address(String fullAddress) throws IllegalArgumentException {
-    ASCIICharSequence ascii = ASCIICharSequence.of(fullAddress);
-    List<List<ASCIICharSequence>> addresses = AddressEncoding.decode(ascii);
-
-    if (addresses.size() != 1 || addresses.get(0).size() != 3)
-      throw new IllegalArgumentException("Invalid email address");
-
-    if (!AddressEncoding.isValidAddressPart(addresses.get(0).get(1).toString()))
-      throw new IllegalArgumentException("Invalid local part");
-
-    if (!AddressEncoding.isValidAddressPart(addresses.get(0).get(2).toString()))
-      throw new IllegalArgumentException("Invalid domain part");
-
-    this.displayName = addresses.get(0).get(0).toString();
-    this.local = addresses.get(0).get(1).toString();
-    this.domain = addresses.get(0).get(2).toString();
-  }
-
-  /**
    * Constructs a new Address instance from a display name, local part, and domain.
    *
    * @param displayName the display name
@@ -84,13 +55,39 @@ public class Address {
   }
 
   /**
+   * Constructs a new Address instance from a String containing the full email address.
+   *
+   * The expected format is "Display Name local@domain". If the display name is not present, the
+   * format should be "local@domain".
+   * If the display name is present and is made of more than two words, it should be enclosed in
+   * double quotes, like this: ""Display Long Name" local@domain".
+   *
+   * @param fullAddress the full email address string
+   * @throws IllegalArgumentException if the email address is invalid, according to exceptions
+   *     thrown by the helper methods
+   */
+  public static Address fromFullAddress(String fullAddress) throws IllegalArgumentException {
+    ASCIICharSequence ascii = ASCIICharSequence.of(fullAddress);
+    List<List<ASCIICharSequence>> addresses = AddressEncoding.decode(ascii);
+
+    if (addresses.size() != 1 || addresses.get(0).size() != 3)
+      throw new IllegalArgumentException("Invalid email address");
+
+    String displayName = addresses.get(0).get(0).toString();
+    String local = addresses.get(0).get(1).toString();
+    String domain = addresses.get(0).get(2).toString();
+
+    return new Address(displayName, local, domain);
+  }
+
+  /**
    * Returns the ASCII representation of the Address object, ready to be written to the disk.
    *
    * If the display name is not present, it returns the address in the format "local@domain".
    * If the display name is present and is made of one or two words, it returns the address
    * in the format "Display Name local@domain".
    * If the display name is present and is made of more than two words, it returns the address
-   * in the format ""Display Name" local@domain".
+   * in the format ""Display Long Name" local@domain".
    *
    * @return the ASCII representation of the Address object
    */
@@ -104,7 +101,7 @@ public class Address {
    * If the display name is present and is made of one or two words, it returns the address
    * in the format "Display Name local@domain".
    * If the display name is present and is made of more than two words, it returns the address
-   * in the format ""Display Name" local@domain".
+   * in the format ""Display Long Name" local@domain".
    *
    * @return a String representation of the Address object
    */
