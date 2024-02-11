@@ -6,7 +6,7 @@ import utils.ASCIICharSequence;
 import java.util.Iterator;
 
 /** Represents the recipients header of a message, using a Recipients object. */
-public class RecipientsHeader implements Header<List<Address>> {
+public final class RecipientsHeader implements Header<List<Address>> {
   /** The value of the Recipients header, represented as a Recipients object */
   private final List<Address> addresses;
 

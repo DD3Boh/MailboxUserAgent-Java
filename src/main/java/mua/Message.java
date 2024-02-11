@@ -6,7 +6,7 @@ import utils.ASCIICharSequence;
 import utils.Fragment;
 
 /** Represents a message composed of multiple message parts. */
-public class Message {
+public final class Message {
   /*
    * Abstraction Function:
    * Represents a message composed of multiple message parts. An instance of Message represents a

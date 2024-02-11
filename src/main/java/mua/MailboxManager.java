@@ -11,7 +11,7 @@ import utils.*;
  * The MailboxManager class represents a manager for mailboxes. It provides methods to add and
  * remove mailboxes.
  */
-public class MailboxManager {
+public final class MailboxManager {
   /** Map of mailboxes and their corresponding Storage.Box */
   private final Map<Mailbox, Storage.Box> mailboxMap;
 

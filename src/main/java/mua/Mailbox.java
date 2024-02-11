@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /** Represents a mailbox that stores messages. */
-public class Mailbox {
+public final class Mailbox {
   /** The name of the mailbox */
   public final String name;
 

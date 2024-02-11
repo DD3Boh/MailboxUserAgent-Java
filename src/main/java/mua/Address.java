@@ -5,7 +5,7 @@ import utils.ASCIICharSequence;
 import utils.AddressEncoding;
 
 /** Represents an email address with display name, local part, and domain. */
-public class Address {
+public final class Address {
   /*
    * Abstraction Function:
    * Represents an email address with a display name, local part, and domain.

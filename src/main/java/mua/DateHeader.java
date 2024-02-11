@@ -5,7 +5,7 @@ import utils.ASCIICharSequence;
 import utils.DateEncoding;
 
 /** Represents the date header of when the message was composed. */
-public class DateHeader implements Header<ZonedDateTime> {
+public final class DateHeader implements Header<ZonedDateTime> {
   /** The value of the Date header, represented as a ZonedDateTime object */
   private ZonedDateTime value;
 

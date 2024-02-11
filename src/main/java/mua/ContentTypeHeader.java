@@ -3,7 +3,7 @@ package mua;
 import utils.ASCIICharSequence;
 
 /** Represents a Content-Type header. */
-public class ContentTypeHeader implements Header<String> {
+public final class ContentTypeHeader implements Header<String> {
   /** the text value of the Content-Type header */
   private final String value;
 

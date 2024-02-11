@@ -9,7 +9,7 @@ import utils.Base64Encoding;
 import utils.Fragment;
 
 /** Represents a message part of a message. */
-public class MessagePart {
+public final class MessagePart {
   /** The list of headers of the message part */
   private final List<Header<?>> headers;
 
