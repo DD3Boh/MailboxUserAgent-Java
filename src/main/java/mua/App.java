@@ -200,6 +200,11 @@ public class App {
       hasAttachment = true;
     }
 
+    if (parts.size() == 1) {
+      ui.error("There must be at least one valid part in the message");
+      return;
+    }
+
     if (parts.size() < 3) {
       MessagePart part0 = parts.get(0);
       MessagePart part1 = parts.get(1);
