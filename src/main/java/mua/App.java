@@ -196,10 +196,13 @@ public class App {
     if (parts.size() < 3) {
       MessagePart part0 = parts.get(0);
       MessagePart part1 = parts.get(1);
-      MessagePart merged = MessagePart.mergeMessageParts(part0, part1);
-      MessagePart part = new MessagePart(merged.getHeaders(), merged.getBodyDecoded());
-      parts.remove(1);
-      parts.set(0, part);
+      headers = new ArrayList<>(part0.getHeaders());
+
+      for (Header<?> header : part1.getHeaders()) headers.add(header);
+
+      MessagePart merged = new MessagePart(headers, part1.getBodyDecoded());
+      parts.clear();
+      parts.add(merged);
     } else {
       MessagePart part0 = parts.get(0);
       headers = new ArrayList<>(part0.getHeaders());

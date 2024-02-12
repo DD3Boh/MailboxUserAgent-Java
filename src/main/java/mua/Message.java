@@ -69,7 +69,7 @@ public final class Message {
     if (fragments.isEmpty()) throw new IllegalArgumentException("The message must contain at least one part");
 
     for (Fragment fragment : fragments)
-      if (fragment != null) messageParts.add(new MessagePart(fragment));
+      if (fragment != null) messageParts.add(MessagePart.fromFragment(fragment));
 
     return messageParts;
   }

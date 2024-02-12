@@ -10,6 +10,21 @@ import utils.Fragment;
 
 /** Represents a message part of a message. */
 public final class MessagePart {
+  /*
+   * Abstraction Function:
+   * Represents a message part of a message. An instance of MessagePart represents a message part with the following parts:
+   * - headers: the list of headers of the message part
+   * - body: the body of the message part
+   * The body of the message part is saved as an encoded ASCIICharSequence if the Content-Transfer-Encoding header is set to "base64".
+   * The ASCII representation of the message part is the concatenation of the ASCII representations of its headers,
+   * followed by a newline character, and the body.
+   *
+   * Representation Invariant:
+   * - headers is not null and does not contain null elements.
+   * - headers cannot be empty.
+   * - body is not null or empty.
+   */
+
   /** The list of headers of the message part */
   private final List<Header<?>> headers;
 
@@ -17,38 +32,62 @@ public final class MessagePart {
   public final ASCIICharSequence body;
 
   /**
-   * Construct a MessagePart object with the specified Fragment.
+   * Static constructor of a MessagePart object with the specified Fragment.
+   *
+   * The Fragment must contain at least one header and a body.
+   * The headers of the message part are parsed from the raw headers of the Fragment.
+   * The body of the message part is the raw body of the Fragment.
    *
    * @param fragment the Fragment
+   * @throws IllegalArgumentException if the fragment is null
+   * @throws IllegalArgumentException if the fragment does not contain at least one header
+   * @throws IllegalArgumentException if the fragment does not contain a body
    */
-  public MessagePart(Fragment fragment) {
-    this.headers = new ArrayList<>();
-    for (List<ASCIICharSequence> rawHeader : fragment.rawHeaders())
-      this.headers.add(parseHeader(rawHeader));
-    this.body = fragment.rawBody();
-    reorderHeaders();
+  public static MessagePart fromFragment(Fragment fragment) {
+    if (fragment == null) throw new IllegalArgumentException("The fragment cannot be null");
+    if (fragment.rawHeaders().isEmpty()) throw new IllegalArgumentException("The fragment must contain at least one header");
+    if (fragment.rawBody().isEmpty()) throw new IllegalArgumentException("The fragment must contain a body");
+
+    List<Header<?>> headers = new ArrayList<>();
+    String body = fragment.rawBody().toString();
+
+    for (List<ASCIICharSequence> rawHeader : fragment.rawHeaders()) {
+      Header<?> header = parseHeader(rawHeader);
+      headers.add(header);
+      if (header.getType().equals("Content-Transfer-Encoding")) 
+        body = Base64Encoding.decode(fragment.rawBody());
+    }
+
+    return new MessagePart(headers, body);
   }
 
   /**
    * Construct a MessagePart object with the specified headers and body.
+   * The headers of the message part are reordered according to the order list.
+   * The body of the message part is encoded with Base64 if the Content-Transfer-Encoding header is set to "base64".
+   * The body of the message part is the raw body if the Content-Transfer-Encoding header is not set.
    *
-   * @param headers the headers
-   * @param body the body
+   * @param headers the headers of the message part
+   * @param body the body of the message part
    */
-  public MessagePart(List<Header<?>> headers, String body) {
-    this.headers = new ArrayList<>();
+  public MessagePart(List<Header<?>> headers, String body) throws IllegalArgumentException {
+    if (headers.contains(null)) throw new IllegalArgumentException("The headers cannot be null");
 
-    for (Header<?> header : headers) this.headers.add(header);
-
+    this.headers = new ArrayList<>(headers);
     reorderHeaders();
 
     ContentTransferEncodingHeader contentEncodingHeader =
         (ContentTransferEncodingHeader) getHeader(ContentTransferEncodingHeader.class);
+
     if (contentEncodingHeader != null) this.body = Base64Encoding.encode(body);
     else this.body = ASCIICharSequence.of(body);
   }
 
-  /** Reorder the headers of the message part. */
+  /**
+   * Reorder the headers of the message part according to the order list.
+   * The order list is the list of headers in the order they should appear in the message part.
+   * If a header is not in the order list, it is placed at the end of the list.
+   */
   private void reorderHeaders() {
     List<String> orderList =
         new ArrayList<>(
@@ -81,26 +120,27 @@ public final class MessagePart {
   }
 
   /**
-   * Find the istance of the header with the specified Header type. If the header is not found, null
-   * is returned.
+   * Find the istance of the header with the specified Header type. 
+   * If the header is not found, null is returned.
    *
    * @param headerClass the class of the header to find
    * @return the header with the specified type, or null if not found.
    */
   public Header<?> getHeader(Class<?> headerClass) {
-    for (Header<?> header : headers) {
+    for (Header<?> header : headers)
       if (headerClass.isInstance(header)) return header;
-    }
+
     return null;
   }
 
   /**
-   * Parse the header of the message part, given the raw header.
+   * Static parsing for the header of the message part, given the raw header,
+   * as a list of ASCIICharSequence.
    *
    * @param rawHeader the raw header
    * @return the parsed Header object.
    */
-  private Header<?> parseHeader(List<ASCIICharSequence> rawHeader) {
+  private static Header<?> parseHeader(List<ASCIICharSequence> rawHeader) {
     String headerName = rawHeader.get(0).toString();
     String headerValue = rawHeader.get(1).toString();
 
@@ -108,16 +148,18 @@ public final class MessagePart {
   }
 
   /**
-   * Returns the headers of the message part.
+   * Returns a copy of the headers of the message part.
    *
-   * @return the list of headers of the message part
+   * @return the list of headers of the message part.
    */
   public List<Header<?>> getHeaders() {
-    return Collections.unmodifiableList(headers);
+    return new ArrayList<>(headers);
   }
 
   /**
    * Returns the ASCII representation of the message part.
+   * The ASCII representation of the message part is the concatenation of the ASCII representations of its headers,
+   * followed by a newline character, and the ascii representation of the body.
    *
    * @return the ASCII representation of the message part
    */
@@ -144,28 +186,5 @@ public final class MessagePart {
     if (contentEncodingHeader == null) return this.body.toString();
 
     return Base64Encoding.decode(this.body);
-  }
-
-  /**
-   * Merge two message parts into a single message part. The merged message part has the headers of
-   * both message parts and the body of the second message part. If a header is present in both
-   * message parts, the header of the second message part is used.
-   *
-   * @param messagePart1 the first message part
-   * @param messagePart2 the second message part
-   * @return the merged message part
-   */
-  public static MessagePart mergeMessageParts(MessagePart messagePart1, MessagePart messagePart2) {
-    List<Header<?>> mergedHeaders = new ArrayList<>(messagePart1.getHeaders());
-
-    for (Header<?> header : messagePart2.getHeaders()) {
-      Header<?> existingHeader = messagePart1.getHeader(header.getClass());
-      if (existingHeader != null) mergedHeaders.remove(existingHeader);
-      mergedHeaders.add(header);
-    }
-
-    String mergedBody = messagePart2.getBodyDecoded();
-
-    return new MessagePart(mergedHeaders, mergedBody);
   }
 }
