@@ -2,8 +2,16 @@ package mua;
 
 import utils.ASCIICharSequence;
 
-/** Represents the sender header of a message, using an Address object. */
+/** Represents the sender header, using an Address object. */
 public final class SenderHeader implements Header<Address> {
+  /*
+   * Abstraction Function:
+   * Represents a Sender header, with value being an address.
+   * The value is represented as an Address object.
+   *
+   * Representation Invariant:
+   * - value is not null.
+   */
   /** The type of the header */
   public static final String TYPE = "From";
   /** The value of the Sender header, represented as an Address object */
@@ -13,8 +21,10 @@ public final class SenderHeader implements Header<Address> {
    * Constructs a SenderHeader object with the specified Address object.
    *
    * @param value the Address object of the sender
+   * @throws IllegalArgumentException if the value is null
    */
   public SenderHeader(Address value) {
+    if (value == null) throw new IllegalArgumentException("The address cannot be null");
     this.value = value;
   }
 
