@@ -133,7 +133,7 @@ public class App {
   /**
    * Handles the COMPOSE command.
    *
-   * Reads the message parts from the standard input and adds the message to the mailbox.
+   * <p>Reads the message parts from the standard input and adds the message to the mailbox.
    *
    * @param mailboxManager the mailbox manager
    * @param mailbox the mailbox
