@@ -5,24 +5,46 @@ import java.util.List;
 import utils.ASCIICharSequence;
 import java.util.Iterator;
 
-/** Represents the recipients header of a message, using a Recipients object. */
+/** Represents a recipients header, using a List of Address. */
 public final class RecipientsHeader implements Header<List<Address>> {
+  /*
+   * Abstraction Function:
+   * Represents a recipients header, with value being a list of addresses.
+   * The value is represented as a List of Address.
+   *
+   * Representation Invariant:
+   * - The addresses is not null and does not contain null elements.
+   * - The addresses cannot be empty.
+   * - The addresses cannot contain duplicate elements.
+   */
   /** The type of the header */
   private static final String TYPE = "To";
   /** The value of the Recipients header, represented as a Recipients object */
   private final List<Address> addresses;
 
   /**
-   * Constructs a RecipientsHeader object with the specified Recipients objects.
+   * Constructs a RecipientsHeader object with the specified String, which
+   * contains a list of addresses separated by a comma and a space.
+   * If the string starts with "To: ", the "To: " is removed.
+   * The string is then split by ", " to obtain the list of addresses.
    *
-   * @param recipients the Recipients object of the recipients.
+   * @param addressList the list of addresses, separated by a comma and a space
+   * @throws IllegalArgumentException if the addressList is null or empty
+   * @throws IllegalArgumentException if the addressList does not contain at least one address
    */
   public RecipientsHeader(String addressList) {
     this.addresses = new ArrayList<>();
 
-    if (addressList.startsWith("To: ")) addressList = addressList.substring("To: ".length());
+    if (addressList == null || addressList.isEmpty())
+      throw new IllegalArgumentException("The address list cannot be null or empty");
+
+    if (addressList.startsWith("To: "))
+      addressList = addressList.substring("To: ".length());
 
     String[] addressArray = addressList.split(", ");
+
+    if (addressArray.length == 0)
+      throw new IllegalArgumentException("The address list cannot be empty");
 
     for (String addressString : addressArray)
       addAddress(Address.fromFullAddress(addressString));
@@ -32,8 +54,15 @@ public final class RecipientsHeader implements Header<List<Address>> {
    * Constructs a RecipientsHeader object with the specified list of addresses.
    *
    * @param addresses the list of addresses
+   * @throws IllegalArgumentException if the addresses is null
+   * @throws IllegalArgumentException if the addresses is empty
+   * @throws IllegalArgumentException if the addresses contains null elements
    */
   public RecipientsHeader(List<Address> addresses) {
+    if (addresses == null) throw new IllegalArgumentException("The addresses cannot be null");
+    if (addresses.isEmpty()) throw new IllegalArgumentException("The addresses cannot be empty");
+    if (addresses.contains(null)) throw new IllegalArgumentException("The addresses cannot contain null elements");
+
     this.addresses = addresses;
   }
 
@@ -41,8 +70,10 @@ public final class RecipientsHeader implements Header<List<Address>> {
    * Adds an address to the recipients list.
    *
    * @param address The address to be added.
+   * @throws IllegalArgumentException if the address is null
    */
   public void addAddress(Address address) {
+    if (address == null) throw new IllegalArgumentException("The address cannot be null");
     this.addresses.add(address);
   }
 
