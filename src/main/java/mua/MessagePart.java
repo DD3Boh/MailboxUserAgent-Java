@@ -139,10 +139,16 @@ public final class MessagePart {
    *
    * @param rawHeader the raw header
    * @return the parsed Header object.
+   * @throws IllegalArgumentException if the raw header does not contain two elements
+   * @throws IllegalArgumentException if the raw header contains null elements
    */
   private static Header<?> parseHeader(List<ASCIICharSequence> rawHeader) {
+    if (rawHeader.size() != 2) throw new IllegalArgumentException("The raw header must contain two elements");
+
     String headerName = rawHeader.get(0).toString();
     String headerValue = rawHeader.get(1).toString();
+
+    if (headerName == null || headerValue == null) throw new IllegalArgumentException("The raw header cannot contain null elements");
 
     return HeaderFactory.createHeader(headerName, headerValue);
   }
