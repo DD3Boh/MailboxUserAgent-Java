@@ -32,6 +32,34 @@ public final class MessagePart {
   public final ASCIICharSequence body;
 
   /**
+   * Construct a MessagePart object with the specified headers and body.
+   * The headers of the message part are reordered according to the order list.
+   * The body of the message part is encoded with Base64 if the Content-Transfer-Encoding header
+   * is set to "base64". The body of the message part is the raw body if the
+   * Content-Transfer-Encoding header is not set.
+   * The body that is passed as "body" needs to necessarily be already decoded into a normal
+   * String, and not encoded as base64.
+   *
+   * @param headers the headers of the message part
+   * @param body the body of the message part
+   * @throws IllegalArgumentException if one of headers is null
+   */
+  public MessagePart(List<Header<?>> headers, String body) throws IllegalArgumentException {
+    if (headers.contains(null)) throw new IllegalArgumentException("The headers cannot be null");
+
+    this.headers = new ArrayList<>(headers);
+    reorderHeaders();
+
+    ContentTransferEncodingHeader contentEncodingHeader =
+        (ContentTransferEncodingHeader) getHeader(ContentTransferEncodingHeader.class);
+
+    if (contentEncodingHeader != null && contentEncodingHeader.getValue().equals("base64"))
+      this.body = Base64Encoding.encode(body);
+    else
+      this.body = ASCIICharSequence.of(body);
+  }
+
+  /**
    * Static constructor of a MessagePart object with the specified Fragment.
    *
    * <p>The Fragment must contain at least one header and a body. The headers of the message part
@@ -58,32 +86,10 @@ public final class MessagePart {
       Header<?> header = parseHeader(rawHeader);
       headers.add(header);
       if (header.getType().equals("Content-Transfer-Encoding"))
-        body = Base64Encoding.decode(fragment.rawBody());
+        if (header.getValue().equals("base64")) body = Base64Encoding.decode(fragment.rawBody());
     }
 
     return new MessagePart(headers, body);
-  }
-
-  /**
-   * Construct a MessagePart object with the specified headers and body. The headers of the message
-   * part are reordered according to the order list. The body of the message part is encoded with
-   * Base64 if the Content-Transfer-Encoding header is set to "base64". The body of the message part
-   * is the raw body if the Content-Transfer-Encoding header is not set.
-   *
-   * @param headers the headers of the message part
-   * @param body the body of the message part
-   */
-  public MessagePart(List<Header<?>> headers, String body) throws IllegalArgumentException {
-    if (headers.contains(null)) throw new IllegalArgumentException("The headers cannot be null");
-
-    this.headers = new ArrayList<>(headers);
-    reorderHeaders();
-
-    ContentTransferEncodingHeader contentEncodingHeader =
-        (ContentTransferEncodingHeader) getHeader(ContentTransferEncodingHeader.class);
-
-    if (contentEncodingHeader != null) this.body = Base64Encoding.encode(body);
-    else this.body = ASCIICharSequence.of(body);
   }
 
   /**
