@@ -63,12 +63,23 @@ public final class Address {
    * double quotes, like this: ""Display Long Name" local@domain".
    *
    * @param fullAddress the full email address string
-   * @throws IllegalArgumentException if the email address is invalid, according to exceptions
-   *     thrown by the helper methods
+   * @throws IllegalArgumentException if the email address is invalid, according to the
+   *    AddressEncoding.decode(ASCIICharSequence) method
+   * @throws IllegalArgumentException if the fullAddress is null or empty
+   * @throws IllegalArgumentException if list of addresses are more than one or the address doesn't
+   *   have 3 parts
+   * @throws IllegalArgumentException if the list of addresses is null
+   * @return a new Address instance
    */
   public static Address fromFullAddress(String fullAddress) throws IllegalArgumentException {
+    if (fullAddress == null || fullAddress.isBlank())
+      throw new IllegalArgumentException("Invalid email address");
+
     ASCIICharSequence ascii = ASCIICharSequence.of(fullAddress);
     List<List<ASCIICharSequence>> addresses = AddressEncoding.decode(ascii);
+
+    if (addresses == null)
+      throw new IllegalArgumentException("The address is invalid");
 
     if (addresses.size() != 1 || addresses.get(0).size() != 3)
       throw new IllegalArgumentException("Invalid email address");
@@ -112,6 +123,7 @@ public final class Address {
    * If the display name is not present, the compressed version is returned, regardless of the value of the extended parameter.
    *
    * @param extended whether to return the extended version of the representation.
+   * @return the UI representation of the address, in a String format.
    */
   public String encodeToUI(boolean extended) {
     if (displayName.trim().isBlank() || !extended)

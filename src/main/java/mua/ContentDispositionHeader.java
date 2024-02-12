@@ -4,7 +4,8 @@ import utils.ASCIICharSequence;
 
 /** Represents a Content-Disposition header. Implements the Header interface with a String value. */
 public final class ContentDispositionHeader implements Header<String> {
-  /* Abstraction Function:
+  /*
+   * Abstraction Function:
    * Represents a Content-Disposition header with a value.
    * The Content-Disposition header is used to specify that the content is an attachment and to
    * provide a filename for the attachment.

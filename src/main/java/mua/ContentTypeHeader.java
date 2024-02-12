@@ -50,8 +50,8 @@ public final class ContentTypeHeader implements Header<String> {
    * "multipart/alternative" or "multipart/mixed".
    * If the text value is "text/plain" or "text/html", the value parameter must be the charset value.
    *
-   * @param variant the text value of the Content-Type header
-   * @param value the text value of the Content-Type header
+   * @param variant the media type of the content
+   * @param value the charset or boundary value of the content
    * @throws IllegalArgumentException if the variant or value is null or empty
    * @throws IllegalArgumentException if the variant is not "text/plain", "text/html", "multipart/alternative" or "multipart/mixed"
    * @throws IllegalArgumentException if the charset value is not "us-ascii" or "utf-8"
@@ -83,7 +83,7 @@ public final class ContentTypeHeader implements Header<String> {
    * The encoded Content-Type String is of the form "value; charset=charset" if charset is not null,
    * "value; boundary=boundary" if boundary is not null.
    *
-   * @param value the encoded Content-Type String
+   * @param encodedString the encoded Content-Type String
    * @return the Content-Type header
    * @throws IllegalArgumentException if the value is null or empty.
    * @throws IllegalArgumentException if the value does not contain only two values.

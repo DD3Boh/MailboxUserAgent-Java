@@ -24,8 +24,10 @@ public final class DateHeader implements Header<ZonedDateTime> {
    *
    * @param value a string in format RFC_1123_DATE_TIME representing the date and time when the
    *     message was composed.
+   * @throws IllegalArgumentException if the value is null or empty
    */
-  public DateHeader(String value) {
+  public DateHeader(String value) throws IllegalArgumentException {
+    if (value == null || value.isEmpty()) throw new IllegalArgumentException("The value cannot be null or empty");
     this.value = DateEncoding.decode(ASCIICharSequence.of(value));
   }
 

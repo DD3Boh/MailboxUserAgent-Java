@@ -42,6 +42,7 @@ public final class MessagePart {
    * @throws IllegalArgumentException if the fragment is null
    * @throws IllegalArgumentException if the fragment does not contain at least one header
    * @throws IllegalArgumentException if the fragment does not contain a body
+   * @return the MessagePart object
    */
   public static MessagePart fromFragment(Fragment fragment) {
     if (fragment == null) throw new IllegalArgumentException("The fragment cannot be null");
