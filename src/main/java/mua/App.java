@@ -133,12 +133,12 @@ public class App {
   /**
    * Handles the COMPOSE command.
    *
-   * <p>Reads the message parts from the standard input and adds the message to the mailbox.
+   * Reads the message parts from the standard input and adds the message to the mailbox.
    *
    * @param mailboxManager the mailbox manager
    * @param mailbox the mailbox
    * @param ui the UIInteract instance
-   * @throws IOException if an I/O error occurs
+   * @throws IOException if an I/O error occurs when reading from the storage
    */
   private static void handleCompose(MailboxManager mailboxManager, Mailbox mailbox, UIInteract ui)
       throws IOException {
