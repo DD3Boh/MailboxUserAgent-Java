@@ -7,6 +7,13 @@ import java.time.format.DateTimeFormatter;
 
 /** Represents the date header of when the message was composed. */
 public final class DateHeader implements Header<ZonedDateTime> {
+  /*
+   * Abstraction Function:
+   * Represents a Date header, with value being a date.
+   *
+   * Representation Invariant:
+   * - value is not null or empty.
+   */
   /** The type of the header */
   public static final String TYPE = "Date";
   /** The value of the Date header, represented as a ZonedDateTime object */
