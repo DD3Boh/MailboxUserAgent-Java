@@ -19,19 +19,21 @@ public final class SubjectHeader implements Header<String> {
    */
   /** The type of the header */
   public static final String TYPE = "Subject";
+
   /** The value of the Subject header */
   private final String value;
 
   /**
-   * Constructs a SubjectHeader object with the specified String.
-   * The value is decoded if it is encoded in Base64.
+   * Constructs a SubjectHeader object with the specified String. The value is decoded if it is
+   * encoded in Base64.
    *
    * @param value the subject of the message as a String.
    * @throws IllegalArgumentException if the value is null or empty
    */
   public SubjectHeader(String value) {
     String subject;
-    if (value == null || value.isEmpty()) throw new IllegalArgumentException("The value cannot be null or empty");
+    if (value == null || value.isEmpty())
+      throw new IllegalArgumentException("The value cannot be null or empty");
 
     if (ASCIICharSequence.isAscii(value)) {
       ASCIICharSequence ascii = ASCIICharSequence.of(value);
@@ -65,8 +67,8 @@ public final class SubjectHeader implements Header<String> {
   }
 
   /**
-   * Returns an ASCII representation of the SubjectHeader object.
-   * The ASCII representation is of the form "Subject: value".
+   * Returns an ASCII representation of the SubjectHeader object. The ASCII representation is of the
+   * form "Subject: value".
    *
    * @return an ASCII representation of the SubjectHeader object
    */
@@ -80,11 +82,11 @@ public final class SubjectHeader implements Header<String> {
   }
 
   /**
-   * Encodes the Subject Header's value to its UI representation, in a string format.
-   * The UI representation is the representation of the header's value that needs to be displayed to the user
-   * when creating cards or tables.
-   * This header does not have an extended version, so the extended parameter is ignored.
-   * The UI representation of the header consists of the value of the header, as an UTF-8 string.
+   * Encodes the Subject Header's value to its UI representation, in a string format. The UI
+   * representation is the representation of the header's value that needs to be displayed to the
+   * user when creating cards or tables. This header does not have an extended version, so the
+   * extended parameter is ignored. The UI representation of the header consists of the value of the
+   * header, as an UTF-8 string.
    *
    * @param extended ignored
    * @return the UI representation of the header
@@ -95,10 +97,9 @@ public final class SubjectHeader implements Header<String> {
   }
 
   /**
-   * Encodes the Subject Header's name to its UI representation, in a string format.
-   * The UI representation is the representation of the header's name that needs to be displayed to the user
-   * when creating cards or tables.
-   * The String generated is of the form "Subject\nvalue".
+   * Encodes the Subject Header's name to its UI representation, in a string format. The UI
+   * representation is the representation of the header's name that needs to be displayed to the
+   * user when creating cards or tables. The String generated is of the form "Subject\nvalue".
    *
    * @return the UI representation of the Subject Header
    */

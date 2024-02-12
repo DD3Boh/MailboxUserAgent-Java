@@ -1,9 +1,9 @@
 package mua;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import utils.ASCIICharSequence;
-import java.util.Iterator;
 
 /** Represents a recipients header, using a List of Address. */
 public final class RecipientsHeader implements Header<List<Address>> {
@@ -19,14 +19,14 @@ public final class RecipientsHeader implements Header<List<Address>> {
    */
   /** The type of the header */
   private static final String TYPE = "To";
+
   /** The value of the Recipients header, represented as a Recipients object */
   private final List<Address> addresses;
 
   /**
-   * Constructs a RecipientsHeader object with the specified String, which
-   * contains a list of addresses separated by a comma and a space.
-   * If the string starts with "To: ", the "To: " is removed.
-   * The string is then split by ", " to obtain the list of addresses.
+   * Constructs a RecipientsHeader object with the specified String, which contains a list of
+   * addresses separated by a comma and a space. If the string starts with "To: ", the "To: " is
+   * removed. The string is then split by ", " to obtain the list of addresses.
    *
    * @param addressList the list of addresses, separated by a comma and a space
    * @throws IllegalArgumentException if the addressList is null or empty
@@ -38,16 +38,14 @@ public final class RecipientsHeader implements Header<List<Address>> {
     if (addressList == null || addressList.isEmpty())
       throw new IllegalArgumentException("The address list cannot be null or empty");
 
-    if (addressList.startsWith("To: "))
-      addressList = addressList.substring("To: ".length());
+    if (addressList.startsWith("To: ")) addressList = addressList.substring("To: ".length());
 
     String[] addressArray = addressList.split(", ");
 
     if (addressArray.length == 0)
       throw new IllegalArgumentException("The address list cannot be empty");
 
-    for (String addressString : addressArray)
-      addAddress(Address.fromFullAddress(addressString));
+    for (String addressString : addressArray) addAddress(Address.fromFullAddress(addressString));
   }
 
   /**
@@ -61,7 +59,8 @@ public final class RecipientsHeader implements Header<List<Address>> {
   public RecipientsHeader(List<Address> addresses) {
     if (addresses == null) throw new IllegalArgumentException("The addresses cannot be null");
     if (addresses.isEmpty()) throw new IllegalArgumentException("The addresses cannot be empty");
-    if (addresses.contains(null)) throw new IllegalArgumentException("The addresses cannot contain null elements");
+    if (addresses.contains(null))
+      throw new IllegalArgumentException("The addresses cannot contain null elements");
 
     this.addresses = addresses;
   }
@@ -121,10 +120,10 @@ public final class RecipientsHeader implements Header<List<Address>> {
   }
 
   /**
-   * Encodes the Recipients Header's value to its UI representation, in a string format.
-   * The UI representation is the representation of the header's value that needs to be displayed
-   * to the user when creating cards or tables.
-   * This consists of the UI representation of each address in the list, separated by a newline.
+   * Encodes the Recipients Header's value to its UI representation, in a string format. The UI
+   * representation is the representation of the header's value that needs to be displayed to the
+   * user when creating cards or tables. This consists of the UI representation of each address in
+   * the list, separated by a newline.
    *
    * @param extended whether to return the extended version of the header
    * @return the UI representation of the header
@@ -146,10 +145,9 @@ public final class RecipientsHeader implements Header<List<Address>> {
   }
 
   /**
-   * Encodes the Recipients Header's name to its UI representation, in a string format.
-   * The UI representation is the representation of the header's name that needs to be displayed to the user
-   * when creating cards or tables.
-   * The String generated matches the name of the header.
+   * Encodes the Recipients Header's name to its UI representation, in a string format. The UI
+   * representation is the representation of the header's name that needs to be displayed to the
+   * user when creating cards or tables. The String generated matches the name of the header.
    *
    * @return the UI representation of the Recipients Header
    */

@@ -8,8 +8,7 @@ import utils.*;
 
 /**
  * The MailboxManager class represents a manager for mailboxes and keeps synchronized the mailboxe
- * and the storage.
- * It provides methods to add and remove mailboxes.
+ * and the storage. It provides methods to add and remove mailboxes.
  */
 public final class MailboxManager {
   /* Abstraction Function:

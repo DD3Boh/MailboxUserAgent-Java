@@ -3,15 +3,13 @@ package mua;
 /**
  * A utility factory class for creating Header instances.
  *
- * Each header type is associated with a specific class that implements the Header interface.
+ * <p>Each header type is associated with a specific class that implements the Header interface.
  * This factory class provides a method to create a new Header instance based on the given type and
  * value. If the type is not recognized, the method returns null.
  */
 public class HeaderFactory {
-  
-  /**
-   * Private constructor to prevent instantiation of this class.
-   */
+
+  /** Private constructor to prevent instantiation of this class. */
   private HeaderFactory() {}
 
   /**

@@ -34,9 +34,9 @@ public final class MessagePart {
   /**
    * Static constructor of a MessagePart object with the specified Fragment.
    *
-   * The Fragment must contain at least one header and a body.
-   * The headers of the message part are parsed from the raw headers of the Fragment.
-   * The body of the message part is the raw body of the Fragment.
+   * <p>The Fragment must contain at least one header and a body. The headers of the message part
+   * are parsed from the raw headers of the Fragment. The body of the message part is the raw body
+   * of the Fragment.
    *
    * @param fragment the Fragment
    * @throws IllegalArgumentException if the fragment is null
@@ -46,8 +46,10 @@ public final class MessagePart {
    */
   public static MessagePart fromFragment(Fragment fragment) {
     if (fragment == null) throw new IllegalArgumentException("The fragment cannot be null");
-    if (fragment.rawHeaders().isEmpty()) throw new IllegalArgumentException("The fragment must contain at least one header");
-    if (fragment.rawBody().isEmpty()) throw new IllegalArgumentException("The fragment must contain a body");
+    if (fragment.rawHeaders().isEmpty())
+      throw new IllegalArgumentException("The fragment must contain at least one header");
+    if (fragment.rawBody().isEmpty())
+      throw new IllegalArgumentException("The fragment must contain a body");
 
     List<Header<?>> headers = new ArrayList<>();
     String body = fragment.rawBody().toString();
@@ -55,7 +57,7 @@ public final class MessagePart {
     for (List<ASCIICharSequence> rawHeader : fragment.rawHeaders()) {
       Header<?> header = parseHeader(rawHeader);
       headers.add(header);
-      if (header.getType().equals("Content-Transfer-Encoding")) 
+      if (header.getType().equals("Content-Transfer-Encoding"))
         body = Base64Encoding.decode(fragment.rawBody());
     }
 
@@ -63,10 +65,10 @@ public final class MessagePart {
   }
 
   /**
-   * Construct a MessagePart object with the specified headers and body.
-   * The headers of the message part are reordered according to the order list.
-   * The body of the message part is encoded with Base64 if the Content-Transfer-Encoding header is set to "base64".
-   * The body of the message part is the raw body if the Content-Transfer-Encoding header is not set.
+   * Construct a MessagePart object with the specified headers and body. The headers of the message
+   * part are reordered according to the order list. The body of the message part is encoded with
+   * Base64 if the Content-Transfer-Encoding header is set to "base64". The body of the message part
+   * is the raw body if the Content-Transfer-Encoding header is not set.
    *
    * @param headers the headers of the message part
    * @param body the body of the message part
@@ -85,9 +87,9 @@ public final class MessagePart {
   }
 
   /**
-   * Reorder the headers of the message part according to the order list.
-   * The order list is the list of headers in the order they should appear in the message part.
-   * If a header is not in the order list, it is placed at the end of the list.
+   * Reorder the headers of the message part according to the order list. The order list is the list
+   * of headers in the order they should appear in the message part. If a header is not in the order
+   * list, it is placed at the end of the list.
    */
   private void reorderHeaders() {
     List<String> orderList =
@@ -100,8 +102,7 @@ public final class MessagePart {
                 "MIME-Version",
                 "Content-Type",
                 "Content-Transfer-Encoding",
-                "Content-Disposition"
-            ));
+                "Content-Disposition"));
 
     Comparator<Header<?>> comparator =
         new Comparator<Header<?>>() {
@@ -121,22 +122,21 @@ public final class MessagePart {
   }
 
   /**
-   * Find the istance of the header with the specified Header type. 
-   * If the header is not found, null is returned.
+   * Find the istance of the header with the specified Header type. If the header is not found, null
+   * is returned.
    *
    * @param headerClass the class of the header to find
    * @return the header with the specified type, or null if not found.
    */
   public Header<?> getHeader(Class<?> headerClass) {
-    for (Header<?> header : headers)
-      if (headerClass.isInstance(header)) return header;
+    for (Header<?> header : headers) if (headerClass.isInstance(header)) return header;
 
     return null;
   }
 
   /**
-   * Static parsing for the header of the message part, given the raw header,
-   * as a list of ASCIICharSequence.
+   * Static parsing for the header of the message part, given the raw header, as a list of
+   * ASCIICharSequence.
    *
    * @param rawHeader the raw header
    * @return the parsed Header object.
@@ -144,12 +144,14 @@ public final class MessagePart {
    * @throws IllegalArgumentException if the raw header contains null elements
    */
   private static Header<?> parseHeader(List<ASCIICharSequence> rawHeader) {
-    if (rawHeader.size() != 2) throw new IllegalArgumentException("The raw header must contain two elements");
+    if (rawHeader.size() != 2)
+      throw new IllegalArgumentException("The raw header must contain two elements");
 
     String headerName = rawHeader.get(0).toString();
     String headerValue = rawHeader.get(1).toString();
 
-    if (headerName == null || headerValue == null) throw new IllegalArgumentException("The raw header cannot contain null elements");
+    if (headerName == null || headerValue == null)
+      throw new IllegalArgumentException("The raw header cannot contain null elements");
 
     return HeaderFactory.createHeader(headerName, headerValue);
   }
@@ -164,9 +166,9 @@ public final class MessagePart {
   }
 
   /**
-   * Returns the ASCII representation of the message part.
-   * The ASCII representation of the message part is the concatenation of the ASCII representations of its headers,
-   * followed by a newline character, and the ascii representation of the body.
+   * Returns the ASCII representation of the message part. The ASCII representation of the message
+   * part is the concatenation of the ASCII representations of its headers, followed by a newline
+   * character, and the ascii representation of the body.
    *
    * @return the ASCII representation of the message part
    */

@@ -19,9 +19,9 @@ public final class ContentDispositionHeader implements Header<String> {
   private final String value;
 
   /**
-   * Constructs a ContentDispositionHeader object with the given value.
-   * If the value contains "filename=", the value is extracted from the string.
-   * If the value does not contain "filename=", the value is set as is.
+   * Constructs a ContentDispositionHeader object with the given value. If the value contains
+   * "filename=", the value is extracted from the string. If the value does not contain "filename=",
+   * the value is set as is.
    *
    * @param value the value of the Content-Disposition header
    * @throws IllegalArgumentException if the value is empty
@@ -33,10 +33,8 @@ public final class ContentDispositionHeader implements Header<String> {
 
     int filenameIndex = value.indexOf("filename=");
 
-    if (filenameIndex == -1)
-      filename = value;
-    else
-      filename = value.substring(filenameIndex + 9).replace("\"", "");
+    if (filenameIndex == -1) filename = value;
+    else filename = value.substring(filenameIndex + 9).replace("\"", "");
 
     if (filename == null)
       throw new IllegalArgumentException("Content-Disposition header value cannot be null");
@@ -68,22 +66,21 @@ public final class ContentDispositionHeader implements Header<String> {
   }
 
   /**
-   * Encodes the Content-Disposition header to ASCII representation, ready
-   * to be written to the disk.
+   * Encodes the Content-Disposition header to ASCII representation, ready to be written to the
+   * disk.
    *
    * @return the ASCII representation of the Content-Disposition header
    */
   @Override
   public ASCIICharSequence encodeToASCII() {
-    return ASCIICharSequence.of(
-        getType() + ": attachment; filename=\"" + value + "\"");
+    return ASCIICharSequence.of(getType() + ": attachment; filename=\"" + value + "\"");
   }
 
   /**
-   * Encodes the Content Disposition Header's name to its UI representation, in a String format.
-   * The UI representation is the representation of the header's name that needs to be displayed to the user
-   * when creating cards or tables.
-   * The UI representation of the header's name is "Text Attachment\n" followed by the value of the header.
+   * Encodes the Content Disposition Header's name to its UI representation, in a String format. The
+   * UI representation is the representation of the header's name that needs to be displayed to the
+   * user when creating cards or tables. The UI representation of the header's name is "Text
+   * Attachment\n" followed by the value of the header.
    *
    * @return the UI representation of the header
    */

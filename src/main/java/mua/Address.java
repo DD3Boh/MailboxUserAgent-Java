@@ -57,17 +57,16 @@ public final class Address {
   /**
    * Constructs a new Address instance from a String containing the full email address.
    *
-   * The expected format is "Display Name local@domain". If the display name is not present, the
-   * format should be "local@domain".
-   * If the display name is present and is made of more than two words, it should be enclosed in
-   * double quotes, like this: ""Display Long Name" local@domain".
+   * <p>The expected format is "Display Name local@domain". If the display name is not present, the
+   * format should be "local@domain". If the display name is present and is made of more than two
+   * words, it should be enclosed in double quotes, like this: ""Display Long Name" local@domain".
    *
    * @param fullAddress the full email address string
    * @throws IllegalArgumentException if the email address is invalid, according to the
-   *    AddressEncoding.decode(ASCIICharSequence) method
+   *     AddressEncoding.decode(ASCIICharSequence) method
    * @throws IllegalArgumentException if the fullAddress is null or empty
    * @throws IllegalArgumentException if list of addresses are more than one or the address doesn't
-   *   have 3 parts
+   *     have 3 parts
    * @throws IllegalArgumentException if the list of addresses is null
    * @return a new Address instance
    */
@@ -78,8 +77,7 @@ public final class Address {
     ASCIICharSequence ascii = ASCIICharSequence.of(fullAddress);
     List<List<ASCIICharSequence>> addresses = AddressEncoding.decode(ascii);
 
-    if (addresses == null)
-      throw new IllegalArgumentException("The address is invalid");
+    if (addresses == null) throw new IllegalArgumentException("The address is invalid");
 
     if (addresses.size() != 1 || addresses.get(0).size() != 3)
       throw new IllegalArgumentException("Invalid email address");
@@ -94,11 +92,10 @@ public final class Address {
   /**
    * Returns the ASCII representation of the Address object, ready to be written to the disk.
    *
-   * If the display name is not present, it returns the address in the format "local@domain".
-   * If the display name is present and is made of one or two words, it returns the address
-   * in the format "Display Name local@domain".
-   * If the display name is present and is made of more than two words, it returns the address
-   * in the format ""Display Long Name" local@domain".
+   * <p>If the display name is not present, it returns the address in the format "local@domain". If
+   * the display name is present and is made of one or two words, it returns the address in the
+   * format "Display Name local@domain". If the display name is present and is made of more than two
+   * words, it returns the address in the format ""Display Long Name" local@domain".
    *
    * @return the ASCII representation of the Address object
    */
@@ -110,30 +107,26 @@ public final class Address {
 
     if (nameParts.length <= 2)
       return ASCIICharSequence.of(String.format("%s <%s@%s>", displayName, local, domain));
-    else
-      return ASCIICharSequence.of(String.format("\"%s\" <%s@%s>", displayName, local, domain));
+    else return ASCIICharSequence.of(String.format("\"%s\" <%s@%s>", displayName, local, domain));
   }
 
   /**
-   * Encodes the Address object to its UI representation, in a String format.
-   * The UI representation is the representation of the address that needs to be displayed to the user
-   * when creating cards or tables.
-   * The extended version of the representation returns the address in the format "Display Name xxxxxx@xxxxxxx".
-   * The compressed version of the representation returns the address in the format "xxxxxx@xxxxxx".
-   * If the display name is not present, the compressed version is returned, regardless of the value of the extended parameter.
+   * Encodes the Address object to its UI representation, in a String format. The UI representation
+   * is the representation of the address that needs to be displayed to the user when creating cards
+   * or tables. The extended version of the representation returns the address in the format
+   * "Display Name xxxxxx@xxxxxxx". The compressed version of the representation returns the address
+   * in the format "xxxxxx@xxxxxx". If the display name is not present, the compressed version is
+   * returned, regardless of the value of the extended parameter.
    *
    * @param extended whether to return the extended version of the representation.
    * @return the UI representation of the address, in a String format.
    */
   public String encodeToUI(boolean extended) {
-    if (displayName.trim().isBlank() || !extended)
-      return String.format("%s@%s", local, domain);
+    if (displayName.trim().isBlank() || !extended) return String.format("%s@%s", local, domain);
 
     String[] nameParts = displayName.split("\\s+");
 
-    if (nameParts.length <= 2)
-      return String.format("%s <%s@%s>", displayName, local, domain);
-    else
-      return String.format("\"%s\" <%s@%s>", displayName, local, domain);
+    if (nameParts.length <= 2) return String.format("%s <%s@%s>", displayName, local, domain);
+    else return String.format("\"%s\" <%s@%s>", displayName, local, domain);
   }
 }

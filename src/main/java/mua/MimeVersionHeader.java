@@ -23,7 +23,8 @@ public final class MimeVersionHeader implements Header<Double> {
    * @throws NumberFormatException if the value is not a valid MIME version
    */
   public MimeVersionHeader(String value) {
-    if (value == null || value.isEmpty()) throw new IllegalArgumentException("The value cannot be null or empty");
+    if (value == null || value.isEmpty())
+      throw new IllegalArgumentException("The value cannot be null or empty");
 
     this.value = Double.parseDouble(value);
   }
@@ -49,8 +50,8 @@ public final class MimeVersionHeader implements Header<Double> {
   }
 
   /**
-   * Returns an ASCII representation of the MIME-Version header.
-   * The ASCII representation is of the form "MIME-Version: value".
+   * Returns an ASCII representation of the MIME-Version header. The ASCII representation is of the
+   * form "MIME-Version: value".
    *
    * @return an ASCII representation of the MIME-Version header
    */

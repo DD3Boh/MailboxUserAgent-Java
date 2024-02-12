@@ -45,15 +45,16 @@ public final class ContentTypeHeader implements Header<String> {
   private final String boundary;
 
   /**
-   * Constructs a new Content-Type header with the specified text, charset and boundary values.
-   * The text value of the Content-Type header must be either "text/plain", "text/html",
-   * "multipart/alternative" or "multipart/mixed".
-   * If the text value is "text/plain" or "text/html", the value parameter must be the charset value.
+   * Constructs a new Content-Type header with the specified text, charset and boundary values. The
+   * text value of the Content-Type header must be either "text/plain", "text/html",
+   * "multipart/alternative" or "multipart/mixed". If the text value is "text/plain" or "text/html",
+   * the value parameter must be the charset value.
    *
    * @param variant the media type of the content
    * @param value the charset or boundary value of the content
    * @throws IllegalArgumentException if the variant or value is null or empty
-   * @throws IllegalArgumentException if the variant is not "text/plain", "text/html", "multipart/alternative" or "multipart/mixed"
+   * @throws IllegalArgumentException if the variant is not "text/plain", "text/html",
+   *     "multipart/alternative" or "multipart/mixed"
    * @throws IllegalArgumentException if the charset value is not "us-ascii" or "utf-8"
    */
   public ContentTypeHeader(String variant, String value) throws IllegalArgumentException {
@@ -67,15 +68,18 @@ public final class ContentTypeHeader implements Header<String> {
       this.variant = variant;
       this.boundary = value;
       this.charset = "";
-    } else if (variant.equals("text/plain") || variant.equals("text/html")) {;
+    } else if (variant.equals("text/plain") || variant.equals("text/html")) {
+      ;
       if (!value.equals("us-ascii") && !value.equals("utf-8"))
-        throw new IllegalArgumentException("Content-Type header value must be either us-ascii or utf-8");
+        throw new IllegalArgumentException(
+            "Content-Type header value must be either us-ascii or utf-8");
 
       this.variant = variant;
       this.charset = value;
       this.boundary = "";
     } else
-      throw new IllegalArgumentException("Content-Type header value must be either text/plain, text/html, multipart/alternative or multipart/mixed");
+      throw new IllegalArgumentException(
+          "Content-Type header value must be either text/plain, text/html, multipart/alternative or multipart/mixed");
   }
 
   /**
@@ -91,8 +95,10 @@ public final class ContentTypeHeader implements Header<String> {
    * @throws IllegalArgumentException if encodedString does not contain a charset or boundary value.
    */
   public static ContentTypeHeader fromEncodedString(String encodedString) {
-    if (encodedString == null) throw new IllegalArgumentException("Content-Type header value cannot be null");
-    if (encodedString.isBlank()) throw new IllegalArgumentException("Content-Type header value cannot be empty");
+    if (encodedString == null)
+      throw new IllegalArgumentException("Content-Type header value cannot be null");
+    if (encodedString.isBlank())
+      throw new IllegalArgumentException("Content-Type header value cannot be empty");
 
     String[] split = encodedString.split(";");
     if (split.length != 2)
@@ -101,11 +107,11 @@ public final class ContentTypeHeader implements Header<String> {
     String variant = split[0].trim();
     String value = split[1].trim();
 
-    if (value.startsWith("boundary=")) 
-      value = value.replace("boundary=", "");
-    else if (value.startsWith("charset=")) 
-      value = value.replace("charset=", "").replace("\"", "");
-    else throw new IllegalArgumentException("Content-Type header value must contain a charset or boundary value");
+    if (value.startsWith("boundary=")) value = value.replace("boundary=", "");
+    else if (value.startsWith("charset=")) value = value.replace("charset=", "").replace("\"", "");
+    else
+      throw new IllegalArgumentException(
+          "Content-Type header value must contain a charset or boundary value");
 
     return new ContentTypeHeader(variant, value);
   }
@@ -157,10 +163,9 @@ public final class ContentTypeHeader implements Header<String> {
   }
 
   /**
-   * Encodes the UI representation of the Content Type Header's name, in a string format.
-   * The UI representation is the representation of the header's name that needs to be displayed to the user
-   * when creating cards or tables.
-   * The String generated is of the form "Part\nvariant".
+   * Encodes the UI representation of the Content Type Header's name, in a string format. The UI
+   * representation is the representation of the header's name that needs to be displayed to the
+   * user when creating cards or tables. The String generated is of the form "Part\nvariant".
    *
    * @return the UI representation of the Content-Type Header
    */

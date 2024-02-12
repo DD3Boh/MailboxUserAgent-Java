@@ -22,7 +22,8 @@ public final class ContentTransferEncodingHeader implements Header<String> {
    * @throws IllegalArgumentException if the value is null or empty
    */
   public ContentTransferEncodingHeader(String value) throws IllegalArgumentException {
-    if (value == null || value.isEmpty()) throw new IllegalArgumentException("The value cannot be null or empty");
+    if (value == null || value.isEmpty())
+      throw new IllegalArgumentException("The value cannot be null or empty");
 
     this.value = value;
   }
@@ -48,8 +49,8 @@ public final class ContentTransferEncodingHeader implements Header<String> {
   }
 
   /**
-   * Returns an ASCII representation of the Content-Transfer-Encoding header.
-   * The ASCII representation is of the form "Content-Transfer-Encoding: value".
+   * Returns an ASCII representation of the Content-Transfer-Encoding header. The ASCII
+   * representation is of the form "Content-Transfer-Encoding: value".
    *
    * @return an ASCII representation of the Content-Transfer-Encoding header
    */

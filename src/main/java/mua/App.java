@@ -17,7 +17,8 @@ public class App {
    */
   public static void main(String[] args) throws IOException, MissingHeaderException {
     if (args.length <= 0) {
-      System.err.println("No command line arguments found. Please provide the mailbox base directory.");
+      System.err.println(
+          "No command line arguments found. Please provide the mailbox base directory.");
       return;
     }
 
@@ -278,10 +279,8 @@ public class App {
       for (Header<?> header : part.getHeaders()) {
         if (header.encodeUIName() != null) {
           headersList.add(header.encodeUIName());
-          if (header.encodeUIValue(true) != null)
-            values.add(header.encodeUIValue(true));
-          else
-            values.add(part.getBodyDecoded());
+          if (header.encodeUIValue(true) != null) values.add(header.encodeUIValue(true));
+          else values.add(part.getBodyDecoded());
         }
       }
     }

@@ -38,12 +38,15 @@ public final class Message {
       throws MissingHeaderException, IllegalArgumentException {
     this.messageParts = messageParts;
 
-    if (messageParts == null) throw new IllegalArgumentException("The message parts cannot be null");
-    if (messageParts.isEmpty()) throw new IllegalArgumentException("The message must contain at least one part");
+    if (messageParts == null)
+      throw new IllegalArgumentException("The message parts cannot be null");
+    if (messageParts.isEmpty())
+      throw new IllegalArgumentException("The message must contain at least one part");
 
     MessagePart part = messageParts.get(0);
 
-    if (part == null) throw new IllegalArgumentException("The first part of the message cannot be null");
+    if (part == null)
+      throw new IllegalArgumentException("The first part of the message cannot be null");
 
     boolean containsFrom = part.getHeader(SenderHeader.class) != null;
     boolean containsTo = part.getHeader(RecipientsHeader.class) != null;
@@ -62,11 +65,13 @@ public final class Message {
    * @return a list of MessageParts
    * @throws IllegalArgumentException if the fragments are null or empty
    */
-  public static List<MessagePart> createMessageParts(List<Fragment> fragments) throws IllegalArgumentException {
+  public static List<MessagePart> createMessageParts(List<Fragment> fragments)
+      throws IllegalArgumentException {
     List<MessagePart> messageParts = new ArrayList<>();
 
     if (fragments == null) throw new IllegalArgumentException("The fragments cannot be null");
-    if (fragments.isEmpty()) throw new IllegalArgumentException("The message must contain at least one part");
+    if (fragments.isEmpty())
+      throw new IllegalArgumentException("The message must contain at least one part");
 
     for (Fragment fragment : fragments)
       if (fragment != null) messageParts.add(MessagePart.fromFragment(fragment));
@@ -86,8 +91,8 @@ public final class Message {
   /**
    * Returns the ASCII representation of the message.
    *
-   * The ASCII representation of the message is the concatenation of the ASCII representations of its parts.
-   * Each part is separated by a newline character.
+   * <p>The ASCII representation of the message is the concatenation of the ASCII representations of
+   * its parts. Each part is separated by a newline character.
    *
    * @return the ASCII representation of the message.
    */
@@ -96,7 +101,8 @@ public final class Message {
 
     MessagePart firstPart = messageParts.get(0);
     for (MessagePart part : messageParts) {
-      ContentTypeHeader contentHeader = (ContentTypeHeader) firstPart.getHeader(ContentTypeHeader.class);
+      ContentTypeHeader contentHeader =
+          (ContentTypeHeader) firstPart.getHeader(ContentTypeHeader.class);
       sb.append(part.encodeToASCII());
       sb.append("\n");
       if (contentHeader != null && contentHeader.getBoundary() != "") {
