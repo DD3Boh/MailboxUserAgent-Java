@@ -187,11 +187,10 @@ public final class MessagePart {
   }
 
   /**
-   * Returns the decoded body of the message part. 
-   * If the body is not encoded, the original body is returned.
+   * Returns the decoded body of the message part. If the body is not encoded, the original body is
+   * returned.
    *
-   * The ContentTransferEncodingHeader is used to check if
-   * the body is decoded or not.
+   * <p>The ContentTransferEncodingHeader is used to check if the body is decoded or not.
    *
    * @return the decoded body of the message part
    */
