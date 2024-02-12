@@ -196,7 +196,7 @@ public final class MessagePart {
     ContentTransferEncodingHeader contentEncodingHeader =
         (ContentTransferEncodingHeader) getHeader(ContentTransferEncodingHeader.class);
 
-    if (contentEncodingHeader != null && contentEncodingHeader.getValue().equals("base64")) 
+    if (contentEncodingHeader != null && contentEncodingHeader.getValue().equals("base64"))
       return Base64Encoding.decode(this.body);
 
     return this.body.toString();
