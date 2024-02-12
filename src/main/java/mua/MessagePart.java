@@ -195,8 +195,10 @@ public final class MessagePart {
   public String getBodyDecoded() {
     ContentTransferEncodingHeader contentEncodingHeader =
         (ContentTransferEncodingHeader) getHeader(ContentTransferEncodingHeader.class);
-    if (contentEncodingHeader == null) return this.body.toString();
 
-    return Base64Encoding.decode(this.body);
+    if (contentEncodingHeader != null && contentEncodingHeader.getValue().equals("base64")) 
+      return Base64Encoding.decode(this.body);
+
+    return this.body.toString();
   }
 }
