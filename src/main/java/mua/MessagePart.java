@@ -59,7 +59,9 @@ public final class MessagePart {
                 "Date",
                 "MIME-Version",
                 "Content-Type",
-                "Content-Transfer-Encoding"));
+                "Content-Transfer-Encoding",
+                "Content-Disposition"
+            ));
 
     Comparator<Header<?>> comparator =
         new Comparator<Header<?>>() {
