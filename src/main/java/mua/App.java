@@ -42,6 +42,7 @@ public class App {
     try (UIInteract ui = UIInteract.getInstance()) {
       while (true) {
         String mailboxString;
+        int index;
         if (curMailbox == null) mailboxString = "*";
         else mailboxString = curMailbox.name;
         String prefix = "[" + mailboxString + "] > ";
@@ -63,6 +64,11 @@ public class App {
               ui.error("Usage: MBOX <mailbox>");
               break;
             }
+            index = Integer.parseInt(input[1]);
+            if (index > mailboxManager.getMailboxMap().size() || index < 1) {
+              ui.error("Invalid mailbox index");
+              break;
+            }
             List<Mailbox> mailboxes =
                 new ArrayList<Mailbox>(mailboxManager.getMailboxMap().keySet());
             curMailbox = mailboxes.get(Integer.parseInt(input[1]) - 1);
@@ -77,7 +83,7 @@ public class App {
               break;
             }
             List<Message> messages = curMailbox.getMessages();
-            int index = Integer.parseInt(input[1]) - 1;
+            index = Integer.parseInt(input[1]) - 1;
             if (index < 0 || index >= messages.size()) {
               ui.error("Invalid message index");
               break;
