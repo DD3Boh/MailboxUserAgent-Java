@@ -20,13 +20,17 @@ public final class MimeVersionHeader implements Header<Double> {
    *
    * @param value the MIME version
    * @throws IllegalArgumentException if the value is null or empty
-   * @throws NumberFormatException if the value is not a valid MIME version
+   * @throws IllegalArgumentException if the value is not parseable as a Double
    */
   public MimeVersionHeader(String value) {
     if (value == null || value.isEmpty())
       throw new IllegalArgumentException("The value cannot be null or empty");
 
-    this.value = Double.parseDouble(value);
+    try {
+      this.value = Double.parseDouble(value);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("The value " + value + " cannot be parsed as a Double");
+    }
   }
 
   /**
