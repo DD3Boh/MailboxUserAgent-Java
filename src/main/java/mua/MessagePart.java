@@ -32,13 +32,11 @@ public final class MessagePart {
   public final ASCIICharSequence body;
 
   /**
-   * Construct a MessagePart object with the specified headers and body.
-   * The headers of the message part are reordered according to the order list.
-   * The body of the message part is encoded with Base64 if the Content-Transfer-Encoding header
-   * is set to "base64". The body of the message part is the raw body if the
-   * Content-Transfer-Encoding header is not set.
-   * The body that is passed as "body" needs to necessarily be already decoded into a normal
-   * String, and not encoded as base64.
+   * Construct a MessagePart object with the specified headers and body. The headers of the message
+   * part are reordered according to the order list. The body of the message part is encoded with
+   * Base64 if the Content-Transfer-Encoding header is set to "base64". The body of the message part
+   * is the raw body if the Content-Transfer-Encoding header is not set. The body that is passed as
+   * "body" needs to necessarily be already decoded into a normal String, and not encoded as base64.
    *
    * @param headers the headers of the message part
    * @param body the body of the message part
@@ -55,8 +53,7 @@ public final class MessagePart {
 
     if (contentEncodingHeader != null && contentEncodingHeader.getValue().equals("base64"))
       this.body = Base64Encoding.encode(body);
-    else
-      this.body = ASCIICharSequence.of(body);
+    else this.body = ASCIICharSequence.of(body);
   }
 
   /**

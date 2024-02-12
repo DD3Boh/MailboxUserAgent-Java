@@ -2,9 +2,9 @@ package mua;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import utils.ASCIICharSequence;
 import utils.DateEncoding;
-import java.time.format.DateTimeParseException;
 
 /** Represents the date header of when the message was composed. */
 public final class DateHeader implements Header<ZonedDateTime> {
