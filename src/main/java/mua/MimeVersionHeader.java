@@ -12,8 +12,10 @@ public final class MimeVersionHeader implements Header<Double> {
    *
    * @param value the MIME version
    */
-  public MimeVersionHeader(Double value) {
-    this.value = value;
+  public MimeVersionHeader(String value) {
+    if (value == null || value.isEmpty()) throw new IllegalArgumentException("The value cannot be null or empty");
+
+    this.value = Double.parseDouble(value);
   }
 
   /**

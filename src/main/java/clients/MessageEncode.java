@@ -71,7 +71,7 @@ public class MessageEncode {
     scanner.close();
 
     if (!text.isEmpty() && !html.isEmpty()) {
-      headers.add(new MimeVersionHeader(1.0));
+      headers.add(new MimeVersionHeader("1.0"));
       headers.add(new ContentTypeHeader("multipart/alternative", "frontier"));
       parts.add(new MessagePart(headers, "This is a message with multiple parts in MIME format."));
       headers.clear();

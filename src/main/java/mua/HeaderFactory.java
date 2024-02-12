@@ -27,7 +27,7 @@ public final class HeaderFactory {
       case "date":
         return new DateHeader(value);
       case "mime-version":
-        return new MimeVersionHeader(Double.parseDouble(value));
+        return new MimeVersionHeader(value);
       case "content-type":
         return ContentTypeHeader.fromEncodedString(value);
       case "content-transfer-encoding":

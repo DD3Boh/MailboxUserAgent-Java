@@ -206,7 +206,7 @@ public class App {
     } else {
       MessagePart part0 = parts.get(0);
       headers = new ArrayList<>(part0.getHeaders());
-      headers.add(new MimeVersionHeader(Double.valueOf(1.0)));
+      headers.add(new MimeVersionHeader("1.0"));
 
       if (hasAttachment) headers.add(new ContentTypeHeader("multipart/mixed", "frontier"));
       else headers.add(new ContentTypeHeader("multipart/alternative", "frontier"));
