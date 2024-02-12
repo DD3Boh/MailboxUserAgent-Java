@@ -155,9 +155,9 @@ public class App {
     headers.clear();
     if (!body.isEmpty()) {
       if (ASCIICharSequence.isAscii(body)) {
-        headers.add(new ContentTypeHeader("text/plain", "us-ascii", "frontier"));
+        headers.add(new ContentTypeHeader("text/plain", "us-ascii"));
       } else {
-        headers.add(new ContentTypeHeader("text/plain", "utf-8", "frontier"));
+        headers.add(new ContentTypeHeader("text/plain", "utf-8"));
         headers.add(new ContentTransferEncodingHeader("base64"));
       }
       parts.add(new MessagePart(headers, body));
@@ -171,7 +171,7 @@ public class App {
     while ((line = ui.line()) != null && !line.equals(".")) body += line + "\n";
 
     if (!body.isEmpty()) {
-      headers.add(new ContentTypeHeader("text/html", "utf-8", "frontier"));
+      headers.add(new ContentTypeHeader("text/html", "utf-8"));
       headers.add(new ContentTransferEncodingHeader("base64"));
       parts.add(new MessagePart(headers, body));
     }
@@ -205,8 +205,8 @@ public class App {
       headers = new ArrayList<>(part0.getHeaders());
       headers.add(new MimeVersionHeader(Double.valueOf(1.0)));
 
-      if (hasAttachment) headers.add(new ContentTypeHeader("multipart/mixed", null, "frontier"));
-      else headers.add(new ContentTypeHeader("multipart/alternative", null, "frontier"));
+      if (hasAttachment) headers.add(new ContentTypeHeader("multipart/mixed", "frontier"));
+      else headers.add(new ContentTypeHeader("multipart/alternative", "frontier"));
 
       MessagePart part = new MessagePart(headers, part0.getBodyDecoded());
       parts.set(0, part);

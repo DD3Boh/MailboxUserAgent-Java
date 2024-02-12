@@ -94,11 +94,12 @@ public final class Message {
   public ASCIICharSequence encodeToASCII() {
     StringBuilder sb = new StringBuilder();
 
+    MessagePart firstPart = messageParts.get(0);
     for (MessagePart part : messageParts) {
-      ContentTypeHeader contentHeader = (ContentTypeHeader) part.getHeader(ContentTypeHeader.class);
+      ContentTypeHeader contentHeader = (ContentTypeHeader) firstPart.getHeader(ContentTypeHeader.class);
       sb.append(part.encodeToASCII());
       sb.append("\n");
-      if (contentHeader != null && contentHeader.getBoundary() != null) {
+      if (contentHeader != null && contentHeader.getBoundary() != "") {
         sb.append("--");
         sb.append(contentHeader.getBoundary());
         if (part.equals(messageParts.get(messageParts.size() - 1))) sb.append("--");

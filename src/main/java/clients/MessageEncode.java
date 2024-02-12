@@ -72,31 +72,31 @@ public class MessageEncode {
 
     if (!text.isEmpty() && !html.isEmpty()) {
       headers.add(new MimeVersionHeader(1.0));
-      headers.add(new ContentTypeHeader("multipart/alternative", null, "frontier"));
+      headers.add(new ContentTypeHeader("multipart/alternative", "frontier"));
       parts.add(new MessagePart(headers, "This is a message with multiple parts in MIME format."));
       headers.clear();
       if (ASCIICharSequence.isAscii(text)) {
-        headers.add(new ContentTypeHeader("text/plain", "us-ascii", "frontier"));
+        headers.add(new ContentTypeHeader("text/plain", "us-ascii"));
       } else {
-        headers.add(new ContentTypeHeader("text/plain", "utf-8", "frontier"));
+        headers.add(new ContentTypeHeader("text/plain", "utf-8"));
         headers.add(new ContentTransferEncodingHeader("base64"));
       }
       parts.add(new MessagePart(headers, text));
       headers.clear();
-      headers.add(new ContentTypeHeader("text/html", "utf-8", "frontier"));
+      headers.add(new ContentTypeHeader("text/html", "utf-8"));
       headers.add(new ContentTransferEncodingHeader("base64"));
       parts.add(new MessagePart(headers, html));
     } else if (!text.isEmpty()) {
       if (ASCIICharSequence.isAscii(text)) {
-        headers.add(new ContentTypeHeader("text/plain", "us-ascii", null));
+        headers.add(new ContentTypeHeader("text/plain", "us-ascii"));
         parts.add(new MessagePart(headers, text));
       } else {
-        headers.add(new ContentTypeHeader("text/plain", "utf-8", null));
+        headers.add(new ContentTypeHeader("text/plain", "utf-8"));
         headers.add(new ContentTransferEncodingHeader("base64"));
         parts.add(new MessagePart(headers, text));
       }
     } else if (!html.isEmpty()) {
-      headers.add(new ContentTypeHeader("text/html", null, null));
+      headers.add(new ContentTypeHeader("text/html", "utf-8"));
       headers.add(new ContentTransferEncodingHeader("base64"));
       parts.add(new MessagePart(headers, html));
     }
