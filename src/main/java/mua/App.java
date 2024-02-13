@@ -282,9 +282,9 @@ public class App {
 
     for (MessagePart part : message.getParts()) {
       for (Header<?> header : part.getHeaders()) {
-        if (header.encodeUIName() != null) {
+        if (!header.encodeUIName().isBlank()) {
           headersList.add(header.encodeUIName());
-          if (header.encodeUIValue(true) != null) values.add(header.encodeUIValue(true));
+          if (!header.encodeUIValue(true).isBlank()) values.add(header.encodeUIValue(true));
           else values.add(part.getBodyDecoded());
         }
       }

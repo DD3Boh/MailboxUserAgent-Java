@@ -30,14 +30,14 @@ public interface Header<T> {
    * the representation of the header that needs to be displayed to the user when creating cards or
    * tables.
    *
-   * <p>The default implementation returns null, meaning that the header does not have a UI
+   * <p>The default implementation returns an empty string, meaning that the header does not have a UI
    * representation.
    *
    * @param extended whether to return the extended version of the header
    * @return the UI representation of the header
    */
   default String encodeUIValue(boolean extended) {
-    return null;
+    return "";
   }
   ;
 
@@ -46,13 +46,13 @@ public interface Header<T> {
    * the representation of the header that needs to be displayed to the user when creating cards or
    * tables.
    *
-   * <p>The default implementation returns null, meaning that the header does not have a UI
+   * <p>The default implementation returns an empty string, meaning that the header does not have a UI
    * representation, hence the name is not displayed.
    *
    * @return the UI representation of the header's name
    */
   default String encodeUIName() {
-    return null;
+    return "";
   }
   ;
 }
