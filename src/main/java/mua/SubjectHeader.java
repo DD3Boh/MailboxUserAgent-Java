@@ -101,10 +101,11 @@ public final class SubjectHeader implements Header<String> {
    * representation is the representation of the header's name that needs to be displayed to the
    * user when creating cards or tables. The String generated is of the form "Subject\nvalue".
    *
+   * @param isExtended ignored
    * @return the UI representation of the Subject Header
    */
   @Override
-  public String encodeUIName() {
+  public String encodeUIName(boolean isExtended) {
     return TYPE;
   }
 }

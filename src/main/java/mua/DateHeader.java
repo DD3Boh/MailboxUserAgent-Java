@@ -102,10 +102,11 @@ public final class DateHeader implements Header<ZonedDateTime> {
    * representation is the representation of the header that needs to be displayed to the user when
    * creating cards or tables.
    *
+   * @param isExtended ignored
    * @return the UI representation of the header's name
    */
   @Override
-  public String encodeUIName() {
+  public String encodeUIName(boolean isExtended) {
     return TYPE;
   }
 }

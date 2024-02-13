@@ -82,10 +82,12 @@ public final class ContentDispositionHeader implements Header<String> {
    * user when creating cards or tables. The UI representation of the header's name is "Text
    * Attachment\n" followed by the value of the header.
    *
+   * @param isExtended whether the current UI representation is the extended version
    * @return the UI representation of the header
    */
   @Override
-  public String encodeUIName() {
+  public String encodeUIName(boolean isExtended) {
+    if (!isExtended) return "";
     return "Text Attachment\n" + value;
   }
 }

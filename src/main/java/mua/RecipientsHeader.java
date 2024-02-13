@@ -149,10 +149,11 @@ public final class RecipientsHeader implements Header<List<Address>> {
    * representation is the representation of the header's name that needs to be displayed to the
    * user when creating cards or tables. The String generated matches the name of the header.
    *
+   * @param isExtended ignored
    * @return the UI representation of the Recipients Header
    */
   @Override
-  public String encodeUIName() {
+  public String encodeUIName(boolean isExtended) {
     return TYPE;
   }
 }

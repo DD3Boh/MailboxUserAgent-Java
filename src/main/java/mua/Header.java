@@ -49,9 +49,13 @@ public interface Header<T> {
    * <p>The default implementation returns an empty string, meaning that the header does not have a UI
    * representation, hence the name is not displayed.
    *
+   * The isExtended parameter is used to determine whether the current UI representation is the
+   * extended version. This allows to return an empty string when the header shouldn't be displayed.
+   *
+   * @param isExtended whether the current UI representation is the extended version
    * @return the UI representation of the header's name
    */
-  default String encodeUIName() {
+  default String encodeUIName(boolean isExtended) {
     return "";
   }
   ;

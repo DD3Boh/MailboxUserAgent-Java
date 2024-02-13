@@ -82,7 +82,7 @@ public final class SenderHeader implements Header<Address> {
    * @return the UI representation of the header's name
    */
   @Override
-  public String encodeUIName() {
+  public String encodeUIName(boolean isExtended) {
     return TYPE;
   }
 }

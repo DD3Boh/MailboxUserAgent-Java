@@ -244,8 +244,8 @@ public class App {
     for (Message message : messages) {
       List<String> row = new ArrayList<>(headers);
       for (Header<?> header : message.getParts().get(0).getHeaders()) {
-        if (headers.contains(header.getType()))
-          row.set(headers.indexOf(header.encodeUIName()), header.encodeUIValue(false));
+        if (!header.encodeUIName(false).isBlank())
+          row.set(headers.indexOf(header.encodeUIName(false)), header.encodeUIValue(false));
       }
       rows.add(row);
     }
@@ -282,8 +282,8 @@ public class App {
 
     for (MessagePart part : message.getParts()) {
       for (Header<?> header : part.getHeaders()) {
-        if (!header.encodeUIName().isBlank()) {
-          headersList.add(header.encodeUIName());
+        if (!header.encodeUIName(true).isBlank()) {
+          headersList.add(header.encodeUIName(true));
           if (!header.encodeUIValue(true).isBlank()) values.add(header.encodeUIValue(true));
           else values.add(part.getBodyDecoded());
         }

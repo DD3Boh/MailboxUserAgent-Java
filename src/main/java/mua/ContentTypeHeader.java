@@ -167,10 +167,12 @@ public final class ContentTypeHeader implements Header<String> {
    * representation is the representation of the header's name that needs to be displayed to the
    * user when creating cards or tables. The String generated is of the form "Part\nvariant".
    *
+   * @param isExtended whether the current UI representation is the extended version
    * @return the UI representation of the Content-Type Header
    */
   @Override
-  public String encodeUIName() {
+  public String encodeUIName(boolean isExtended) {
+    if (!isExtended) return "";
     return "Part\n" + variant;
   }
 }
