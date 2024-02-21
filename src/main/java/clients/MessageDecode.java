@@ -49,7 +49,7 @@ public class MessageDecode {
 
     for (MessagePart part : message.getParts()) {
       System.out.println("Fragment\n\tRaw headers:");
-      for (Header<?> header : part.getHeaders()) {
+      for (Header header : part.getHeaders()) {
         String headerRawType = header.getType().toString();
         System.out.println(
             "\t\tRaw type = "

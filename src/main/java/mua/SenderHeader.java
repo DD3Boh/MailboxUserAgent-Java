@@ -3,7 +3,7 @@ package mua;
 import utils.ASCIICharSequence;
 
 /** Represents the sender header, using an Address object. */
-public final class SenderHeader implements Header<Address> {
+public final class SenderHeader implements Header {
   /*
    * Abstraction Function:
    * Represents a Sender header, with value being an address.

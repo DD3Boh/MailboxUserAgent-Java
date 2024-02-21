@@ -4,7 +4,7 @@ import utils.ASCIICharSequence;
 import utils.Base64Encoding;
 
 /** Represents the subject header of a message. */
-public final class SubjectHeader implements Header<String> {
+public final class SubjectHeader implements Header {
   /*
    * Abstraction Function:
    * Represents a Subject header, with value being the subject of the message.

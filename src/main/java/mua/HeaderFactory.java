@@ -19,7 +19,7 @@ public class HeaderFactory {
    * @param value the value of the header as a string
    * @return a new Header instance corresponding to the type, or null if the type is not recognized
    */
-  public static Header<?> createHeader(String type, String value) {
+  public static Header createHeader(String type, String value) {
     switch (type.toLowerCase()) {
       case "from":
         return new SenderHeader(Address.fromFullAddress(value));

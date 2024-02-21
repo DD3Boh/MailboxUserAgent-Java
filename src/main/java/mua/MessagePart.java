@@ -26,7 +26,7 @@ public final class MessagePart {
    */
 
   /** The list of headers of the message part */
-  private final List<Header<?>> headers;
+  private final List<Header> headers;
 
   /** The body of the message part */
   public final ASCIICharSequence body;
@@ -42,7 +42,7 @@ public final class MessagePart {
    * @param body the body of the message part
    * @throws IllegalArgumentException if one of headers is null
    */
-  public MessagePart(List<Header<?>> headers, String body) throws IllegalArgumentException {
+  public MessagePart(List<Header> headers, String body) throws IllegalArgumentException {
     if (headers.contains(null)) throw new IllegalArgumentException("The headers cannot be null");
 
     this.headers = new ArrayList<>(headers);
@@ -76,11 +76,11 @@ public final class MessagePart {
     if (fragment.rawBody().isEmpty())
       throw new IllegalArgumentException("The fragment must contain a body");
 
-    List<Header<?>> headers = new ArrayList<>();
+    List<Header> headers = new ArrayList<>();
     String body = fragment.rawBody().toString();
 
     for (List<ASCIICharSequence> rawHeader : fragment.rawHeaders()) {
-      Header<?> header = parseHeader(rawHeader);
+      Header header = parseHeader(rawHeader);
       headers.add(header);
       if (header.getType().equals("Content-Transfer-Encoding"))
         if (header.getValue().equals("base64")) body = Base64Encoding.decode(fragment.rawBody());
@@ -107,10 +107,10 @@ public final class MessagePart {
                 "Content-Transfer-Encoding",
                 "Content-Disposition"));
 
-    Comparator<Header<?>> comparator =
-        new Comparator<Header<?>>() {
+    Comparator<Header> comparator =
+        new Comparator<Header>() {
           @Override
-          public int compare(Header<?> h1, Header<?> h2) {
+          public int compare(Header h1, Header h2) {
             int index1 = orderList.indexOf(h1.getType());
             int index2 = orderList.indexOf(h2.getType());
 
@@ -131,8 +131,8 @@ public final class MessagePart {
    * @param headerClass the class of the header to find
    * @return the header with the specified type, or null if not found.
    */
-  public Header<?> getHeader(Class<?> headerClass) {
-    for (Header<?> header : headers) if (headerClass.isInstance(header)) return header;
+  public Header getHeader(Class<?> headerClass) {
+    for (Header header : headers) if (headerClass.isInstance(header)) return header;
 
     return null;
   }
@@ -146,7 +146,7 @@ public final class MessagePart {
    * @throws IllegalArgumentException if the raw header does not contain two elements
    * @throws IllegalArgumentException if the raw header contains null elements
    */
-  private static Header<?> parseHeader(List<ASCIICharSequence> rawHeader) {
+  private static Header parseHeader(List<ASCIICharSequence> rawHeader) {
     if (rawHeader.size() != 2)
       throw new IllegalArgumentException("The raw header must contain two elements");
 
@@ -164,7 +164,7 @@ public final class MessagePart {
    *
    * @return the list of headers of the message part.
    */
-  public List<Header<?>> getHeaders() {
+  public List<Header> getHeaders() {
     return new ArrayList<>(headers);
   }
 
@@ -177,7 +177,7 @@ public final class MessagePart {
    */
   public ASCIICharSequence encodeToASCII() {
     StringBuilder sb = new StringBuilder();
-    for (Header<?> header : headers) {
+    for (Header header : headers) {
       sb.append(header.encodeToASCII());
       sb.append("\n");
     }

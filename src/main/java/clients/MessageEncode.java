@@ -37,7 +37,7 @@ public class MessageEncode {
    */
   public static void main(String[] args) throws MissingHeaderException {
     String displayName, local, domain;
-    List<Header<?>> headers = new ArrayList<>();
+    List<Header> headers = new ArrayList<>();
     List<MessagePart> parts = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 

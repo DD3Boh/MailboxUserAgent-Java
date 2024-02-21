@@ -3,7 +3,7 @@ package mua;
 import utils.ASCIICharSequence;
 
 /** Represents a Content-Transfer-Encoding header. */
-public final class ContentTransferEncodingHeader implements Header<String> {
+public final class ContentTransferEncodingHeader implements Header {
   /*
    * Abstraction Function:
    * Represents a Content-Transfer-Encoding header with a value.

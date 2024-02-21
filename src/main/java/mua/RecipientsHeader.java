@@ -6,7 +6,7 @@ import java.util.List;
 import utils.ASCIICharSequence;
 
 /** Represents a recipients header, using a List of Address. */
-public final class RecipientsHeader implements Header<List<Address>> {
+public final class RecipientsHeader implements Header {
   /*
    * Abstraction Function:
    * Represents a recipients header, with value being a list of addresses.

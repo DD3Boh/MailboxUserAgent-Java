@@ -3,7 +3,7 @@ package mua;
 import utils.ASCIICharSequence;
 
 /** Represents a MIME-Version header. */
-public final class MimeVersionHeader implements Header<Double> {
+public final class MimeVersionHeader implements Header {
   /*
    * Abstraction Function:
    * Represents a MIME-Version header with a value.

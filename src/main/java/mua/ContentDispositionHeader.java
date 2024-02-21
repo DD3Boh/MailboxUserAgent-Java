@@ -3,7 +3,7 @@ package mua;
 import utils.ASCIICharSequence;
 
 /** Represents a Content-Disposition header. Implements the Header interface with a String value. */
-public final class ContentDispositionHeader implements Header<String> {
+public final class ContentDispositionHeader implements Header {
   /*
    * Abstraction Function:
    * Represents a Content-Disposition header with a value.

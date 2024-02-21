@@ -3,7 +3,7 @@ package mua;
 import utils.ASCIICharSequence;
 
 /** Represents a generic interface for message headers. */
-public interface Header<T> {
+public interface Header {
   /**
    * Returns the type of the header.
    *
@@ -16,7 +16,7 @@ public interface Header<T> {
    *
    * @return the value of the header
    */
-  T getValue();
+  Object getValue();
 
   /**
    * Returns an ASCII representation of the header.

@@ -143,7 +143,7 @@ public class App {
   private static void handleCompose(MailboxManager mailboxManager, Mailbox mailbox, UIInteract ui)
       throws IOException {
     List<String> headersStrings = new ArrayList<>(List.of("From", "To", "Subject", "Date"));
-    List<Header<?>> headers = new ArrayList<>();
+    List<Header> headers = new ArrayList<>();
     List<MessagePart> parts = new ArrayList<>();
     String line = "";
 
@@ -210,7 +210,7 @@ public class App {
       MessagePart part1 = parts.get(1);
       headers = new ArrayList<>(part0.getHeaders());
 
-      for (Header<?> header : part1.getHeaders()) headers.add(header);
+      for (Header header : part1.getHeaders()) headers.add(header);
 
       MessagePart merged = new MessagePart(headers, part1.getBodyDecoded());
       parts.clear();
@@ -243,7 +243,7 @@ public class App {
 
     for (Message message : messages) {
       List<String> row = new ArrayList<>(headers);
-      for (Header<?> header : message.getParts().get(0).getHeaders()) {
+      for (Header header : message.getParts().get(0).getHeaders()) {
         if (!header.encodeUIName(false).isBlank())
           row.set(headers.indexOf(header.encodeUIName(false)), header.encodeUIValue(false));
       }
@@ -281,7 +281,7 @@ public class App {
     List<String> values = new ArrayList<>();
 
     for (MessagePart part : message.getParts()) {
-      for (Header<?> header : part.getHeaders()) {
+      for (Header header : part.getHeaders()) {
         if (!header.encodeUIName(true).isBlank()) {
           headersList.add(header.encodeUIName(true));
           if (!header.encodeUIValue(true).isBlank()) values.add(header.encodeUIValue(true));

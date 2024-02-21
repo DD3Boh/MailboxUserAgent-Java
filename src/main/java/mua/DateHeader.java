@@ -7,7 +7,7 @@ import utils.ASCIICharSequence;
 import utils.DateEncoding;
 
 /** Represents the date header of when the message was composed. */
-public final class DateHeader implements Header<ZonedDateTime> {
+public final class DateHeader implements Header {
   /*
    * Abstraction Function:
    * Represents a Date header, with value being a date.
