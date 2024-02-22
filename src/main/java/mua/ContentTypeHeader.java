@@ -26,8 +26,10 @@ public final class ContentTypeHeader implements Header {
    *
    * Representation Invariant:
    * - The variant value cannot be null or empty.
-   * - The charset value cannot be null or empty.
-   * - The boundary value cannot be null or empty.
+   * - The charset value cannot be null.
+   * - The boundary value cannot be null.
+   *
+   * - One of the charset or boundary value must be empty, according to the variant value.
    * - The variant value must be either "text/plain", "text/html", "multipart/alternative" or "multipart/mixed".
    * - If the variant value is "text/plain" or "text/html", the charset value must be set,
    *   the boundary value must be empty.
