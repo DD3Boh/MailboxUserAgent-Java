@@ -31,6 +31,9 @@ public final class MimeVersionHeader implements Header {
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException("The value " + value + " cannot be parsed as a Double");
     }
+
+    if (this.value != 1.0)
+      throw new IllegalArgumentException("Unsupported MIME version: " + this.value);
   }
 
   /**
