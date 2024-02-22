@@ -15,7 +15,6 @@ public final class RecipientsHeader implements Header {
    * Representation Invariant:
    * - The addresses is not null and does not contain null elements.
    * - The addresses cannot be empty.
-   * - The addresses cannot contain duplicate elements.
    */
   /** The type of the header */
   private static final String TYPE = "To";
