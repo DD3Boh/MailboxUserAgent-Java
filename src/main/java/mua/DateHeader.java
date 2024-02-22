@@ -45,6 +45,7 @@ public final class DateHeader implements Header {
    *     object.
    */
   public DateHeader(ZonedDateTime value) {
+    if (value == null) throw new IllegalArgumentException("The value cannot be null");
     this.value = value;
   }
 
