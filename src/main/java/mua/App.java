@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2024 Davide Garberi
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
 package mua;
 
 import java.io.IOException;
