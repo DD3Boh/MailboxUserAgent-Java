@@ -38,8 +38,7 @@ public class HeaderFactory {
       case "content-disposition":
         return new ContentDispositionHeader(value);
       default:
-        System.out.println("Unknown header type: " + type);
-        return null;
+        throw new IllegalArgumentException("Unknown header type: " + type);
     }
   }
 }
