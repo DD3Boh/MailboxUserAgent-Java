@@ -58,7 +58,7 @@ public final class RecipientsHeader implements Header {
     if (addresses.contains(null))
       throw new IllegalArgumentException("The addresses cannot contain null elements");
 
-    this.addresses = addresses;
+    this.addresses = new ArrayList<>(addresses);
   }
 
   /**
@@ -83,13 +83,13 @@ public final class RecipientsHeader implements Header {
   }
 
   /**
-   * Returns the Recipients object for the recipients.
+   * Returns a copy of the addresses list for the recipients.
    *
-   * @return the Recipients object for the recipients.
+   * @return a copy of the addresses list for the recipients.
    */
   @Override
   public List<Address> getValue() {
-    return addresses;
+    return new ArrayList<>(addresses);
   }
 
   /**
