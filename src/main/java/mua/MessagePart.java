@@ -53,7 +53,12 @@ public final class MessagePart {
 
     if (contentEncodingHeader != null && contentEncodingHeader.getValue().equals("base64"))
       this.body = Base64Encoding.encode(body);
-    else this.body = ASCIICharSequence.of(body);
+    else {
+      if (!ASCIICharSequence.isAscii(body))
+        throw new IllegalArgumentException("The body must be ASCII if the Content-Transfer-Encoding is not set to base64");
+      else
+        this.body = ASCIICharSequence.of(body);
+    }
   }
 
   /**
