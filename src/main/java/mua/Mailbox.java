@@ -43,6 +43,8 @@ public final class Mailbox {
     if (name == null) throw new IllegalArgumentException("Name cannot be null");
     if (name.isBlank()) throw new IllegalArgumentException("Name cannot be empty");
 
+    if (messages.contains(null)) throw new IllegalArgumentException("Messages cannot contain null elements");
+
     this.messages = new ArrayList<>(messages);
     this.name = name;
   }
@@ -75,6 +77,7 @@ public final class Mailbox {
    * @param message the message to be added
    */
   public void addMessage(Message message) {
+    if (message == null) throw new IllegalArgumentException("Message cannot be null");
     messages.add(message);
   }
 
@@ -84,6 +87,7 @@ public final class Mailbox {
    * @param message the message to be removed
    */
   public void removeMessage(Message message) {
+    if (message == null) throw new IllegalArgumentException("Message cannot be null");
     messages.remove(message);
   }
 }
