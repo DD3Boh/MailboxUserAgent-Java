@@ -12,8 +12,6 @@ public final class SenderHeader implements Header {
    * Representation Invariant:
    * - value is not null.
    */
-  /** The type of the header */
-  public static final String TYPE = "From";
 
   /** The value of the Sender header, represented as an Address object */
   private Address value;
@@ -36,7 +34,7 @@ public final class SenderHeader implements Header {
    */
   @Override
   public String getType() {
-    return TYPE;
+    return "From";
   }
 
   /**
@@ -56,7 +54,7 @@ public final class SenderHeader implements Header {
    */
   @Override
   public ASCIICharSequence encodeToASCII() {
-    return ASCIICharSequence.of(TYPE + ": " + value.encodeToASCII());
+    return ASCIICharSequence.of(getType() + ": " + value.encodeToASCII());
   }
 
   /**
@@ -83,6 +81,6 @@ public final class SenderHeader implements Header {
    */
   @Override
   public String encodeUIName(boolean isExtended) {
-    return TYPE;
+    return getType();
   }
 }

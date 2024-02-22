@@ -16,9 +16,6 @@ public final class RecipientsHeader implements Header {
    * - The addresses is not null and does not contain null elements.
    * - The addresses cannot be empty.
    */
-  /** The type of the header */
-  private static final String TYPE = "To";
-
   /** The value of the Recipients header, represented as a Recipients object */
   private final List<Address> addresses;
 
@@ -82,7 +79,7 @@ public final class RecipientsHeader implements Header {
    */
   @Override
   public String getType() {
-    return TYPE;
+    return "To";
   }
 
   /**
@@ -115,7 +112,7 @@ public final class RecipientsHeader implements Header {
       if (iterator.hasNext()) sb.append(", ");
     }
 
-    return ASCIICharSequence.of(TYPE + ": " + sb.toString());
+    return ASCIICharSequence.of(getType() + ": " + sb.toString());
   }
 
   /**
@@ -153,6 +150,6 @@ public final class RecipientsHeader implements Header {
    */
   @Override
   public String encodeUIName(boolean isExtended) {
-    return TYPE;
+    return getType();
   }
 }

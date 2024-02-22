@@ -17,8 +17,6 @@ public final class SubjectHeader implements Header {
    * Representation Invariant:
    * - value is not null or empty.
    */
-  /** The type of the header */
-  public static final String TYPE = "Subject";
 
   /** The value of the Subject header */
   private final String value;
@@ -53,7 +51,7 @@ public final class SubjectHeader implements Header {
    */
   @Override
   public String getType() {
-    return TYPE;
+    return "Subject";
   }
 
   /**
@@ -78,7 +76,7 @@ public final class SubjectHeader implements Header {
     if (ASCIICharSequence.isAscii(value)) encodedSubject = ASCIICharSequence.of(value);
     else encodedSubject = Base64Encoding.encodeWord(value);
 
-    return ASCIICharSequence.of(TYPE + ": " + encodedSubject);
+    return ASCIICharSequence.of(getType() + ": " + encodedSubject);
   }
 
   /**
@@ -106,6 +104,6 @@ public final class SubjectHeader implements Header {
    */
   @Override
   public String encodeUIName(boolean isExtended) {
-    return TYPE;
+    return getType();
   }
 }

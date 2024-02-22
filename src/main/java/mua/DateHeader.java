@@ -15,8 +15,6 @@ public final class DateHeader implements Header {
    * Representation Invariant:
    * - value is not null or empty.
    */
-  /** The type of the header */
-  public static final String TYPE = "Date";
 
   /** The value of the Date header, represented as a ZonedDateTime object */
   private ZonedDateTime value;
@@ -57,7 +55,7 @@ public final class DateHeader implements Header {
    */
   @Override
   public String getType() {
-    return TYPE;
+    return "Date";
   }
 
   /**
@@ -77,7 +75,7 @@ public final class DateHeader implements Header {
    */
   @Override
   public ASCIICharSequence encodeToASCII() {
-    return ASCIICharSequence.of(TYPE + ": " + DateEncoding.encode(value));
+    return ASCIICharSequence.of(getType() + ": " + DateEncoding.encode(value));
   }
 
   /**
@@ -107,6 +105,6 @@ public final class DateHeader implements Header {
    */
   @Override
   public String encodeUIName(boolean isExtended) {
-    return TYPE;
+    return getType();
   }
 }
